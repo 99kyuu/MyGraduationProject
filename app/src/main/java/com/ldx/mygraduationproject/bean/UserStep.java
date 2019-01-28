@@ -1,10 +1,12 @@
 package com.ldx.mygraduationproject.bean;
 
 /**
- * Created by freeFreAme on 2019/1/24.
+ * Created by fySpring
+ * Date : 2017/3/24
+ * To do :
  */
 
-public class UserStep{
+public class UserStep {
 
     private String curDate; //当天的日期
     private String steps;   //当天的步数
@@ -36,7 +38,7 @@ public class UserStep{
 
     @Override
     public String toString() {
-        return "StepEntity{" +
+        return "UserStep{" +
                 "curDate='" + curDate + '\'' +
                 ", steps=" + steps +
                 '}';
