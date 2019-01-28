@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.activity.MainActivity;
-import com.ldx.mygraduationproject.activity.textActivity;
+
 
 
 /**
