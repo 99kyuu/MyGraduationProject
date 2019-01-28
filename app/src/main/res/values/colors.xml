@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#55AF7B</color>
+    <color name="colorPrimaryDark">#55AF7B</color>
+    <color name="colorAccent">#55AF7B</color>
+
+    <color name="black">#000000</color>
+
+    <color name="tans">#00000000</color>
+    <color name="green">#55AF7B</color>
+
+    <color name="gray">#e8e8e8</color>
+    <color name="gray_1">#666666</color>
+    <color name="gray_2">#888888</color>
+    <color name="gray_3">#8D7A71</color>
+
+    <color name="green1">#17a81e</color>
+    <color name="green2">#5cc151</color>
+    <color name="green3">#a1d88b</color>
+
+    <color name="blue1">#004ebc</color>
+    <color name="blue2">#5585d7</color>
+    <color name="blue3">#b2c6e6</color>
+
+    <color name="pink1">#f85a7a</color>
+    <color name="pink2">#fe94ab</color>
+    <color name="pink3">#fbbcc8</color>
+
+    <color name="purple1">#8d6cd1</color>
+    <color name="purple2">#c2afe6</color>
+    <color name="purple3">#ddcee8</color>
+
+    <color name="yellow">#FFC800</color>
+
+    <color name="bg_black">#000000</color>
+    <color name="bg_white">#FFFFFF</color>
+    <color name="bg_topbar">#FCFCFC</color>
+    <color name="bg_gray">#00F1F1F1</color>
+    <color name="transparent">#00FFFFFF</color>
+
+    <color name="text_white">#FFFFFF</color>
+    <color name="text_yellow">#FFC800</color>
+    <color name="text_topbar">#694E42</color>
+    <color name="div_white">#E5E5E5</color>
+
+
+    <color name="progress_circle">#55AF7B</color>
+    <color name="gray_cir">#626262</color>
+    <color name="three_cir">#55AF7B</color>
+
+    <color name="light_blue">#44CDC5</color>
+    <color name="main_text_color">#333333</color>
+    <color name="gray_default_dark">#666666</color>
+</resources>

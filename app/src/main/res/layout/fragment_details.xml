@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+<com.ldx.mygraduationproject.view.BounceScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_white">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--卡片式布局显示用户的基本健康信息-->
+        <!--步数数据显示-->
+        <android.support.v7.widget.CardView
+            android:id="@+id/running_count_card"
+            android:layout_width="@dimen/dp_200"
+            android:layout_height="@dimen/dp_200"
+            android:layout_alignTop="@+id/heart_rate_card"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_marginRight="@dimen/dp_8"
+            android:layout_toEndOf="@+id/heart_rate_card"
+            android:layout_toRightOf="@+id/heart_rate_card"
+            android:background="@color/bg_white"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardCornerRadius="@dimen/dp_20"
+            app:cardElevation="@dimen/dp_20">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/miles"
+                    android:layout_width="@dimen/dp_10"
+                    android:layout_height="@dimen/dp_10"
+                    android:layout_alignLeft="@+id/running_view"
+                    android:layout_alignStart="@+id/running_view"
+                    android:layout_below="@+id/running_view"
+                    app:srcCompat="@drawable/circle_purple" />
+
+                <com.ldx.mygraduationproject.view.RunningView
+                    android:id="@+id/running_view"
+                    android:layout_width="@dimen/dp_157"
+                    android:layout_height="@dimen/dp_158"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="22dp" />
+
+                <TextView
+                    android:id="@+id/mile_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/miles"
+                    android:layout_marginLeft="@dimen/dp_12"
+                    android:layout_marginStart="@dimen/dp_12"
+                    android:layout_toEndOf="@+id/miles"
+                    android:layout_toRightOf="@+id/miles"
+                    android:text="@string/mile" />
+
+                <ImageView
+                    android:id="@+id/running_man_image"
+                    android:layout_width="@dimen/dp_25"
+                    android:layout_height="@dimen/dp_25"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/miles"
+                    android:layout_toRightOf="@+id/miles"
+                    app:srcCompat="@drawable/running" />
+
+                <TextView
+                    android:id="@+id/running_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/running_man_image"
+                    android:layout_toEndOf="@+id/mile_text"
+                    android:layout_toRightOf="@+id/mile_text"
+                    android:text="计步" />
+
+                <TextView
+                    android:id="@+id/mile_data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="1.6公里" />
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <!--心率数据显示-->
+        <android.support.v7.widget.CardView
+            android:id="@+id/heart_rate_card"
+            android:layout_width="@dimen/dp_207"
+            android:layout_height="@dimen/dp_200"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="@dimen/dp_50"
+            android:background="@color/bg_white"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardCornerRadius="@dimen/dp_20"
+            app:cardElevation="@dimen/dp_20">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.ldx.mygraduationproject.view.LineChartView
+                    android:id="@+id/LineChartView"
+                    android:layout_width="@dimen/dp_174"
+                    android:layout_height="@dimen/dp_150"
+                    android:layout_marginBottom="@dimen/dp_20"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:layout_marginRight="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_30"
+                    app:lineColor="@color/green"
+                    app:textColor="@color/gray_2"
+                    app:textSize="@dimen/dp_12" />
+
+                <ImageView
+                    android:id="@+id/heart_rate_image"
+                    android:layout_width="@dimen/dp_25"
+                    android:layout_height="@dimen/dp_25"
+                    android:layout_alignLeft="@+id/LineChartView"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignStart="@+id/LineChartView"
+                    android:layout_marginLeft="@dimen/dp_11"
+                    android:layout_marginStart="@dimen/dp_11"
+                    app:srcCompat="@drawable/heart_rate" />
+
+                <TextView
+                    android:id="@+id/heart_rate_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/heart_rate_image"
+                    android:layout_marginLeft="@dimen/dp_14"
+                    android:layout_marginStart="@dimen/dp_14"
+                    android:layout_toEndOf="@+id/heart_rate_image"
+                    android:layout_toRightOf="@+id/heart_rate_image"
+                    android:text="@string/heart_rate" />
+
+                <TextView
+                    android:id="@+id/max_heart_rate_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toEndOf="@+id/max_heart_rate_image"
+                    android:layout_toRightOf="@+id/max_heart_rate_image"
+                    android:text="@string/max_heart_rate" />
+
+                <ImageView
+                    android:id="@+id/max_heart_rate_image"
+                    android:layout_width="@dimen/dp_10"
+                    android:layout_height="@dimen/dp_10"
+                    android:layout_alignLeft="@+id/heart_rate_image"
+                    android:layout_alignStart="@+id/heart_rate_image"
+                    android:layout_alignTop="@+id/max_heart_rate_text"
+                    app:srcCompat="@drawable/circle_red" />
+
+                <ImageView
+                    android:id="@+id/min_heart_rate_image"
+                    android:layout_width="@dimen/dp_10"
+                    android:layout_height="@dimen/dp_10"
+                    android:layout_alignTop="@+id/min_heart_rate_text"
+                    android:layout_marginLeft="@dimen/dp_14"
+                    android:layout_marginStart="@dimen/dp_14"
+                    android:layout_toEndOf="@+id/heart_rate_text"
+                    android:layout_toRightOf="@+id/heart_rate_text"
+                    app:srcCompat="@drawable/circle_green" />
+
+                <TextView
+                    android:id="@+id/min_heart_rate_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/max_heart_rate_text"
+                    android:layout_alignBottom="@+id/max_heart_rate_text"
+                    android:layout_toEndOf="@+id/min_heart_rate_image"
+                    android:layout_toRightOf="@+id/min_heart_rate_image"
+                    android:text="@string/min_heart_rate" />
+
+                <TextView
+                    android:id="@+id/max_heart_rate_data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/heart_rate_text"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignStart="@+id/heart_rate_text"
+                    android:layout_toLeftOf="@+id/min_heart_rate_image"
+                    android:layout_toStartOf="@+id/min_heart_rate_image"
+                    android:text="80" />
+
+                <TextView
+                    android:id="@+id/min_heart_rate_data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/min_heart_rate_text"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_toEndOf="@+id/min_heart_rate_text"
+                    android:layout_toRightOf="@+id/min_heart_rate_text"
+                    android:text="60" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <!--体重信息-->
+        <android.support.v7.widget.CardView
+            android:id="@+id/weight_card"
+            android:layout_width="@dimen/dp_190"
+            android:layout_height="@dimen/dp_155"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/heart_rate_card"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_marginRight="@dimen/dp_8"
+            android:layout_marginStart="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_25"
+            android:background="@color/bg_white"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardCornerRadius="@dimen/dp_20"
+            app:cardElevation="@dimen/dp_20">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.ldx.mygraduationproject.view.WeightView
+                    android:id="@+id/weightView"
+                    android:layout_width="@dimen/dp_165"
+                    android:layout_height="@dimen/dp_123"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_25" />
+
+                <ImageView
+                    android:id="@+id/weight_image"
+                    android:layout_width="@dimen/dp_25"
+                    android:layout_height="@dimen/dp_25"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/dp_13"
+                    android:layout_marginStart="@dimen/dp_13"
+                    app:srcCompat="@drawable/weight" />
+
+                <TextView
+                    android:id="@+id/weight_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/dp_16"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_toEndOf="@+id/weight_image"
+                    android:layout_toRightOf="@+id/weight_image"
+                    android:text="体重" />
+
+                <TextView
+                    android:id="@+id/weight_data_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/weightView"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="12dp"
+                    android:text="TextView" />
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/blood_pressure_card"
+            android:layout_width="@dimen/dp_163"
+            android:layout_height="@dimen/dp_155"
+            android:layout_alignLeft="@+id/running_count_card"
+            android:layout_alignStart="@+id/running_count_card"
+            android:layout_alignTop="@+id/weight_card"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardCornerRadius="@dimen/dp_20"
+            app:cardElevation="@dimen/dp_20" >
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+        <!--历史记录显示-->
+        <LinearLayout
+            android:id="@+id/activity_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignEnd="@+id/running_count_card"
+            android:layout_alignRight="@+id/running_count_card"
+            android:layout_below="@+id/weight_card"
+            android:orientation="vertical">
+
+            <LinearLayout
+            android:id="@+id/movement_records_calender_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"/>
+
+            <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/light_blue" />
+
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
+
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:text="运动记录"
+            android:textColor="@color/main_text_color"
+            android:textSize="15sp" />
+
+            <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/ic_small_blue_rectangular">
+
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="步行+跑步距离"
+            android:textColor="@color/text_white"
+            android:textSize="18sp" />
+
+            <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:orientation="horizontal">
+
+            <TextView
+            android:id="@+id/movement_total_km_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/text_white"
+            android:textSize="30sp" />
+
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="公里"
+            android:textColor="@color/text_white"
+            android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:orientation="horizontal">
+
+            <TextView
+            android:id="@+id/movement_total_km_time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/text_white"
+            android:textSize="12sp" />
+
+
+            </LinearLayout>
+            </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_small_blue_rectangular">
+
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="步数"
+            android:textColor="@color/text_white"
+            android:textSize="18sp" />
+
+            <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:orientation="horizontal">
+
+            <TextView
+            android:id="@+id/movement_total_steps_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:textColor="@color/text_white"
+            android:textSize="30sp" />
+
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="步"
+            android:textColor="@color/text_white"
+            android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:orientation="horizontal">
+
+            <TextView
+            android:id="@+id/movement_total_steps_time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:textColor="@color/text_white"
+            android:textSize="12sp" />
+
+            </LinearLayout>
+            </LinearLayout>
+            </RelativeLayout>
+
+            <TextView
+            android:id="@+id/is_support_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:text="该设备不支持计步"
+            android:textSize="15sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+</com.ldx.mygraduationproject.view.BounceScrollView>
+
+</LinearLayout>
+

@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">FourLeaf</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="running_count">记步</string>
+    <string name="weight">体重</string>
+    <string name="heart_rate">心率</string>
+    <string name="max_heart_rate">最快</string>
+    <string name="min_heart_rate">最慢</string>
+    <string name="mile">里程</string>
+</resources>
