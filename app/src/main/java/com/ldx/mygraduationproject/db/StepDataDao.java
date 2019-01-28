@@ -6,15 +6,16 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 
-import com.ldx.mygraduationproject.bean.StepEntity;
+import com.ldx.mygraduationproject.bean.UserStep;
+import com.ldx.mygraduationproject.bean.UserPlan;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 /**
- * Created by fySpring
- * Date : 2017/3/24
+ * Created by ldx
+ * Date : 2019/3/24
  * To do :
  */
 
@@ -29,14 +30,14 @@ public class StepDataDao {
     /**
      * 添加一条新记录
      *
-     * @param stepEntity
+     * @param userStep
      */
-    public void addNewData(StepEntity stepEntity) {
+    public void addNewData(UserStep userStep) {
         stepDb = stepHelper.getReadableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put("curDate", stepEntity.getCurDate());
-        values.put("totalSteps", stepEntity.getSteps());
+        values.put("curDate", userStep.getCurDate());
+        values.put("totalSteps", userStep.getSteps());
         stepDb.insert("step", null, values);
 
         stepDb.close();
@@ -48,15 +49,15 @@ public class StepDataDao {
      * @param curDate
      * @return
      */
-    public StepEntity getCurDataByDate(String curDate) {
+    public UserStep getCurDataByDate(String curDate) {
         stepDb = stepHelper.getReadableDatabase();
-        StepEntity stepEntity = null;
+        UserStep userStep = null;
         Cursor cursor = stepDb.query("step", null, null, null, null, null, null);
         while (cursor.moveToNext()) {
             String date = cursor.getString(cursor.getColumnIndexOrThrow("curDate"));
             if (curDate.equals(date)) {
                 String steps = cursor.getString(cursor.getColumnIndexOrThrow("totalSteps"));
-                stepEntity = new StepEntity(date, steps);
+                userStep = new UserStep(date, steps);
                 //跳出循环
                 break;
             }
@@ -64,7 +65,7 @@ public class StepDataDao {
         //关闭
         stepDb.close();
         cursor.close();
-        return stepEntity;
+        return userStep;
     }
 
     /**
@@ -72,15 +73,15 @@ public class StepDataDao {
      *
      * @return
      */
-    public List<StepEntity> getAllDatas() {
-        List<StepEntity> dataList = new ArrayList<>();
+    public List<UserStep> getAllDatas() {
+        List<UserStep> dataList = new ArrayList<>();
         stepDb = stepHelper.getReadableDatabase();
         Cursor cursor = stepDb.rawQuery("select * from step", null);
 
         while (cursor.moveToNext()) {
             String curDate = cursor.getString(cursor.getColumnIndex("curDate"));
             String totalSteps = cursor.getString(cursor.getColumnIndex("totalSteps"));
-            StepEntity entity = new StepEntity(curDate, totalSteps);
+            UserStep entity = new UserStep(curDate, totalSteps);
             dataList.add(entity);
         }
 
@@ -92,15 +93,16 @@ public class StepDataDao {
 
     /**
      * 更新数据
-     * @param stepEntity
+     *
+     * @param userStep
      */
-    public void updateCurData(StepEntity stepEntity) {
+    public void updateCurData(UserStep userStep) {
         stepDb = stepHelper.getReadableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put("curDate",stepEntity.getCurDate());
-        values.put("totalSteps", stepEntity.getSteps());
-        stepDb.update("step", values, "curDate=?", new String[]{stepEntity.getCurDate()});
+        values.put("curDate", userStep.getCurDate());
+        values.put("totalSteps", userStep.getSteps());
+        stepDb.update("step", values, "curDate=?", new String[]{userStep.getCurDate()});
 
         stepDb.close();
     }
@@ -117,5 +119,46 @@ public class StepDataDao {
         if (stepDb.isOpen())
             stepDb.delete("step", "curDate", new String[]{curDate});
         stepDb.close();
+    }
+
+    /**
+     * 记入用户设置的计划步数
+     *
+     * @param userPlan
+     */
+    public void addNewPlan(UserPlan userPlan) {
+        stepDb = stepHelper.getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("remindTime", userPlan.getRemindTime());
+        values.put("isRemind", userPlan.getIsRemind());
+        values.put("planSteps", userPlan.getPlanSteps());
+        stepDb.insert("step_plan", null, values);
+
+        stepDb.close();
+    }
+
+    /**
+     * 根据日期查询记录
+     *
+     * @param
+     * @return
+     */
+    public UserPlan getPlanByTheLasted() {
+        UserPlan userPlan =null;
+        stepDb = stepHelper.getReadableDatabase();
+        Cursor cursor = stepDb.rawQuery(
+                "select * from step_plan order by id", null);
+
+        while (cursor.moveToNext()) {
+            String remindTime = cursor.getString(cursor.getColumnIndex("remindTime"));
+            String isRemind = cursor.getString(cursor.getColumnIndex("isRemind"));
+            String planSteps=cursor.getString(cursor.getColumnIndex("planSteps"));
+            userPlan =new UserPlan(remindTime,isRemind,planSteps);
+        }
+        //关闭
+        stepDb.close();
+        cursor.close();
+        return userPlan;
+
     }
 }

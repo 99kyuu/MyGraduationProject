@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.ldx.mygraduationproject">
     <!--权限-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
    <uses-permission android:name="android.permission.BODY_SENSORS"/>
 
@@ -24,9 +25,9 @@
             </intent-filter>
         </activity>
          <!--测试界面-->
-        <activity android:name=".activity.textActivity" >
+        <!--<activity android:name=".activity.textActivity" >-->
 
-        </activity>
+        <!--</activity>-->
         <!--找回密码界面-->
         <activity android:name=".activity.ForgetActivity"  android:theme="@style/dialogStyle"/>
         <!--登入界面-->
@@ -35,7 +36,7 @@
         </activity>
 
 
-        <!--<activity android:name=".activity.SetPlanActivity"/>-->
+        <activity android:name=".activity.SetPlanActivity"/>
         <!-- 计步功能 -->
         <service
             android:name=".service.StepService"

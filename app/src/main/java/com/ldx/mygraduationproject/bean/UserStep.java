@@ -10,7 +10,6 @@ public class UserStep {
 
     private String curDate; //当天的日期
     private String steps;   //当天的步数
-
     public UserStep() {
     }
 

@@ -151,7 +151,7 @@ public class MainActivity extends BaseActivity  implements
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.toString()){
                     case "小病自诊":
-                        startActivity(new Intent(MainActivity.this,textActivity.class));
+//                        startActivity(new Intent(MainActivity.this,textActivity.class));
                         break;
                     case "体检单":
 //                        if (score == 0){

@@ -346,6 +346,7 @@ public class StepService extends Service implements SensorEventListener {
      * 保存当天的数据到数据库中，并去刷新通知栏
      */
     private void saveStepData() {
+
         //查询数据库中的数据
         UserStep userStep = stepDataDao.getCurDataByDate(CURRENT_DATE);
         //为空则说明还没有该天的数据，有则说明已经开始当天的计步了

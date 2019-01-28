@@ -5,29 +5,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.Display;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ldx.mygraduationproject.R;
-import com.ldx.mygraduationproject.bean.StepEntity;
+import com.ldx.mygraduationproject.activity.SetPlanActivity;
+import com.ldx.mygraduationproject.bean.UserStep;
 import com.ldx.mygraduationproject.constant.AppConfig;
 import com.ldx.mygraduationproject.db.StepDataDao;
 import com.ldx.mygraduationproject.service.StepService;
@@ -45,6 +34,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 
 /**
@@ -94,7 +84,7 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
 
     private String curSelDate;
     private DecimalFormat df = new DecimalFormat("#.##");
-    private List<StepEntity> stepEntityList = new ArrayList<>();
+    private List<UserStep> userStepList = new ArrayList<>();
     private StepDataDao stepDataDao;
 
 
@@ -111,8 +101,8 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
     @Override
     protected void initData() {
         super.initData();
-        //跑步数据
-        runningView.setCurrentCount(0, 10000, 1799);
+
+        //具体时间
         curSelDate = TimeUtil.getCurrentDate();
         //体重数据
         weightView.setPercent(66.45f);
@@ -154,7 +144,15 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
             supportTv.setVisibility(View.VISIBLE);
         }
     }
+    @OnClick({R.id.running_count_card})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.running_count_card:
+                mActivity.startActivity(new Intent(mActivity,SetPlanActivity.class));
+                break;
 
+        }
+    }
     @Override
     protected void setListener() {
         super.setListener();
@@ -177,12 +175,12 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
          * 开启计步服务
          */
     private void setupService() {
-        Intent intent = new Intent(getContext(), StepService.class);
+        Intent intent = new Intent(mActivity, StepService.class);
         isBind = getContext().bindService(intent, conn, Context.BIND_AUTO_CREATE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            getContext().startForegroundService(intent);
+            mActivity.startForegroundService(intent);
         } else {
-            getContext().startService(intent);
+            mActivity.startService(intent);
         }
 
     }
@@ -243,15 +241,17 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
      *
      */
     private void setDatas() {
-        StepEntity stepEntity = stepDataDao.getCurDataByDate(curSelDate);
+        UserStep userStep = stepDataDao.getCurDataByDate(curSelDate);
 
-        if (stepEntity != null) {
-            int steps = Integer.parseInt(stepEntity.getSteps());
+        if (userStep != null) {
+            int steps = Integer.parseInt(userStep.getSteps());
 
             //获取全局的步数
             totalStepsTv.setText(String.valueOf(steps));
             //计算总公里数
             totalKmTv.setText(countTotalKM(steps));
+            //跑步数据
+            runningView.setCurrentCount(0, 10000, steps);
         } else {
             //获取全局的步数
             totalStepsTv.setText("0");
@@ -284,9 +284,9 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
     private void getRecordList() {
         //获取数据库
         stepDataDao = new StepDataDao(mActivity);
-        stepEntityList.clear();
-        stepEntityList.addAll(stepDataDao.getAllDatas());
-        if (stepEntityList.size() >= 7) {
+        userStepList.clear();
+        userStepList.addAll(stepDataDao.getAllDatas());
+        if (userStepList.size() >= 7) {
             // TODO: 2019/1/24在这里获取历史记录条数，当条数达到7条或以上时，就开始删除第七天之前的数据,暂未实现
 
         }
