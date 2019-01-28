@@ -26,8 +26,7 @@ import android.support.annotation.Nullable;
 
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.activity.MainActivity;
-import com.ldx.mygraduationproject.activity.textActivity;
-import com.ldx.mygraduationproject.bean.StepEntity;
+import com.ldx.mygraduationproject.bean.UserStep;
 import com.ldx.mygraduationproject.constant.AppConfig;
 import com.ldx.mygraduationproject.db.StepDataDao;
 import com.ldx.mygraduationproject.utils.TimeUtil;
@@ -220,12 +219,12 @@ public class StepService extends Service implements SensorEventListener {
         //获取数据库
         stepDataDao = new StepDataDao(getApplicationContext());
         //获取当天的数据，用于展示
-        StepEntity entity = stepDataDao.getCurDataByDate(CURRENT_DATE);
+        UserStep userStep = stepDataDao.getCurDataByDate(CURRENT_DATE);
         //为空则说明还没有该天的数据，有则说明已经开始当天的计步了
-        if (entity == null) {
+        if (userStep == null) {
             CURRENT_STEP = 0;
         } else {
-            CURRENT_STEP = Integer.parseInt(entity.getSteps());
+            CURRENT_STEP = Integer.parseInt(userStep.getSteps());
         }
     }
 
@@ -348,24 +347,24 @@ public class StepService extends Service implements SensorEventListener {
      */
     private void saveStepData() {
         //查询数据库中的数据
-        StepEntity entity = stepDataDao.getCurDataByDate(CURRENT_DATE);
+        UserStep userStep = stepDataDao.getCurDataByDate(CURRENT_DATE);
         //为空则说明还没有该天的数据，有则说明已经开始当天的计步了
-        if (entity == null) {
+        if (userStep == null) {
             //没有则新建一条数据
-            entity = new StepEntity();
-            entity.setCurDate(CURRENT_DATE);
-            entity.setSteps(String.valueOf(CURRENT_STEP));
+            userStep = new UserStep();
+            userStep.setCurDate(CURRENT_DATE);
+            userStep.setSteps(String.valueOf(CURRENT_STEP));
 
-            stepDataDao.addNewData(entity);
+            stepDataDao.addNewData(userStep);
         } else {
             //有则更新当前的数据
-            entity.setSteps(String.valueOf(CURRENT_STEP));
+            userStep.setSteps(String.valueOf(CURRENT_STEP));
 
-            stepDataDao.updateCurData(entity);
+            stepDataDao.updateCurData(userStep);
         }
 
         builder.setContentIntent(PendingIntent.getActivity(this, 0, nfIntent, 0)) // 设置PendingIntent
-                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.mipmap.ic_launcher)) // 设置下拉列表中的图标(大图标)
+                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.drawable.launch_icon)) // 设置下拉列表中的图标(大图标)
                 .setContentTitle("今日步数"+CURRENT_STEP+"步") // 设置下拉列表里的标题
                 .setSmallIcon(R.mipmap.ic_launcher) // 设置状态栏内的小图标
                 .setContentText("加油，要记得勤加运动"); // 设置上下文内容　
