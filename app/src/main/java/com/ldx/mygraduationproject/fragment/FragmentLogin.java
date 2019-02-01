@@ -14,8 +14,11 @@ import android.widget.Toast;
 
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.activity.ForgetActivity;
+import com.ldx.mygraduationproject.activity.MainActivity;
+import com.ldx.mygraduationproject.bean.User;
 import com.ldx.mygraduationproject.constant.AppConfig;
 import com.ldx.mygraduationproject.utils.RegularUtils;
+import com.ldx.mygraduationproject.utils.SPUtlis;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
@@ -122,6 +125,7 @@ public class FragmentLogin extends BaseFragment {
 //            return;
         try {
             userLogin(userName,userPwd);
+//            afterLogin(userName,userPwd,isAuto);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -176,20 +180,7 @@ public class FragmentLogin extends BaseFragment {
         }
     };
 
-    }
 
-//    private void afterLogin(UserBean data) {
-//        data.setAutoSessionToken(token);
-//        MedicalCareApplication.getInstance().setUserBean(data);
-//        UserScoreBean bean = LitePal.find(UserScoreBean.class,data.getId());
-//        if (bean != null){
-//            MedicalCareApplication.getInstance().setScore(bean.getScorre());
-//        }
-//        SPUtlis.put(mActivity,MedicalCareConstant.IS_AUTO_LOGIN,isAuto);
-//        Log.d("afterLogin",data.getUsername());
-//        SPUtlis.put(mActivity,MedicalCareConstant.AUTO_LOGIN_NAME,data.getUsername());
-//        SPUtlis.put(mActivity,MedicalCareConstant.AUTO_LOGIN_PASS,data.getPassword());
-//        mActivity.startActivity(new Intent(mActivity, MainActivity.class));
-//        mActivity.finish();
-//    }
-//}
+
+
+}

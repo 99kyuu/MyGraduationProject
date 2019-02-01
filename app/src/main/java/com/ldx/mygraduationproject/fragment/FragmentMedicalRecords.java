@@ -2,15 +2,25 @@ package com.ldx.mygraduationproject.fragment;
 
 import android.app.FragmentManager;
 import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+import android.support.v7.widget.Toolbar;
 import android.view.Display;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.ImageView;
+
 
 import com.ldx.mygraduationproject.R;
-import com.ldx.mygraduationproject.view.BeforeOrAfterCalendarView;
+
 
 import butterknife.BindView;
+
 
 /**
  * Created by freeFreAme on 2019/1/22.
@@ -19,37 +29,55 @@ import butterknife.BindView;
 public class FragmentMedicalRecords extends BaseFragment {
 
 
-    private BeforeOrAfterCalendarView calenderView1;
 
-
-    private TextView totalKmTv;
-    private TextView stepsTimeTv;
-    private TextView totalStepsTv;
-    private TextView supportTv;
-    @BindView(R.id.movement_records_calender_l2)
-    LinearLayout movementCalenderL2;
-    @BindView(R.id.movement_total_km_time_tv)
-    TextView kmTimeTv;
-    /**
-     * 屏幕长度和宽度
-     */
-    public static int screenWidth, screenHeight;
+    @BindView(R.id.web_view)
+    WebView webView;
 
     @Override
     protected int setLayoutId() {
-        return R.layout.fragment_record;
+        return R.layout.fragment_question;
     }
 
-    protected void initData() {
-        WindowManager windowManager = (WindowManager)mActivity
-                .getSystemService(Context.WINDOW_SERVICE);
-        Display display = windowManager.getDefaultDisplay();
-        screenWidth = display.getWidth();
-        screenHeight = display.getHeight();
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    @Override
+    protected void initView() {
+        super.initView();
+        WebSettings settings = webView.getSettings();
+        settings.setJavaScriptEnabled(true);
+        settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        settings.setPluginState(WebSettings.PluginState.ON);
+        settings.setAppCacheEnabled(true);
+        settings.setUseWideViewPort(true);
+        settings.setSupportZoom(false);
+        settings.setAllowUniversalAccessFromFileURLs(true);
+        settings.setLoadsImagesAutomatically(true);
+        settings.setDatabaseEnabled(true);
+        settings.setDomStorageEnabled(true);
+        webView.setWebChromeClient(new WebChromeClient());
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    view.loadUrl(request.getUrl().toString());
+                } else {
+                    view.loadUrl(request.toString());
+                }
+                return true;
+            }
 
-//        放到获取宽度之后
-        calenderView1 = new BeforeOrAfterCalendarView(getContext());
-        movementCalenderL2.addView(calenderView1);
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
+                view.loadUrl("file:///android_asset/html/error.html");
+            }
+        });
+        webView.loadUrl("https://m.drmed.cn/self-diagnosis");
+    }
+
+
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
 
     }
 }

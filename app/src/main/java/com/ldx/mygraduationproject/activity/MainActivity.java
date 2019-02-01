@@ -7,9 +7,12 @@ import android.content.Intent;
 import android.os.Build;
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.adapter.BaseFragmentStatePagerAdapter;
+import com.ldx.mygraduationproject.utils.LocalReceiver;
+import com.ldx.mygraduationproject.utils.StringUtils;
 
 
-
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
@@ -17,6 +20,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -31,17 +35,10 @@ import android.widget.Toast;
 import butterknife.BindView;
 
 public class MainActivity extends BaseActivity  implements
-        RadioGroup.OnCheckedChangeListener,ViewPager.OnPageChangeListener
+        RadioGroup.OnCheckedChangeListener,ViewPager.OnPageChangeListener,LocalReceiver.Callback
 {
 
-//    @BindView(R.id.main_frame)
-//    FrameLayout mainFrame;
-//    @BindView(R.id.main_item_health)
-//    LinearLayout mainItemHealth;
-//    @BindView(R.id.main_item_main)
-//    RelativeLayout mainItemMain;
-//    @BindView(R.id.main_item_statistics)
-    LinearLayout mainItemStatistics;
+
     @BindView(R.id.nav_view)
     NavigationView navView;
     @BindView(R.id.drawer_layout)
@@ -57,20 +54,13 @@ public class MainActivity extends BaseActivity  implements
     @BindView(R.id.user_record)
     RadioButton user_record;
 
-
-//
-//    private FragmentHeath fragmentHeath;
-//    private FragmentMain fragmentMain;
-//    private FragmentStatistics fragmentStatistics;
-
-
     private int score = 0;
     //几个代表页面的常量
     public static final int PAGE_ONE = 0;
     public static final int PAGE_TWO = 1;
     public static final int PAGE_THREE = 2;
 
-
+    private static boolean isExit=false;
     private static MainActivity mainActivity ;
     public static int screenWidth, screenHeight;
 
@@ -105,8 +95,7 @@ public class MainActivity extends BaseActivity  implements
         setHeader();
     }
 
-    private LinearLayout mywallet;
-    private LinearLayout myshop;
+
     private ImageView myphoto;
     private TextView headerUserHealthNumber;
     private TextView headerUserHealthState;
@@ -116,8 +105,7 @@ public class MainActivity extends BaseActivity  implements
 
     private void setHeader(){
         View view = navView.getHeaderView(0);
-        mywallet = view.findViewById(R.id.header_my_wallet);
-        myshop = view.findViewById(R.id.header_my_shop);
+
         view01 = view.findViewById(R.id.header_obtain);
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT){
             view01.setVisibility(View.GONE);
@@ -131,12 +119,7 @@ public class MainActivity extends BaseActivity  implements
         headerUserHealthState.setText("11");
         headerUserHealthNumber.setText(String.valueOf(score));
 
-        mywallet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                startActivity(new Intent(MainActivity.this,WallteActivity.class));
-            }
-        });
+
         myphoto = view.findViewById(R.id.header_user_photo);
         myphoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,7 +134,7 @@ public class MainActivity extends BaseActivity  implements
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.toString()){
                     case "小病自诊":
-//                        startActivity(new Intent(MainActivity.this,textActivity.class));
+                        startActivity(new Intent(MainActivity.this,ExaminationActivity.class));
                         break;
                     case "体检单":
 //                        if (score == 0){
@@ -184,7 +167,9 @@ public class MainActivity extends BaseActivity  implements
         }
         return null;
     }
-
+    public void openDraw(){
+        drawerLayout.openDrawer(Gravity.LEFT);
+    }
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -229,5 +214,40 @@ public class MainActivity extends BaseActivity  implements
             }
         }
     }
+    Handler handlerforisExit=new Handler(){
+        @Override
+        public void handleMessage(Message msg){
+            super.handleMessage(msg);
+            isExit=false;
+        }
+    };
+    @Override
+    public boolean onKeyDown(int keyCode,KeyEvent event){
+        if(keyCode==KeyEvent.KEYCODE_BACK){
+            exit();
+            return false;
+        }
+        return super.onKeyDown(keyCode,event);
+    }
 
+    private void exit(){
+        if(!isExit){
+            isExit=true;
+            Toast.makeText(getApplicationContext(),"再按一次退出fourleafApp",Toast.LENGTH_SHORT).show();
+                    //利用handler延迟发送更改状态信息
+                    handlerforisExit.sendEmptyMessageDelayed(0,2000);
+        }
+        else{
+            finish();
+            System.exit(0);
+        }
+    }
+
+
+    @Override
+    public void onSuccess(int score) {
+        headerUserHealthNumber.setText(String.valueOf(score));
+        headerUserHealthState.setText(StringUtils.getStateForScore(score));
+        headerProgress.setProgress(score);
+    }
 }

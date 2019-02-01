@@ -22,21 +22,26 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.activity.MainActivity;
+import com.ldx.mygraduationproject.bean.User;
 import com.ldx.mygraduationproject.bean.UserStep;
 import com.ldx.mygraduationproject.constant.AppConfig;
 import com.ldx.mygraduationproject.db.StepDataDao;
 import com.ldx.mygraduationproject.utils.TimeUtil;
 
+import org.litepal.LitePal;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
- * Created by fySpring
- * Date : 2017/3/24
+ * Created by ldx
+ * Date : 2019/1/29
  * To do :
  */
 
@@ -360,7 +365,6 @@ public class StepService extends Service implements SensorEventListener {
         } else {
             //有则更新当前的数据
             userStep.setSteps(String.valueOf(CURRENT_STEP));
-
             stepDataDao.updateCurData(userStep);
         }
 

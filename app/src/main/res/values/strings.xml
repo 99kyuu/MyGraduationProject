@@ -9,4 +9,21 @@
     <string name="max_heart_rate">最快</string>
     <string name="min_heart_rate">最慢</string>
     <string name="mile">里程</string>
+    <string name="exercise_plan">锻炼计划</string>
+    <string name="save_plan">保存计划</string>
+
+
+    <string-array name="ages">
+        <item>婴儿 0</item>
+        <item>童年 1-10</item>
+        <item>少年 11-17</item>
+        <item>青年 18-30</item>
+        <item>中年 30-60</item>
+        <item>老年 >60</item>
+    </string-array>
+
+    <string-array name="sexs">
+        <item>男</item>
+        <item>女</item>
+    </string-array>
 </resources>

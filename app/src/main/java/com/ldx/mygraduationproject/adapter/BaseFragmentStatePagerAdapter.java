@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.ldx.mygraduationproject.activity.MainActivity;
 import com.ldx.mygraduationproject.fragment.FragmentMedicalRecords;
-import com.ldx.mygraduationproject.fragment.FragmentRssReader;
+import com.ldx.mygraduationproject.fragment.FragmentQuestion;
 import com.ldx.mygraduationproject.fragment.FragmentDetails;
 
 
@@ -18,7 +18,7 @@ import com.ldx.mygraduationproject.fragment.FragmentDetails;
 public class BaseFragmentStatePagerAdapter extends FragmentStatePagerAdapter {
     private final int PAGER_COUNT = 3;
     private FragmentDetails fragmentDetails = null;
-    private FragmentRssReader fragmentRssReader=null;
+    private FragmentQuestion fragmentQuestion =null;
     private FragmentMedicalRecords fragmentMedicalRecords=null;
 
 
@@ -28,7 +28,7 @@ public class BaseFragmentStatePagerAdapter extends FragmentStatePagerAdapter {
     public BaseFragmentStatePagerAdapter(FragmentManager fm) {
         super(fm);
         fragmentDetails = new FragmentDetails();
-        fragmentRssReader=new FragmentRssReader();
+        fragmentQuestion =new FragmentQuestion();
         fragmentMedicalRecords=new FragmentMedicalRecords();
     }
 
@@ -54,7 +54,7 @@ public class BaseFragmentStatePagerAdapter extends FragmentStatePagerAdapter {
         Fragment fragment = null;
         switch (position) {
             case MainActivity.PAGE_ONE:
-                fragment = fragmentRssReader;
+                fragment = fragmentQuestion;
                 break;
             case MainActivity.PAGE_TWO:
                 fragment = fragmentDetails;

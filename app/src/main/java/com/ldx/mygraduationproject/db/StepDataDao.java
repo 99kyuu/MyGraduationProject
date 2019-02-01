@@ -3,6 +3,7 @@ package com.ldx.mygraduationproject.db;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 
@@ -34,14 +35,27 @@ public class StepDataDao {
      */
     public void addNewData(UserStep userStep) {
         stepDb = stepHelper.getReadableDatabase();
-
         ContentValues values = new ContentValues();
         values.put("curDate", userStep.getCurDate());
         values.put("totalSteps", userStep.getSteps());
         stepDb.insert("step", null, values);
-
         stepDb.close();
     }
+//    /**
+//     * 记入用户设置的计划步数
+//     *
+//     * @param userPlan
+//     */
+//    public void addNewPlan(UserPlan userPlan) throws SQLException{
+//        stepDb = stepHelper.getReadableDatabase();
+//        ContentValues values = new ContentValues();
+//        values.put("remindTime", userPlan.getRemindTime());
+//        values.put("isRemind", userPlan.getIsRemind());
+//        values.put("planSteps", userPlan.getPlanSteps());
+//        stepDb.insert("step_plan", null, values);
+//        stepDb.close();
+//    }
+
 
     /**
      * 根据日期查询记录
@@ -121,44 +135,29 @@ public class StepDataDao {
         stepDb.close();
     }
 
-    /**
-     * 记入用户设置的计划步数
-     *
-     * @param userPlan
-     */
-    public void addNewPlan(UserPlan userPlan) {
-        stepDb = stepHelper.getReadableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("remindTime", userPlan.getRemindTime());
-        values.put("isRemind", userPlan.getIsRemind());
-        values.put("planSteps", userPlan.getPlanSteps());
-        stepDb.insert("step_plan", null, values);
 
-        stepDb.close();
-    }
-
-    /**
-     * 根据日期查询记录
-     *
-     * @param
-     * @return
-     */
-    public UserPlan getPlanByTheLasted() {
-        UserPlan userPlan =null;
-        stepDb = stepHelper.getReadableDatabase();
-        Cursor cursor = stepDb.rawQuery(
-                "select * from step_plan order by id", null);
-
-        while (cursor.moveToNext()) {
-            String remindTime = cursor.getString(cursor.getColumnIndex("remindTime"));
-            String isRemind = cursor.getString(cursor.getColumnIndex("isRemind"));
-            String planSteps=cursor.getString(cursor.getColumnIndex("planSteps"));
-            userPlan =new UserPlan(remindTime,isRemind,planSteps);
-        }
-        //关闭
-        stepDb.close();
-        cursor.close();
-        return userPlan;
-
-    }
+//    /**
+//     * 根据日期查询记录
+//     *
+//     * @param
+//     * @return
+//     */
+//    public UserPlan getPlanByTheLasted() throws SQLException{
+//        UserPlan userPlan =null;
+//        stepDb = stepHelper.getReadableDatabase();
+//        Cursor cursor = stepDb.rawQuery(
+//                "select * from step_plan order by _id desc limit 1", null);
+//
+//        while (cursor.moveToNext()) {
+//            String remindTime = cursor.getString(1);
+//            String isRemind = cursor.getString(2);
+//            String planSteps=cursor.getString(3);
+//            userPlan =new UserPlan(remindTime,isRemind,planSteps);
+//        }
+//        //关闭
+//        stepDb.close();
+//        cursor.close();
+//        return userPlan;
+//
+//    }
 }

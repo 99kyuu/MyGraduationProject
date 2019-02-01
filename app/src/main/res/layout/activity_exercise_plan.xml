@@ -1,67 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
     <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="@dimen/dp_280"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+    android:background="@drawable/dialog_bg"
+        tools:context=".activity.SetPlanActivity"
+        >
+
+        <!--<FrameLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical">-->
+
+
+
+               <!---->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center"-->
+
+                    <!--android:background="#00000000"-->
+                    <!--android:gravity="center_horizontal"-->
+                    <!--android:paddingLeft="10px"-->
+                    <!--android:paddingRight="10px"-->
+                    <!--android:text="@string/exercise_plan"-->
+                    <!--android:textColor="#ffffff"-->
+                    <!--android:textSize="20sp" />-->
+
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/iv_right"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:ellipsize="end"-->
+                    <!--android:gravity="center"-->
+                    <!--android:maxEms="4"-->
+                    <!--android:maxWidth="80px"-->
+                    <!--android:minEms="2"-->
+                    <!--android:visibility="invisible"-->
+                    <!--android:paddingLeft="40px"-->
+                    <!--android:paddingRight="40px"-->
+                    <!--android:singleLine="true"/>-->
+            <!---->
+
+        <!--</FrameLayout>-->
+
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-
-
-                <ImageView
-                    android:id="@+id/iv_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:onClick="onBackward"
-                    android:paddingLeft="18dp"
-                    android:paddingRight="18dp"
-                    android:src="@mipmap/arrow_back_white"
-                    android:visibility="visible" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:background="#00000000"
-                    android:gravity="center_horizontal"
-                    android:paddingLeft="10px"
-                    android:paddingRight="10px"
-                    android:text="锻炼计划"
-                    android:textColor="#ffffff"
-                    android:textSize="20sp" />
-
-
-                <ImageView
-                    android:id="@+id/iv_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:layout_gravity="center"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:maxEms="4"
-                    android:maxWidth="80px"
-                    android:minEms="2"
-                    android:visibility="invisible"
-                    android:paddingLeft="40px"
-                    android:paddingRight="40px"
-                    android:singleLine="true"/>
-
-
-
-        </FrameLayout>
-<ImageView
-    android:layout_width="match_parent"
-    android:src="@mipmap/sport"
-    android:scaleType="centerCrop"
-    android:layout_height="wrap_content" />
+        android:layout_height="65dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/sport" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -157,27 +151,21 @@
                     android:minWidth="300px"
                     android:text="21:00"
                     android:textColor="#000000"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/sp_18" />
             </LinearLayout>
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="50dp"
-            android:background="@mipmap/btn_submit_bg"
-            android:text="保存"
-            android:textColor="#ffffff"
-            android:textSize="18dp" />
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_36"
+        android:layout_marginRight="@dimen/dp_36"
+        android:layout_marginTop="@dimen/dp_40"
+        android:layout_marginBottom="@dimen/dp_25"
+        android:background="@drawable/green_button_bg"
+        android:text="@string/save_plan"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/sp_21" />
 
-        <WebView
-            android:id="@+id/wv"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="100px">
-
-        </WebView>
-    </LinearLayout>
+</LinearLayout>

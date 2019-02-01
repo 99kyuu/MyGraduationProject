@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:icon,android:theme,android:allowBackup">
+        tools:replace="android:icon,android:theme,android:allowBackup"
+        android:name=".app.MyApplication">
         <!---->
         <!--宣告activity-->
         <!--主界面-->
@@ -30,13 +31,16 @@
         <!--</activity>-->
         <!--找回密码界面-->
         <activity android:name=".activity.ForgetActivity"  android:theme="@style/dialogStyle"/>
+        <!--web界面-->
+        <activity android:name=".activity.WebActivity"  />
         <!--登入界面-->
         <activity android:name=".activity.LoginActivity">
 
         </activity>
-
-
-        <activity android:name=".activity.SetPlanActivity"/>
+        <activity android:name=".activity.ExaminationActivity" />
+        <activity android:name=".activity.ScoreActivity" />
+        <!-- 设置每日步数 -->
+        <activity android:name=".activity.SetPlanActivity" android:theme="@style/dialogStyle"/>
         <!-- 计步功能 -->
         <service
             android:name=".service.StepService"

@@ -19,11 +19,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             + "_id INTEGER PRIMARY KEY AUTOINCREMENT, "
             + "curDate TEXT, "
             + "totalSteps TEXT)";
-    private static final String CREATE_BANNER2="create table step_plan ("
-            + "_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + "remindTime TEXT, "
-            + "isRemind TEXT, "
-            + "planSteps TEXT)";
+
 
     public DBOpenHelper(Context context) {
         super(context, DB_NAME, null,DB_VERSION);
@@ -32,7 +28,6 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_BANNER);//执行用户步数表语句
-        db.execSQL(CREATE_BANNER2);//执行建立计划表
     }
 
     @Override
