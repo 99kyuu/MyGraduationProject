@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.ScoreActivity">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:background="@color/green"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:contentInsetStart="@dimen/dp_0"
+        app:contentInsetRight="@dimen/dp_0">
+
+        <ImageView
+            android:id="@+id/toolbar_back"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:src="@drawable/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:textSize="@dimen/sp_24"
+            android:textColor="#ffffff"
+            android:text="体验结果"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/toolbar_renew"
+            android:textSize="@dimen/sp_16"
+            android:textColor="#ffffff"
+            android:text="重测"
+            android:layout_gravity="right"
+            android:layout_marginRight="@dimen/dp_8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </android.support.v7.widget.Toolbar>
+
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_marginTop="@dimen/dp_21"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:textColor="#666666"
+            android:textSize="@dimen/sp_16"
+            android:text="健康指数"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/score_score"
+            android:layout_marginTop="@dimen/dp_10"
+            android:textColor="#666666"
+            android:textSize="@dimen/sp_54"
+            android:text="85"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/score_description"
+            android:layout_marginTop="@dimen/dp_10"
+            android:textColor="#666666"
+            android:textSize="@dimen/sp_20"
+            android:text="身体健康超过75%的人"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/dp_68"
+        android:layout_marginLeft="@dimen/dp_12"
+        android:layout_marginRight="@dimen/dp_12"
+        android:layout_marginBottom="@dimen/dp_12"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/green"
+        android:orientation="vertical">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_36"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:layout_marginRight="@dimen/dp_24"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/header_user_photo"
+                android:src="@drawable/user_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/score_user_name"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/sp_20"
+                android:text="jssz猪猪猪"
+                android:layout_weight="1"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+        <ProgressBar
+            android:id="@+id/score_progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_marginTop="@dimen/dp_26"
+            android:layout_marginRight="@dimen/dp_24"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:min="0"
+            android:max="100"
+            android:progress="40"
+            android:indeterminate="false"
+            android:progressDrawable="@drawable/progressbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_9" />
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/dp_17"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_46"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/score_health_number"
+                    android:textSize="16sp"
+                    android:textColor="#ffffff"
+                    android:text="85"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:src="@drawable/health_figure"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:textSize="13sp"
+                        android:textColor="#ffffff"
+                        android:text="健康指数"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+            </LinearLayout>
+            <View
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_marginBottom="@dimen/dp_8"
+                android:background="#ffffff"
+                android:layout_width="@dimen/dp_1"
+                android:layout_height="match_parent"
+                />
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_46"
+                android:orientation="vertical"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/score_health_state"
+                    android:textSize="16sp"
+                    android:textColor="#ffffff"
+                    android:text="亚健康"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:src="@drawable/health_condition"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:textSize="13sp"
+                        android:textColor="#ffffff"
+                        android:text="健康状态"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/score_suggest"
+            android:layout_marginTop="@dimen/dp_36"
+            android:gravity="center"
+            android:text="将康状态良好，请继续保持"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/sp_20"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</LinearLayout>

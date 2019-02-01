@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.ExaminationActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:background="@color/green"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:contentInsetStart="@dimen/dp_0"
+        app:contentInsetRight="@dimen/dp_0">
+
+        <TextView
+            android:textSize="@dimen/sp_24"
+            android:textColor="#ffffff"
+            android:text="健康体验"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.design.widget.TabLayout
+        android:layout_below="@id/toolbar"
+        android:id="@+id/examination_tab"
+        app:tabIndicatorHeight="@dimen/dp_0"
+        app:tabPaddingStart="@dimen/dp_3"
+        app:tabPaddingEnd="@dimen/dp_3"
+        app:tabBackground="@null"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.design.widget.TabLayout>
+
+    <TextView
+        android:id="@+id/examination_text"
+        android:text="1.第一题： \n 总是失眠，不易入睡，或容易惊醒，又或者总是处于睡梦中，睡眠质量很差，并且有脱发现象？"
+        android:layout_marginTop="@dimen/dp_24"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginRight="@dimen/dp_24"
+        android:layout_below="@+id/examination_tab"
+        android:lineSpacingExtra="@dimen/dp_14"
+        android:maxLines="5"
+        android:textColor="#777777"
+        android:textSize="@dimen/sp_18"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_above="@id/examination_linear_bt"
+        android:layout_marginBottom="@dimen/dp_48"
+        android:layout_marginRight="@dimen/dp_34"
+        android:layout_marginLeft="@dimen/dp_34">
+
+        <Button
+            android:id="@+id/examination_button1"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/sp_17"
+            android:text="一直有"
+            android:background="@drawable/green_button_select"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_36" />
+
+        <Button
+            android:id="@+id/examination_button2"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/sp_17"
+            android:text="有时有"
+            android:layout_marginTop="@dimen/dp_22"
+            android:background="@drawable/green_button_select"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_36" />
+
+        <Button
+            android:id="@+id/examination_button3"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/sp_17"
+            android:text="没有"
+            android:layout_marginTop="@dimen/dp_22"
+            android:background="@drawable/green_button_select"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_36" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/examination_linear_bt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_25"
+        android:layout_marginRight="@dimen/dp_25"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        >
+        <Button
+            android:id="@+id/examination_last"
+            android:text="上一题"
+            android:background="@null"
+            android:textSize="@dimen/sp_18"
+            android:textColor="#777777"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"></LinearLayout>
+
+        <Button
+            android:id="@+id/examination_back"
+            android:text="退出"
+            android:background="@null"
+            android:textSize="@dimen/sp_18"
+            android:textColor="#777777"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</RelativeLayout>
