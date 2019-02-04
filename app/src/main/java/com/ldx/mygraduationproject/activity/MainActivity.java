@@ -137,20 +137,17 @@ public class MainActivity extends BaseActivity  implements
                         startActivity(new Intent(MainActivity.this,ExaminationActivity.class));
                         break;
                     case "体检单":
-//                        if (score == 0){
-//                            startActivity(new Intent(MainActivity.this,ExaminationActivity.class));
-//                        }else {
-//                            startActivity(new Intent(MainActivity.this,ScoreActivity.class));
-//                        }
+                        if (score == 0){
+                            startActivity(new Intent(MainActivity.this,ExaminationActivity.class));
+                        }else {
+                            startActivity(new Intent(MainActivity.this,ScoreActivity.class));
+                        }
                         break;
                     case "关注":
 //                        startActivity(new Intent(MainActivity.this,CollectionActivity.class));
                         break;
-                    case "足迹":
-                        Toast.makeText(MainActivity.this,"待开发",Toast.LENGTH_LONG).show();
-                        break;
                     case "关于":
-//                        startActivity(new Intent(MainActivity.this,AboutActivity.class));
+                        startActivity(new Intent(MainActivity.this,AboutActivity.class));
                         break;
                     case "设置":
 //                        startActivity(new Intent(MainActivity.this,SetActivity.class));

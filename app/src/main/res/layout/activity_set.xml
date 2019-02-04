@@ -51,13 +51,13 @@
 
         <TextView
             android:id="@+id/set_user_name"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:textColor="#666666"
-            android:textSize="@dimen/sp_20"
-            android:text="jssz猪猪猪"
-            android:layout_weight="1"
             android:layout_width="@dimen/dp_0"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_weight="1"
+            android:text="ldx"
+            android:textColor="#666666"
+            android:textSize="@dimen/sp_20" />
 
     </LinearLayout>
 

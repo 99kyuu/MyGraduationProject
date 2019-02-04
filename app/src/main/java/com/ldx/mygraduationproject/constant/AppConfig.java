@@ -12,15 +12,17 @@ public class AppConfig {
     public final static String ADD_MORE_STUDENTS = BASE_URL_PATH.concat("/add_more_students");
 
 
-
+//    192.168.124.9
+    //192.168.1.104
     //用户类下功能 /userApi
-    public final static String SERVER_URL_PATH = "http://192.168.1.104:8100/api/security";
-    public final static String REGISTER_NEW_USER= SERVER_URL_PATH.concat("/register_new_user");
-    public final static String USER_LOGIN= SERVER_URL_PATH.concat("/user_login");
-    public final static String RESET_VALID_CODE= SERVER_URL_PATH.concat("/reset_valid_code");
-    public final static String RESET_USER_PASSWORD= SERVER_URL_PATH.concat("/reset_user_password");
-
-
+    public final static String SERVER_URL_PATH = "http://192.168.124.9:8100/api";
+    public final static String REGISTER_NEW_USER= SERVER_URL_PATH.concat("/security/register_new_user");
+    public final static String USER_LOGIN= SERVER_URL_PATH.concat("/security/user_login");
+    public final static String RESET_VALID_CODE= SERVER_URL_PATH.concat("/security/reset_valid_code");
+    public final static String RESET_USER_PASSWORD= SERVER_URL_PATH.concat("/security/reset_user_password");
+    //步数类下的功能
+    public final static String GET_USER_STEP_PLAN_BY_USERNAME=SERVER_URL_PATH.concat("/stepplan/get_user_step_plan_by_username");
+    public final static String ADD_USER_PLAN=SERVER_URL_PATH.concat("/stepplan/add_user_plan");
     //计步类
     public static final int MSG_FROM_CLIENT = 0;
     public static final int MSG_FROM_SERVER = 1;
