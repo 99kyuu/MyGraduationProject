@@ -4,40 +4,39 @@ import org.litepal.annotation.Column;
 import org.litepal.crud.LitePalSupport;
 
 /**
- * @author: tao
- * @time: 2018/9/7
- * @e-mail: 1462320178@qq.com
+ * @author: ldx
+ * @time: 2019/2/1
  * @version: 1.0
  * @exception: 无
  * @explain: 用于在本地数据库存储体检单成绩
  */
 public class UserScore extends LitePalSupport {
     @Column(unique = true,nullable = false)
-    private int userid;
+    private String username;
     @Column(nullable = false)
-    private int scorre;
+    private int score;
 
-    public int getUserid() {
-        return userid;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserid(int userid) {
-        this.userid = userid;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public int getScorre() {
-        return scorre;
+    public int getScore() {
+        return score;
     }
 
-    public void setScorre(int scorre) {
-        this.scorre = scorre;
+    public void setScore(int score) {
+        this.score = score;
     }
 
     @Override
     public String toString() {
         return "UserScore{" +
-                "userid=" + userid +
-                ", scorre=" + scorre +
+                "username=" + username +
+                ", score=" + score +
                 '}';
     }
 

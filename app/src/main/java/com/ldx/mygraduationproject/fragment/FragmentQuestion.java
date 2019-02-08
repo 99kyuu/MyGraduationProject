@@ -149,10 +149,22 @@ public class FragmentQuestion extends BaseFragment{
                 Article article=null;
                 switch (position){
                     case 0:
-                         article = new Gson().fromJson(AppConfig.DATE,Article.class);
+                         article = com.alibaba.fastjson.JSONArray.parseObject(AppConfig.DATE,Article.class);
                         break;
                     case 1:
-                        article =new Gson().fromJson(AppConfig.DATE2,Article.class);
+                        article =com.alibaba.fastjson.JSONArray.parseObject(AppConfig.DATE2,Article.class);
+                        break;
+                    case 2:
+                        article =com.alibaba.fastjson.JSONArray.parseObject(AppConfig.DATE2,Article.class);
+                        break;
+                    case 3:
+                        article =com.alibaba.fastjson.JSONArray.parseObject(AppConfig.DATE2,Article.class);
+                        break;
+                    case 4:
+                        article =com.alibaba.fastjson.JSONArray.parseObject(AppConfig.DATE2,Article.class);
+                        break;
+                    case 5:
+                        article =com.alibaba.fastjson.JSONArray.parseObject(AppConfig.DATE2,Article.class);
                         break;
                 }
                 Intent intent = new Intent(mActivity, WebActivity.class);

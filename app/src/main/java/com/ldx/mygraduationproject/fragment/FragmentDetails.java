@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ldx.mygraduationproject.R;
+import com.ldx.mygraduationproject.activity.HeartRateActivity;
 import com.ldx.mygraduationproject.activity.SetPlanActivity;
 import com.ldx.mygraduationproject.bean.UserStep;
 import com.ldx.mygraduationproject.constant.AppConfig;
@@ -144,13 +145,14 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
             supportTv.setVisibility(View.VISIBLE);
         }
     }
-    @OnClick({R.id.running_count_card})
+    @OnClick({R.id.running_count_card,R.id.heart_rate_card})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.running_count_card:
                 mActivity.startActivity(new Intent(mActivity,SetPlanActivity.class));
                 break;
-
+            case R.id.heart_rate_card:
+                mActivity.startActivity(new Intent(mActivity, HeartRateActivity.class));
         }
     }
     @Override

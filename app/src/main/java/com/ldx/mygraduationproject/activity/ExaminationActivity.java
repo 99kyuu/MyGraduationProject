@@ -1,5 +1,6 @@
 package com.ldx.mygraduationproject.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
@@ -54,6 +55,7 @@ public class ExaminationActivity extends BaseActivity {
     private int index = 0;
 
     private ArrayList<Question> questions = new ArrayList<>(10);
+    @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {

@@ -4,12 +4,11 @@ import org.litepal.annotation.Column;
 import org.litepal.crud.LitePalSupport;
 
 /**
- * @author: tao
- * @time: 2018/8/25
- * @e-mail: 1462320178@qq.com
+ * @author: ldx
+ * @time: 2019/2/1
  * @version: 1.0
  * @exception: 无
- * @explain: 说明
+ * @explain: 文章实体类
  */
 public class Article extends LitePalSupport {
 

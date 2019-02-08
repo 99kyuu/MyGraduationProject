@@ -29,8 +29,8 @@ public class LocalReceiver extends BroadcastReceiver {
         int score = intent.getIntExtra("score",0);
         MyApplication.getInstance().setScore(score);
         UserScore userScore = new UserScore();
-        userScore.setScorre(score);
-        userScore.setUserid(1);
+        userScore.setScore(score);
+        userScore.setUsername("ldx");
         if (userScore.save()){
             Log.i("LocalReceiver","存储成功");
         }

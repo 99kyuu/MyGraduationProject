@@ -99,7 +99,7 @@ public class SetPlanActivity extends BaseActivity {
     }
 
     //------------
-    public void SaveUserPlanToNet(String userName, String remindTime, String isRemind, String planSteps) {
+    public void saveUserPlanToNet(String userName, String remindTime, String isRemind, String planSteps) {
         OkHttpClient mOkHttpClient = new OkHttpClient();
         FormEncodingBuilder builder = new FormEncodingBuilder();
         builder.add("user_name", userName);
@@ -137,6 +137,7 @@ public class SetPlanActivity extends BaseActivity {
             Map<String, Object> r = (HashMap) msg.obj;
             if ((Integer) r.get("code") == 1) {
                 Toast.makeText(SetPlanActivity.this, "" + r.get("msg"), Toast.LENGTH_SHORT).show();
+                finish();
             }
         }
     };
@@ -225,10 +226,11 @@ public class SetPlanActivity extends BaseActivity {
             userPlan.setRemindTime(remindTime);
         }
         if (NetUtils.isConnected(this) == true) {
-            SaveUserPlanToNet("ldx", remindTime, isRemind, planSteps);
+            saveUserPlanToNet("ldx", remindTime, isRemind, planSteps);
         } else {
             userPlan.save();
             Toast.makeText(this, ""+"计划本地存储成功", Toast.LENGTH_SHORT).show();
+            finish();
         }
 
     }

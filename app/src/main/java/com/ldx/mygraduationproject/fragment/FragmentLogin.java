@@ -15,7 +15,9 @@ import android.widget.Toast;
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.activity.ForgetActivity;
 import com.ldx.mygraduationproject.activity.MainActivity;
+import com.ldx.mygraduationproject.app.MyApplication;
 import com.ldx.mygraduationproject.bean.User;
+import com.ldx.mygraduationproject.bean.UserScore;
 import com.ldx.mygraduationproject.constant.AppConfig;
 import com.ldx.mygraduationproject.utils.RegularUtils;
 import com.ldx.mygraduationproject.utils.SPUtlis;
@@ -125,7 +127,7 @@ public class FragmentLogin extends BaseFragment {
 //            return;
         try {
             userLogin(userName,userPwd);
-//            afterLogin(userName,userPwd,isAuto);
+           afterLogin(userName,userPwd,isAuto);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -179,6 +181,20 @@ public class FragmentLogin extends BaseFragment {
             }
         }
     };
+    private void afterLogin(String userName,String userPwd,Boolean isAuto) {
+
+        UserScore userScore = LitePal.findLast(UserScore.class);
+        if (userScore != null){
+            MyApplication.getInstance().setScore(userScore.getScore());
+        }
+        SPUtlis.put(mActivity,AppConfig.IS_AUTO_LOGIN,isAuto);
+//        Log.d("afterLogin",data.getUsername());
+        SPUtlis.put(mActivity,AppConfig.AUTO_LOGIN_NAME,userName);
+        SPUtlis.put(mActivity,AppConfig.AUTO_LOGIN_PASS,userPwd);
+        mActivity.startActivity(new Intent(mActivity, MainActivity.class));
+        mActivity.finish();
+    }
+
 
 
 

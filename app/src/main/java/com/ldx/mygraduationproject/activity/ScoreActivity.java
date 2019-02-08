@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 
 import com.ldx.mygraduationproject.R;
+import com.ldx.mygraduationproject.app.MyApplication;
+import com.ldx.mygraduationproject.constant.AppConfig;
+import com.ldx.mygraduationproject.utils.SPUtlis;
 import com.ldx.mygraduationproject.utils.StringUtils;
 
 import butterknife.BindView;
@@ -41,8 +44,8 @@ public class ScoreActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-//        UserBean userBean = MedicalCareApplication.getInstance().getUserBean();
-        int score =90;
+//        String userName=(String)SPUtlis.get(ScoreActivity.this,AppConfig.AUTO_LOGIN_NAME,"");
+        int score = MyApplication.getInstance().getScore();
         scoreUserName.setText("ldx");
         scoreDescription.setText("身体健康超过 "+ (score+5) +"%的人");
         scoreScore.setText(String.valueOf(score));
