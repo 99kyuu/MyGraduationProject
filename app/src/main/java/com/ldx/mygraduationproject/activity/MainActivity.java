@@ -150,7 +150,7 @@ public class MainActivity extends BaseActivity  implements
                         startActivity(new Intent(MainActivity.this,AboutActivity.class));
                         break;
                     case "设置":
-//                        startActivity(new Intent(MainActivity.this,SetActivity.class));
+                        startActivity(new Intent(MainActivity.this,SetActivity.class));
                         break;
                 }
                 return true;
