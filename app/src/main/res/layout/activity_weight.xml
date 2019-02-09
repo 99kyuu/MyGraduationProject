@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    app:ignore="NamespaceTypo">
+    <TextView
+        android:id="@+id/height_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11.0dip"
+        android:includeFontPadding="false"
+        android:maxHeight="24.0sp"
+        android:text="165"
+        android:textColor="#cc222222"
+        android:textSize="24.0sp"/>
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <com.zkk.view.rulerview.RulerView
+            android:id="@+id/ruler_height"
+            android:layout_width="fill_parent"
+            android:layout_height="58.0dip"
+            android:layout_marginTop="24.0dip"/>
+
+        <ImageView
+            android:layout_width="14.0dip"
+            android:layout_height="46.0dip"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="11.0dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/user_info_ruler_height"/>
+    </RelativeLayout>
+
+
+</LinearLayout>

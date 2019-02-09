@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.activity.HeartRateActivity;
 import com.ldx.mygraduationproject.activity.SetPlanActivity;
+import com.ldx.mygraduationproject.activity.WeightActivty;
 import com.ldx.mygraduationproject.bean.UserStep;
 import com.ldx.mygraduationproject.constant.AppConfig;
 import com.ldx.mygraduationproject.db.StepDataDao;
@@ -39,9 +40,8 @@ import butterknife.OnClick;
 
 
 /**
- * @author: tao
- * @time: 2018/9/3
- * @e-mail: 1462320178@qq.com
+ * @author: ldx
+ * @time: 2019/2/9
  * @version: 1.0
  * @exception: 无
  * @explain: 说明
@@ -145,7 +145,7 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
             supportTv.setVisibility(View.VISIBLE);
         }
     }
-    @OnClick({R.id.running_count_card,R.id.heart_rate_card})
+    @OnClick({R.id.running_count_card,R.id.heart_rate_card,R.id.weight_card})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.running_count_card:
@@ -153,6 +153,8 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
                 break;
             case R.id.heart_rate_card:
                 mActivity.startActivity(new Intent(mActivity, HeartRateActivity.class));
+            case R.id.weight_card:
+                mActivity.startActivity(new Intent(mActivity, WeightActivty.class));
         }
     }
     @Override
