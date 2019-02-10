@@ -18,13 +18,17 @@
         android:orientation="vertical">
 
     </LinearLayout>
-
+    <TextView
+        android:id="@+id/heart_rate_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
     <TextView
         android:id="@+id/heart_rate_show"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dip"
-        android:layout_weight="1"></TextView>
+        android:layout_weight="1" />
 
     <TextView
         android:id="@+id/pixel_value"
@@ -32,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dip"
         android:layout_weight="1"
-        android:text="像素值"></TextView>
+        android:text="像素值" />
 
     <TextView
         android:id="@+id/pulse_count"
@@ -40,11 +44,19 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dip"
         android:layout_weight="1"
-        android:text="脉冲数"></TextView>
+        android:text="脉冲数" />
 
     <Button
+        android:text="@string/isOKforHeart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="addHeartRate" />
+        android:onClick="addHeartRate"
+        android:layout_marginLeft="@dimen/dp_36"
+        android:layout_marginRight="@dimen/dp_36"
+        android:layout_marginTop="@dimen/dp_40"
+        android:layout_marginBottom="@dimen/dp_25"
+        android:background="@drawable/green_button_bg"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/sp_15"/>
 </LinearLayout>
 

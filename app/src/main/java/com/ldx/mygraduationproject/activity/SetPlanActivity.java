@@ -29,9 +29,7 @@ import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
-
 import org.litepal.LitePal;
-import org.litepal.crud.DataSupport;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -50,12 +48,12 @@ import butterknife.OnClick;
 
 
 /**
- * Created by yuandl on 2016-10-18.
+ * Created by freeFreAme on 2019/1/28.
  */
 
 public class SetPlanActivity extends BaseActivity {
 
-//    private StepDataDao stepDataDao;
+
     private Handler getPlanHandler;
     private UserPlan userPlan = new UserPlan();
 
@@ -77,6 +75,7 @@ public class SetPlanActivity extends BaseActivity {
         builder.add("user_name",userName);
         final Request request = new Request.Builder()
                 .url(AppConfig.GET_USER_STEP_PLAN_BY_USERNAME)
+                .post(builder.build())
                 .build();
         Call call = mOkHttpClient.newCall(request);
         call.enqueue(new Callback() {
@@ -151,18 +150,41 @@ public class SetPlanActivity extends BaseActivity {
     @SuppressLint("HandlerLeak")
     @Override
     public void initData() {//获取锻炼计划
-//        if (NetUtils.isConnected(this) == true || NetUtils.isWifi(this) == true) {
-//            getUserPlanByNet("ldx");
-//            getPlanHandler = new Handler() {
-//                @Override
-//                public void handleMessage(Message msg) {
-//                    UserPlan userPlanNet = (UserPlan) msg.obj;
-////                    UserPlan userPlan = new UserPlan();
-//                    userPlan = userPlanNet;
-//                }
-//            };
-//        } else {
-            UserPlan userPlan = new UserPlan();
+
+        if (NetUtils.isConnected(this) == true) {
+
+            getUserPlanByNet("ldx");
+            getPlanHandler = new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    UserPlan userPlanNet = (UserPlan) msg.obj;
+                    userPlan = userPlanNet;
+                    Log.e("e5",""+userPlan.getIsRemind());
+                    Log.e("e6",""+userPlan.getRemindTime());
+                    Log.e("e7",""+userPlan.getPlanSteps());
+                    String planSteps = userPlan.getPlanSteps();
+                    String isRemind = userPlan.getIsRemind();
+                    String remindTime = userPlan.getRemindTime();
+                    if (!planSteps.isEmpty()) {
+                        if ("0".equals(planSteps)) {
+                            tv_step_number.setText("7000");//默认的计划是7000步
+                        } else {
+                            tv_step_number.setText(planSteps);//如果数据库有数据则将数据取出
+                        }
+                    }
+                    if (!isRemind.isEmpty()) {
+                        if ("0".equals(isRemind)) {
+                            cb_remind.setChecked(false);
+                        } else if ("1".equals(isRemind)) {
+                            cb_remind.setChecked(true);
+                        }
+                    }
+                    if (!remindTime.isEmpty()) {
+                        tv_remind_time.setText(remindTime);
+                    }
+                }
+            };
+        } else {
             if (LitePal.findLast(UserPlan.class) == null) {
                 Toast.makeText(this, "计划为空，已设为默认设置", Toast.LENGTH_SHORT).show();
             } else {
@@ -188,8 +210,8 @@ public class SetPlanActivity extends BaseActivity {
                     tv_remind_time.setText(remindTime);
                 }
             }
+        }
     }
-
     @OnClick({R.id.btn_save, R.id.tv_remind_time})
     public void onViewClicked(View view) {
         switch (view.getId()) {

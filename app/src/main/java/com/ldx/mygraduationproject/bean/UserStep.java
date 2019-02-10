@@ -14,13 +14,13 @@ public class UserStep extends LitePalSupport{
     @Column(unique = true,nullable = false)
     private Integer id;
     private String curDate; //当天的日期
-    private String steps;   //当天的步数
+    private String totalSteps;   //当天的步数
     public UserStep() {
     }
 
-    public UserStep(String curDate, String steps) {
+    public UserStep(String curDate, String totalSteps) {
         this.curDate = curDate;
-        this.steps = steps;
+        this.totalSteps = totalSteps;
     }
 
     public String getCurDate() {
@@ -32,11 +32,11 @@ public class UserStep extends LitePalSupport{
     }
 
     public String getSteps() {
-        return steps;
+        return totalSteps;
     }
 
-    public void setSteps(String steps) {
-        this.steps = steps;
+    public void setSteps(String totalSteps) {
+        this.totalSteps = totalSteps;
     }
 
     public Integer getId() {
@@ -51,7 +51,7 @@ public class UserStep extends LitePalSupport{
     public String toString() {
         return "UserStep{" +
                 "curDate='" + curDate + '\'' +
-                ", steps=" + steps +
+                ", steps=" + totalSteps +
                 '}';
     }
 }

@@ -6,7 +6,6 @@ import org.litepal.crud.LitePalSupport;
 /**
  * Created by freeFreAme on 2019/1/28.
  */
-
 public class UserPlan extends LitePalSupport {
     @Column(unique = true,nullable = false)
     private Integer id;

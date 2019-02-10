@@ -16,7 +16,8 @@
     <string name="height_cm">身高(cm)</string>
     <string name="save">保存</string>
     <string name="sex">性别</string>
-    <!--<string-array name="ages">-->
+    <string name="isOKforHeart">检测完成,点击保存</string>
+     <!--<string-array name="ages">-->
         <!--<item>婴儿 0</item>-->
         <!--<item>童年 1-10</item>-->
         <!--<item>少年 11-17</item>-->

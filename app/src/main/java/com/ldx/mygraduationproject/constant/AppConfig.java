@@ -21,12 +21,19 @@ public class AppConfig {
     public final static String RESET_VALID_CODE= SERVER_URL_PATH.concat("/security/reset_valid_code");
     public final static String RESET_USER_PASSWORD= SERVER_URL_PATH.concat("/security/reset_user_password");
     //步数类下的功能
+    //计划类
     public final static String GET_USER_STEP_PLAN_BY_USERNAME=SERVER_URL_PATH.concat("/stepplan/get_user_step_plan_by_username");
     public final static String ADD_USER_PLAN=SERVER_URL_PATH.concat("/stepplan/add_user_plan");
+    //步数类
+    public final static String FIND_BY_CURDATE=SERVER_URL_PATH.concat("/stepcount/find_by_curDate");
+    //心率类
+    public final static String ADD_USER_HEART_RATE=SERVER_URL_PATH.concat("/heartrate/add_user_heart_rate");
+    public final static String GET_USER_HEART_RATE_BY_USER_NAME=SERVER_URL_PATH.concat("/heartrate/get_user_heart_rate_by_user_name");
     //计步类
     public static final int MSG_FROM_CLIENT = 0;
     public static final int MSG_FROM_SERVER = 1;
-
+    //文章
+    public static final String GET_ALL_ARTICLE=SERVER_URL_PATH.concat("/article/get_all_article");
     /*是否自动登录*/
     public static String IS_AUTO_LOGIN = "IS_AUTO_LOGIN";
     /*自动登录用户名*/

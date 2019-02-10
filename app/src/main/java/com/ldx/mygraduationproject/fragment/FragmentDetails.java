@@ -1,5 +1,6 @@
 package com.ldx.mygraduationproject.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -10,14 +11,20 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.activity.HeartRateActivity;
 import com.ldx.mygraduationproject.activity.SetPlanActivity;
 import com.ldx.mygraduationproject.activity.WeightActivity;
+import com.ldx.mygraduationproject.bean.UserHeartRate;
+import com.ldx.mygraduationproject.bean.UserPlan;
 import com.ldx.mygraduationproject.bean.UserStep;
 import com.ldx.mygraduationproject.constant.AppConfig;
 import com.ldx.mygraduationproject.db.StepDataDao;
@@ -28,7 +35,14 @@ import com.ldx.mygraduationproject.view.BeforeOrAfterCalendarView;
 import com.ldx.mygraduationproject.view.LineChartView;
 import com.ldx.mygraduationproject.view.RunningView;
 import com.ldx.mygraduationproject.view.WeightView;
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +92,8 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
     LineChartView lineChartView;
     @BindView(R.id.weightView)
     WeightView weightView;
-
+    @BindView(R.id.mile_data)
+    TextView mile_data;
     /**
      * 屏幕长度和宽度
      */
@@ -87,8 +102,8 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
     private DecimalFormat df = new DecimalFormat("#.##");
     private List<UserStep> userStepList = new ArrayList<>();
     private StepDataDao stepDataDao;
-
-
+    private List<UserHeartRate> userHeartRateList;
+    private Handler getHeartRateHandler;
     @Override
     protected int setLayoutId() {
         return R.layout.fragment_details;
@@ -99,37 +114,46 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
 
     }
 
+    @SuppressLint("HandlerLeak")
     @Override
     protected void initData() {
         super.initData();
-
+         getHeartRateFromNet("ldx");
         //具体时间
         curSelDate = TimeUtil.getCurrentDate();
         //体重数据
         weightView.setPercent(66.45f);
         //  初始化折线数据
-        mItems = new ArrayList<>();
-        mItems.add(new LineChartView.ItemBean(1489507200, 23));
-        mItems.add(new LineChartView.ItemBean(1489593600, 88));
-        mItems.add(new LineChartView.ItemBean(1489680000, 60));
-        mItems.add(new LineChartView.ItemBean(1489766400, 50));
-        mItems.add(new LineChartView.ItemBean(1489852800, 70));
-        mItems.add(new LineChartView.ItemBean(1489939200, 10));
-        mItems.add(new LineChartView.ItemBean(1490025600, 33));
-        mItems.add(new LineChartView.ItemBean(1490112000, 44));
-        mItems.add(new LineChartView.ItemBean(1490198400, 99));
-        mItems.add(new LineChartView.ItemBean(1490284800, 17));
 
-        shadeColors= new int[]{
-                Color.argb(100, 161,216,139), Color.argb(55, 183,235,139),
-                Color.argb(20, 221,249,197)};
+         getHeartRateHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                userHeartRateList = (List<UserHeartRate>)msg.obj;
+                mItems = new ArrayList<>();
+                mItems.add(new LineChartView.ItemBean(1489507200,Integer.parseInt(userHeartRateList.get(0).getUserHeartRate())));
+                mItems.add(new LineChartView.ItemBean(1489593600,Integer.parseInt(userHeartRateList.get(1).getUserHeartRate())));
+                mItems.add(new LineChartView.ItemBean(1489680000,Integer.parseInt(userHeartRateList.get(2).getUserHeartRate())));
+                mItems.add(new LineChartView.ItemBean(1489766400, Integer.parseInt(userHeartRateList.get(3).getUserHeartRate())));
+                mItems.add(new LineChartView.ItemBean(1489852800, Integer.parseInt(userHeartRateList.get(4).getUserHeartRate())));
+                mItems.add(new LineChartView.ItemBean(1489939200, Integer.parseInt(userHeartRateList.get(5).getUserHeartRate())));
+                mItems.add(new LineChartView.ItemBean(1490025600, Integer.parseInt(userHeartRateList.get(6).getUserHeartRate())));
+//                mItems.add(new LineChartView.ItemBean(1490112000, Integer.parseInt(userHeartRateList.get(6).getUserHeartRate())));
+//                mItems.add(new LineChartView.ItemBean(1490198400, Integer.parseInt(userHeartRateList.get(1).getUserHeartRate())));
+//                mItems.add(new LineChartView.ItemBean(1490284800, Integer.parseInt(userHeartRateList.get(1).getUserHeartRate())));
+                shadeColors= new int[]{
+                        Color.argb(100, 161,216,139), Color.argb(55, 183,235,139),
+                        Color.argb(20, 221,249,197)};
 
-        //  设置折线数据
-        lineChartView.setItems(mItems);
-        //  设置渐变颜色
-        lineChartView.setShadeColors(shadeColors);
-        //  开启动画
-        lineChartView.startAnim(lineChartView,2000);
+                //  设置折线数据
+                lineChartView.setItems(mItems);
+                //  设置渐变颜色
+                lineChartView.setShadeColors(shadeColors);
+                //  开启动画
+                lineChartView.startAnim(lineChartView,2000);
+            }
+        };
+
+
         //用户历史步数
 
 //        放到获取宽度之后
@@ -153,8 +177,10 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
                 break;
             case R.id.heart_rate_card:
                 mActivity.startActivity(new Intent(mActivity, HeartRateActivity.class));
+                break;
             case R.id.weight_card:
                 mActivity.startActivity(new Intent(mActivity, WeightActivity.class));
+                break;
         }
     }
     @Override
@@ -256,6 +282,7 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
             totalKmTv.setText(countTotalKM(steps));
             //跑步数据
             runningView.setCurrentCount(0, 10000, steps);
+            mile_data.setText(countTotalKM(steps));
         } else {
             //获取全局的步数
             totalStepsTv.setText("0");
@@ -294,7 +321,6 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
             // TODO: 2019/1/24在这里获取历史记录条数，当条数达到7条或以上时，就开始删除第七天之前的数据,暂未实现
 
         }
-
     }
 
     @Override
@@ -316,7 +342,35 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
         }
         return false;
     }
+    /***
+     * 从云端获取历史心率数据的部分*/
+    private void getHeartRateFromNet(String userName){
+        OkHttpClient mOkHttpClient = new OkHttpClient();
+        FormEncodingBuilder builder = new FormEncodingBuilder();
+        builder.add("user_name",userName);
+        final Request request = new Request.Builder()
+                .url(AppConfig.GET_USER_HEART_RATE_BY_USER_NAME)
+                .post(builder.build())
+                .build();
+        Call call = mOkHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
 
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                String responseStr = response.body().string();
+                List<UserHeartRate> userHeartRates=new ArrayList<>();
+                userHeartRates = com.alibaba.fastjson.JSONArray.parseArray(responseStr, UserHeartRate.class);
+                Message msg = getHeartRateHandler.obtainMessage();
+                msg.obj = userHeartRates;
+                getHeartRateHandler.sendMessage(msg);
+
+            }
+        });
+    }
 
     @Override
     public void onDestroy() {

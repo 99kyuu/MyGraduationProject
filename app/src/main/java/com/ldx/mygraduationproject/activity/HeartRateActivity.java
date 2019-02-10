@@ -7,6 +7,9 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -38,7 +41,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ldx.mygraduationproject.R;
+import com.ldx.mygraduationproject.constant.AppConfig;
 import com.ldx.mygraduationproject.utils.ImageProcessing;
+import com.ldx.mygraduationproject.utils.TimeUtil;
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
 /**
  * Created by freeFreAme on 2019/2/5.
@@ -79,11 +90,12 @@ public class HeartRateActivity extends Activity {
     private static TextView pixel_value = null;
     private static TextView pulse_count = null;
     private static WakeLock wakeLock = null;
+    private static TextView heart_rate_text=null;
     private static int averageIndex = 0;
     private static final int averageArraySize = 4;
     private static final int[] averageArray = new int[averageArraySize];
     private String heartbeatValue;
-
+    private String heartbeatValueShow;
     /**
      * 类型枚举
      * @author liuyazhuang
@@ -122,12 +134,12 @@ public class HeartRateActivity extends Activity {
 
     }
     public void addHeartRate(View view){
-        heartbeatValue=heart_rate_show.getText().toString();
+        String CURRENT_DATE= TimeUtil.getCurrentDate();
+        heartbeatValueShow=heart_rate_show.getText().toString();
+        heartbeatValue=heart_rate_text.getText().toString();
         if (heartbeatValue!= null) {
-            finish();
-            Toast.makeText(context, ""+heartbeatValue, Toast.LENGTH_SHORT).show();
-
-
+            Toast.makeText(context, ""+heartbeatValueShow, Toast.LENGTH_SHORT).show();
+            saveHeartRateToNet("ldx",heartbeatValue,CURRENT_DATE);
         }
 
     }
@@ -192,6 +204,7 @@ public class HeartRateActivity extends Activity {
         previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         //		image = findViewById(R.id.image);
         heart_rate_show =  findViewById(R.id.heart_rate_show);
+        heart_rate_text=findViewById(R.id.heart_rate_text);
         pixel_value =  findViewById(R.id.pixel_value);
         pulse_count =  findViewById(R.id.pulse_count);
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
@@ -354,6 +367,7 @@ public class HeartRateActivity extends Activity {
      * 通过获取手机摄像头的参数来实时动态计算平均像素值、脉冲数，从而实时动态计算心率值。
      */
     private static PreviewCallback previewCallback = new PreviewCallback() {
+        @SuppressLint("SetTextI18n")
         public void onPreviewFrame(byte[] data, Camera cam) {
             if (data == null)
                 throw new NullPointerException();
@@ -436,10 +450,10 @@ public class HeartRateActivity extends Activity {
                     }
                 }
                 int beatsAvg = (beatsArrayAvg / beatsArrayCnt);
-                heart_rate_show.setText("您的的心率是"+String.valueOf(beatsAvg)+"  zhi:"+String.valueOf(beatsArray.length)
-                        +"    "+String.valueOf(beatsIndex)+"    "+String.valueOf(beatsArrayAvg)+"    "+String.valueOf(beatsArrayCnt));
-
-
+                heart_rate_show.setText("您的的心率是"+String.valueOf(beatsAvg));
+                heart_rate_text.setText(String.valueOf(beatsAvg));
+//                +"  zhi:"+String.valueOf(beatsArray.length)
+//                        +"    "+String.valueOf(beatsIndex)+"    "+String.valueOf(beatsArrayAvg)+"    "+String.valueOf(beatsArrayCnt)
                 //获取系统时间（ms）
                 startTime = System.currentTimeMillis();
                 beats = 0;
@@ -507,4 +521,45 @@ public class HeartRateActivity extends Activity {
         }
         return result;
     }
+    private void saveHeartRateToNet(String userName,String HeartRate,String CurDate){
+        OkHttpClient mOkHttpClient = new OkHttpClient();
+        FormEncodingBuilder builder = new FormEncodingBuilder();
+        builder.add("user_name", userName);
+        builder.add("cur_date", CurDate);
+        builder.add("heart_rate", HeartRate);
+        final Request request = new Request.Builder()
+                .url(AppConfig.ADD_USER_HEART_RATE)
+                .post(builder.build())
+                .build();
+        Call call = mOkHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                String responseStr = response.body().string();
+                Map<String, Object> r = new HashMap<>();
+                r = com.alibaba.fastjson.JSONArray.parseObject(responseStr, HashMap.class);
+                Message msg = addHeartRateHandler.obtainMessage();
+                msg.obj = r;
+                addHeartRateHandler.sendMessage(msg);
+
+            }
+        });
+    }
+
+    @SuppressLint("HandlerLeak")
+    private Handler addHeartRateHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            Map<String, Object> r = (HashMap) msg.obj;
+            if ((Integer) r.get("code") == 1) {
+                Toast.makeText(HeartRateActivity.this, "" + r.get("msg"), Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }
+    };
 }

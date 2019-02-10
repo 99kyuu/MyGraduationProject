@@ -1,5 +1,6 @@
 package com.ldx.mygraduationproject.service;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -23,31 +24,41 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 
 
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.activity.MainActivity;
+import com.ldx.mygraduationproject.activity.SetPlanActivity;
 import com.ldx.mygraduationproject.bean.User;
+import com.ldx.mygraduationproject.bean.UserPlan;
 import com.ldx.mygraduationproject.bean.UserStep;
 import com.ldx.mygraduationproject.constant.AppConfig;
 import com.ldx.mygraduationproject.db.StepDataDao;
+import com.ldx.mygraduationproject.utils.NetUtils;
 import com.ldx.mygraduationproject.utils.TimeUtil;
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
-import org.litepal.LitePal;
 
+
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by ldx
  * Date : 2019/1/29
- * To do :
  */
 
 public class StepService extends Service implements SensorEventListener {
     public static final String TAG = "StepService";
-
+    //Handler
+    private Handler getCurDateStepHandler;
     //当前日期
     private static String CURRENT_DATE;
     //当前步数
@@ -115,13 +126,13 @@ public class StepService extends Service implements SensorEventListener {
         nfIntent = new Intent(this, MainActivity.class);
         builder.setContentIntent(PendingIntent.getActivity(this, 0, nfIntent, 0)) // 设置PendingIntent
                 .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.drawable.launch_icon)) // 设置下拉列表中的图标(大图标)
-                .setContentTitle("今日步数"+CURRENT_STEP+"步") // 设置下拉列表里的标题
+                .setContentTitle("今日步数" + CURRENT_STEP + "步") // 设置下拉列表里的标题
                 .setSmallIcon(R.drawable.launch_icon) // 设置状态栏内的小图标
                 .setContentText("加油，要记得勤加运动"); // 设置上下文内容
         // 获取构建好的Notification
         Notification stepNotification = builder.build();
 
-        notificationManager.notify(110,stepNotification);
+        notificationManager.notify(110, stepNotification);
         // 参数一：唯一的通知标识；参数二：通知消息。
         startForeground(110, stepNotification);// 开始前台服务
 
@@ -218,19 +229,36 @@ public class StepService extends Service implements SensorEventListener {
     /**
      * 初始化当天数据
      */
+    @SuppressLint("HandlerLeak")
     private void initTodayData() {
         //获取当前时间
         CURRENT_DATE = TimeUtil.getCurrentDate();
-        //获取数据库
-        stepDataDao = new StepDataDao(getApplicationContext());
-        //获取当天的数据，用于展示
-        UserStep userStep = stepDataDao.getCurDataByDate(CURRENT_DATE);
-        //为空则说明还没有该天的数据，有则说明已经开始当天的计步了
-        if (userStep == null) {
-            CURRENT_STEP = 0;
-        } else {
-            CURRENT_STEP = Integer.parseInt(userStep.getSteps());
-        }
+
+//        if (NetUtils.isConnected(getApplicationContext()) == true) {
+//            getUserStepByNet(CURRENT_DATE,"ldx");
+//            getCurDateStepHandler = new Handler() {
+//                @Override
+//                public void handleMessage(Message msg) {
+//                    UserStep userStep = (UserStep) msg.obj;
+//                    if (userStep == null) {
+//                        CURRENT_STEP = 0;
+//                    } else {
+//                        CURRENT_STEP = Integer.parseInt(userStep.getSteps());
+//                    }
+//                }
+//            };
+//        } else {
+            //获取数据库
+            stepDataDao = new StepDataDao(getApplicationContext());
+            //获取当天的数据，用于展示
+            UserStep userStep = stepDataDao.getCurDataByDate(CURRENT_DATE);
+            //为空则说明还没有该天的数据，有则说明已经开始当天的计步了
+            if (userStep == null) {
+                CURRENT_STEP = 0;
+            } else {
+                CURRENT_STEP = Integer.parseInt(userStep.getSteps());
+            }
+//        }
     }
 
 
@@ -370,15 +398,50 @@ public class StepService extends Service implements SensorEventListener {
 
         builder.setContentIntent(PendingIntent.getActivity(this, 0, nfIntent, 0)) // 设置PendingIntent
                 .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.drawable.launch_icon)) // 设置下拉列表中的图标(大图标)
-                .setContentTitle("今日步数"+CURRENT_STEP+"步") // 设置下拉列表里的标题
+                .setContentTitle("今日步数" + CURRENT_STEP + "步") // 设置下拉列表里的标题
                 .setSmallIcon(R.mipmap.ic_launcher) // 设置状态栏内的小图标
                 .setContentText("加油，要记得勤加运动"); // 设置上下文内容　
 
         // 获取构建好的Notification
         Notification stepNotification = builder.build();
         //调用更新
-        notificationManager.notify(110,stepNotification);
+        notificationManager.notify(110, stepNotification);
     }
+
+    /**
+     * 网络连接部分
+     **/
+    public void getUserStepByNet(String currentDate,String userName) {
+        OkHttpClient mOkHttpClient = new OkHttpClient();
+        FormEncodingBuilder builder = new FormEncodingBuilder();
+        builder.add("cur_date", currentDate);
+        builder.add("user_name",userName);
+        final Request request = new Request.Builder()
+                .url(AppConfig.FIND_BY_CURDATE)
+                .post(builder.build())
+                .build();
+        Call call = mOkHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                String responseStr = response.body().string();
+                UserStep userStep= new UserStep();
+                userStep = com.alibaba.fastjson.JSONArray.parseObject(responseStr, UserStep.class);
+                System.out.println("11111"+responseStr);
+                Log.e("eeee1",""+responseStr);
+                Message msg = getCurDateStepHandler.obtainMessage();
+                msg.obj = userStep;
+                getCurDateStepHandler.sendMessage(msg);
+
+            }
+        });
+    }
+
 
 
     @Override

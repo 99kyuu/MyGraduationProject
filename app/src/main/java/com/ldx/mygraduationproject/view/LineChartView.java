@@ -41,8 +41,8 @@ public class LineChartView extends View {
     private float yInterval;  //  y轴坐标间隔
     private float xInterval;  //  x轴坐标间隔
 
-    private String startTime = "2017-03-15";
-    private String endTime = "2017-03-24";
+    private String startTime = "前7天数据";
+    private String endTime = "今天";
     private int timeWidth;  //  日期宽度
 
     private List<ItemBean> mItems;//  折线数据
