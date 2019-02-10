@@ -160,20 +160,15 @@ public class FragmentQuestion extends BaseFragment {
         getArticleFromNet();
 
 
-        fragmentHealthBanner.setOnBannerListener(new OnBannerListener() {
+        getArticlesHandler = new Handler() {
             @Override
-            public void OnBannerClick(final int position) {
-//                Article bean =com.alibaba.fastjson.JSONArray.parseObject(AppConfig.DATE,Article.class);
-                if (getArticlesHandler == null) {
+            public void handleMessage(Message msg) {
 
-                        Toast.makeText(mActivity, "11", Toast.LENGTH_SHORT).show();
-
-                }
-                getArticlesHandler = new Handler() {
+                articleArrayList = (List<Article>) msg.obj;
+                fragmentHealthBanner.setOnBannerListener(new OnBannerListener() {
                     @Override
-                    public void handleMessage(Message msg) {
-
-                        articleArrayList = (List<Article>) msg.obj;
+                    public void OnBannerClick(final int position) {
+//                Article bean =com.alibaba.fastjson.JSONArray.parseObject(AppConfig.DATE,Article.class);
                         switch (position) {
 
                             case 0:
@@ -202,11 +197,10 @@ public class FragmentQuestion extends BaseFragment {
                         bundle.putString(AppConfig.WEB_INTENT_CONTENT, article.getArticleUrl());
                         intent.putExtra(AppConfig.WEB_INTENT, bundle);
                         mActivity.startActivity(intent);
-
                     }
-                };
+                });
             }
-        });
+        };
 
 
 //            }
