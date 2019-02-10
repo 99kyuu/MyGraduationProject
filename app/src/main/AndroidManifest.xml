@@ -48,7 +48,7 @@
         <activity android:name=".activity.HeartRateActivity" android:theme="@style/dialogStyle"/>
         <activity android:name=".activity.AboutActivity"/>
         <activity android:name=".activity.SetActivity"/>
-        <activity android:name=".activity.WeightActivty"/>
+        <activity android:name=".activity.WeightActivity" android:theme="@style/dialogStyle"/>
         <!-- 设置每日步数 -->
         <activity android:name=".activity.SetPlanActivity" android:theme="@style/dialogStyle"/>
         <!-- 计步功能 -->

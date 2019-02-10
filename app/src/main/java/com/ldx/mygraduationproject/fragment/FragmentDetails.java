@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.activity.HeartRateActivity;
 import com.ldx.mygraduationproject.activity.SetPlanActivity;
-import com.ldx.mygraduationproject.activity.WeightActivty;
+import com.ldx.mygraduationproject.activity.WeightActivity;
 import com.ldx.mygraduationproject.bean.UserStep;
 import com.ldx.mygraduationproject.constant.AppConfig;
 import com.ldx.mygraduationproject.db.StepDataDao;
@@ -154,7 +154,7 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
             case R.id.heart_rate_card:
                 mActivity.startActivity(new Intent(mActivity, HeartRateActivity.class));
             case R.id.weight_card:
-                mActivity.startActivity(new Intent(mActivity, WeightActivty.class));
+                mActivity.startActivity(new Intent(mActivity, WeightActivity.class));
         }
     }
     @Override

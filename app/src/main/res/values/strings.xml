@@ -5,25 +5,28 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="running_count">记步</string>
     <string name="weight">体重</string>
+    <string name="weight_kg">体重(kg)</string>
     <string name="heart_rate">心率</string>
     <string name="max_heart_rate">最快</string>
     <string name="min_heart_rate">最慢</string>
     <string name="mile">里程</string>
     <string name="exercise_plan">锻炼计划</string>
     <string name="save_plan">保存计划</string>
+    <string name="height">身高</string>
+    <string name="height_cm">身高(cm)</string>
+    <string name="save">保存</string>
+    <string name="sex">性别</string>
+    <!--<string-array name="ages">-->
+        <!--<item>婴儿 0</item>-->
+        <!--<item>童年 1-10</item>-->
+        <!--<item>少年 11-17</item>-->
+        <!--<item>青年 18-30</item>-->
+        <!--<item>中年 30-60</item>-->
+        <!--<item>老年 >60</item>-->
+    <!--</string-array>-->
 
-
-    <string-array name="ages">
-        <item>婴儿 0</item>
-        <item>童年 1-10</item>
-        <item>少年 11-17</item>
-        <item>青年 18-30</item>
-        <item>中年 30-60</item>
-        <item>老年 >60</item>
-    </string-array>
-
-    <string-array name="sexs">
-        <item>男</item>
-        <item>女</item>
-    </string-array>
+    <!--<string-array name="sexs">-->
+        <!--<item>男</item>-->
+        <!--<item>女</item>-->
+    <!--</string-array>-->
 </resources>

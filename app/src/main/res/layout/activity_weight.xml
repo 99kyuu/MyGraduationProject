@@ -1,38 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    app:ignore="NamespaceTypo">
-    <TextView
-        android:id="@+id/height_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="11.0dip"
-        android:includeFontPadding="false"
-        android:maxHeight="24.0sp"
-        android:text="165"
-        android:textColor="#cc222222"
-        android:textSize="24.0sp"/>
-    <RelativeLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/dp_280"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="visible">
 
-        <com.zkk.view.rulerview.RulerView
-            android:id="@+id/ruler_height"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="23.0dip"
+            android:includeFontPadding="false"
+            android:maxHeight="@dimen/sp_16"
+            android:text="@string/sex"
+            android:textColor="#cc222222"
+            android:textSize="@dimen/sp_15" />
+
+        <CheckBox
+            android:id="@+id/btn_sex"
+            android:layout_width="180dp"
+            android:layout_height="58dp"
+            android:layout_marginTop="@dimen/dp_11"
+            android:background="@drawable/user_sex_selector"
+            android:button="@null"
+            android:gravity="center" />
+
+        <View
             android:layout_width="fill_parent"
-            android:layout_height="58.0dip"
-            android:layout_marginTop="24.0dip"/>
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginBottom="@dimen/dp_23"
+            android:layout_marginTop="27.0dip"
+            android:background="@drawable/register_info_line" />
 
-        <ImageView
-            android:layout_width="14.0dip"
-            android:layout_height="46.0dip"
-            android:layout_centerHorizontal="true"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:maxHeight="@dimen/sp_17"
+            android:text="@string/height_cm"
+            android:textColor="#cc222222"
+            android:textSize="@dimen/sp_15" />
+
+        <TextView
+            android:id="@+id/height_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="11.0dip"
-            android:scaleType="fitXY"
-            android:src="@drawable/user_info_ruler_height"/>
-    </RelativeLayout>
+            android:includeFontPadding="false"
+            android:maxHeight="24.0sp"
+            android:text="175"
+            android:textColor="#cc222222"
+            android:textSize="24.0sp" />
 
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <com.zkk.view.rulerview.RulerView
+                android:id="@+id/ruler_height"
+                android:layout_width="fill_parent"
+                android:layout_height="58.0dip"
+                android:layout_marginTop="24.0dip"
+                app:alphaEnable="true"
+                app:lineColor="@color/gray"
+                app:lineMaxHeight="40dp"
+                app:lineMidHeight="30dp"
+                app:lineMinHeight="20dp"
+                app:lineSpaceWidth="10dp"
+                app:lineWidth="2dip"
+                app:maxValue="250.0"
+                app:minValue="80.0"
+                app:perValue="1"
+                app:selectorValue="165.0"
+                app:textColor="@color/black" />
+
+            <ImageView
+                android:layout_width="14.0dip"
+                android:layout_height="46.0dip"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="11.0dip"
+                android:scaleType="fitXY"
+                android:src="@drawable/user_info_ruler_height" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1.0dip"
+            android:layout_marginBottom="23.0dip"
+            android:layout_marginTop="27.0dip"
+            android:background="@drawable/register_info_line" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:maxHeight="17.0sp"
+            android:text="@string/weight_kg"
+            android:textColor="#cc222222"
+            android:textSize="15.0sp" />
+
+        <TextView
+            android:id="@+id/weight_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="11.0dip"
+            android:includeFontPadding="false"
+            android:maxHeight="24.0sp"
+            android:text="55"
+            android:textColor="#cc222222"
+            android:textSize="24.0sp" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0.0dip"
+            android:layout_weight="1.0">
+
+            <com.zkk.view.rulerview.RulerView
+                android:id="@+id/ruler_weight"
+                android:layout_width="fill_parent"
+                android:layout_height="58.0dip"
+                android:layout_marginTop="24.0dip"
+                app:alphaEnable="true"
+                app:lineColor="@color/gray"
+                app:textColor="@color/black" />
+
+            <ImageView
+                android:layout_width="14.0dip"
+                android:layout_height="46dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="6.0dip"
+                android:scaleType="fitXY"
+                android:src="@drawable/user_info_ruler_weight" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="164dp"
+            android:layout_height="38dp"
+            android:layout_marginBottom="@dimen/dp_25"
+            android:layout_marginLeft="@dimen/dp_36"
+            android:layout_marginRight="@dimen/dp_36"
+            android:layout_marginTop="@dimen/dp_40"
+            android:background="@drawable/green_button_bg"
+            android:text="@string/save"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/sp_21" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -15,7 +15,7 @@ public class AppConfig {
 //    192.168.124.9
     //192.168.1.104
     //用户类下功能 /userApi
-    public final static String SERVER_URL_PATH = "http://192.168.124.9:8100/api";
+    public final static String SERVER_URL_PATH = "http://192.168.1.104:8100/api";
     public final static String REGISTER_NEW_USER= SERVER_URL_PATH.concat("/security/register_new_user");
     public final static String USER_LOGIN= SERVER_URL_PATH.concat("/security/user_login");
     public final static String RESET_VALID_CODE= SERVER_URL_PATH.concat("/security/reset_valid_code");
