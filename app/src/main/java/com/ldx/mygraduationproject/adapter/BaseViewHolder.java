@@ -20,7 +20,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         itemView.setOnClickListener(this);
     }
 
-    protected <T extends View> T findView(int id) {
+    public <T extends View> T findView(int id) {
 
         View view = viewSparseArray.get(id);
         if (view == null) {

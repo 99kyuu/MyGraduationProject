@@ -144,7 +144,7 @@ public class MainActivity extends BaseActivity  implements
                         }
                         break;
                     case "关注":
-//                        startActivity(new Intent(MainActivity.this,CollectionActivity.class));
+                        startActivity(new Intent(MainActivity.this,CollectionActivity.class));
                         break;
                     case "关于":
                         startActivity(new Intent(MainActivity.this,AboutActivity.class));

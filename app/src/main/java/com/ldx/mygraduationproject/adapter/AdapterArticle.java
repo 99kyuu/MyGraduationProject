@@ -29,7 +29,6 @@ import java.util.List;
  */
 public class AdapterArticle extends SimpleAdapter<Article> {
 
-    private String[] labels = {"健康时报","流行疾病","医学热点","疾病预防"};
 
     public AdapterArticle(Context context){
         super(context, R.layout.item_article);
@@ -59,7 +58,7 @@ public class AdapterArticle extends SimpleAdapter<Article> {
         itemArticleTime = viewHolder.findView(R.id.item_article_time);
         itemArticleTime.setText(article.getCreateDate());
         itemArticleLabel = viewHolder.findView(R.id.item_article_label);
-        itemArticleLabel.setText(labels[Integer.parseInt(article.getClasses())]);
+//        itemArticleLabel.setText(labels[Integer.parseInt(article.getClasses())]);
         itemArticleRelative = viewHolder.findView(R.id.item_article_relative);
         itemArticleRelative.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -38,7 +38,6 @@ import butterknife.BindView;
 /**
  * Created by freeFreAme on 2019/1/22.
  */
-
 public class FragmentQuestion extends BaseFragment {
     @BindView(R.id.fragment_health_banner)
     Banner fragmentHealthBanner;
@@ -50,15 +49,14 @@ public class FragmentQuestion extends BaseFragment {
     Toolbar fragmentHealthToolbar;
     @BindView(R.id.fragment_health_article_rv)
     RecyclerView fragmentHealthArticleRv;
-    @BindView(R.id.fragment_health_tab)
-    TabLayout fragmentHealthTab;
+
     private Handler getArticlesHandler;
     private List<Article> articleArrayList;
     private AdapterArticle adapterArticle;
-    private ArrayList<Article> beans0 = null;
-    private ArrayList<Article> beans1 = null;
-    private ArrayList<Article> beans2 = null;
-    private ArrayList<Article> beans3 = null;
+    private List<Article> beans0 = null;
+    private List<Article> beans1 = null;
+    private List<Article> beans2 = null;
+    private List<Article> beans3 = null;
     private Article article = null;
 
     @Override
@@ -76,64 +74,10 @@ public class FragmentQuestion extends BaseFragment {
         super.initView();
         setBanner();
         setFragmentHealthArticleRv();
-        setFragmentHealthTab();
+
     }
 
-    private void setFragmentHealthTab() {
-        fragmentHealthTab.addTab(fragmentHealthTab.newTab().setText("健康养生"));
-        fragmentHealthTab.addTab(fragmentHealthTab.newTab().setText("流行疾病"));
-        fragmentHealthTab.addTab(fragmentHealthTab.newTab().setText("医学热点"));
-        fragmentHealthTab.addTab(fragmentHealthTab.newTab().setText("疾病预防"));
-        fragmentHealthTab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                int index = tab.getPosition();
-                switch (index) {
-                    case 0:
-                        if (beans0 == null) {
-                            //获取数据的操作
-                            getData("0", "10", "0", 0);
-                        } else {
-//                            Log.i("FragmentHeath测试",beans0.toString());
-                            adapterArticle.setData(beans0);
-                        }
-                        break;
-                    case 1:
-                        if (beans1 == null) {
-                            //获取数据的操作
-                            getData("0", "10", "1", 1);
-                        } else {
-                            adapterArticle.setData(beans1);
-                        }
-                        break;
-                    case 2:
-                        if (beans2 == null) {
-                            getData("0", "10", "2", 2);
-                        } else {
-                            adapterArticle.setData(beans2);
-                        }
-                        break;
-                    case 3:
-                        if (beans3 == null) {
-                            getData("0", "10", "3", 3);
-                        } else {
-                            adapterArticle.setData(beans3);
-                        }
-                        break;
-                }
-            }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-    }
 
     @Override
     protected void setListener() {
@@ -175,7 +119,7 @@ public class FragmentQuestion extends BaseFragment {
                                 article = (articleArrayList.get(0));
                                 break;
                             case 1:
-                                article = com.alibaba.fastjson.JSONArray.parseObject(AppConfig.DATE2, Article.class);
+                                article = (articleArrayList.get(0));
                                 break;
                             case 2:
                                 article = com.alibaba.fastjson.JSONArray.parseObject(AppConfig.DATE2, Article.class);
@@ -201,59 +145,41 @@ public class FragmentQuestion extends BaseFragment {
                 });
             }
         };
-
-
-//            }
-//        };
-
     }
 
     private void setFragmentHealthArticleRv() {
         adapterArticle = new AdapterArticle(mActivity, null);
         fragmentHealthArticleRv.setLayoutManager(new LinearLayoutManager(mActivity));
         fragmentHealthArticleRv.setAdapter(adapterArticle);
-        getData("0", "10", "0", 4);
+        getData( 1);
     }
 
-    public void getData(String page, String size, final String clazz, final int mode) {
-//        UserBean bean = MedicalCareApplication.getInstance().getUserBean();
-//        disposable = NetworkClient.getUserApi()
-//                .getArticleByClazzPage(bean.getAutoSessionToken(), page, size, clazz)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Consumer<ArticleResponseBean>() {
-//                    @Override
-//                    public void accept(@NonNull ArticleResponseBean bean) throws Exception {
-//                        switch (mode) {
-//                            case 0:
-//                                adapterArticle.setData(beans0);
-//                                break;
-//                            case 1:
-//                                beans1 = (ArrayList<Article>) bean.getData().getContent();
-//                                adapterArticle.setData(beans1);
-//                                break;
-//                            case 2:
-//                                beans2 = (ArrayList<Article>) bean.getData().getContent();
-//                                adapterArticle.setData(beans2);
-//                                break;
-//                            case 3:
-//                                beans3 = (ArrayList<Article>) bean.getData().getContent();
-//                                adapterArticle.setData(beans3);
-//                                break;
-//                            case 4:
-//                                beans0 = (ArrayList<Article>) bean.getData().getContent();
-//                                adapterArticle.setData(beans0);
-//                                break;
-//                        }
-//                    }
-//                }, new Consumer<Throwable>() {
-//                    @Override
-//                    public void accept(@NonNull Throwable throwable) throws Exception {
-//                        Log.d("getArticleByClazzPage错误", throwable.toString());
-//                    }
-//                });
-//    }
+    public void getData( final int mode) {
+
+
+        switch (mode) {
+            case 0:
+                adapterArticle.setData(beans0);
+                break;
+            case 1:
+                beans1 = articleArrayList;
+                adapterArticle.setData(beans1);
+                break;
+//            case 2:
+//                beans2 = articleArrayList;
+//                adapterArticle.setData(beans2);
+//                break;
+//            case 3:
+//                beans3 = articleArrayList;
+//                adapterArticle.setData(beans3);
+//                break;
+//            case 4:
+//                beans0 = (ArrayList<Article>) bean.getData().getContent();
+//                adapterArticle.setData(beans0);
+//                break;
+        }
     }
+
 
     @Override
     protected void initImmersionBar() {
