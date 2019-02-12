@@ -1,0 +1,19 @@
+language: android
+
+jdk: oraclejdk8
+
+android:
+  components:
+    - tools
+    - android-24
+    - build-tools-24.0.2
+    - platform-tools
+
+script: ./gradlew build
+
+after_success:
+  - for name in $(find $TRAVIS_BUILD_DIR -name '*.apk'); do ls -hl $name;  done
+  - date
+
+after_failure:
+  for name in $(find $TRAVIS_BUILD_DIR -name lint-results*.xml); do echo $name; cat -n $name; done
