@@ -88,10 +88,10 @@ public class FragmentLogin extends BaseFragment {
 
     @Override
     protected void initView() {
-//        if (isAuto){
-//            username = (String) SPUtlis.get(mActivity,MedicalCareConstant.AUTO_LOGIN_NAME,"");
-//            loginUsername.setText(username);
-//        }
+        if (isAuto){
+            userName = (String) SPUtlis.get(mActivity,AppConfig.AUTO_LOGIN_NAME,"");
+            loginUsername.setText(userName);
+        }
     }
 
 

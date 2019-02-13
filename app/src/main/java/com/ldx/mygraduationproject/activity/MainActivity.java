@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.os.Build;
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.adapter.BaseFragmentStatePagerAdapter;
+import com.ldx.mygraduationproject.constant.AppConfig;
 import com.ldx.mygraduationproject.utils.LocalReceiver;
+import com.ldx.mygraduationproject.utils.SPUtlis;
 import com.ldx.mygraduationproject.utils.StringUtils;
 
 
@@ -115,8 +117,8 @@ public class MainActivity extends BaseActivity  implements
         headerUserName = view.findViewById(R.id.header_user_name);
         headerProgress = view.findViewById(R.id.header_progress);
         headerProgress.setProgress(score);
-        headerUserName.setText("11"==null?"未登录":"ldx");
-        headerUserHealthState.setText("11");
+        headerUserName.setText((String) SPUtlis.get(MainActivity.this, AppConfig.AUTO_LOGIN_NAME,""));
+        headerUserHealthState.setText("未知");
         headerUserHealthNumber.setText(String.valueOf(score));
 
 
@@ -124,7 +126,7 @@ public class MainActivity extends BaseActivity  implements
         myphoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                startActivity(new Intent(MainActivity.this,LoginActivity.class));
                 finish();
             }
         });
@@ -133,7 +135,7 @@ public class MainActivity extends BaseActivity  implements
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.toString()){
-                    case "小病自诊":
+                    case "自我检测":
                         startActivity(new Intent(MainActivity.this,ExaminationActivity.class));
                         break;
                     case "体检单":

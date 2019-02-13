@@ -15,7 +15,6 @@ import org.litepal.LitePal;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class CollectionActivity extends BaseActivity {
@@ -26,6 +25,7 @@ public class CollectionActivity extends BaseActivity {
     Toolbar toolbar;
     @BindView(R.id.collection_rv)
     RecyclerView collectionRv;
+
 
     @Override
     protected int setLayoutId() {

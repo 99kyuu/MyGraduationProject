@@ -17,6 +17,9 @@
     <string name="save">保存</string>
     <string name="sex">性别</string>
     <string name="isOKforHeart">检测完成,点击保存</string>
+    <string name="update_pwd">修改密码</string>
+    <string name="set">设置界面</string>
+    <string name="version">版本：1.0（2019.02.12）</string>
      <!--<string-array name="ages">-->
         <!--<item>婴儿 0</item>-->
         <!--<item>童年 1-10</item>-->

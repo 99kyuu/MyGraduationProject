@@ -35,9 +35,8 @@ public class AdapterArticle extends SimpleAdapter<Article> {
     }
 
     private ImageView itemArticleImage;
-    private ImageView itemArticleCircular;
     private TextView itemArticleLabel;
-    private CardView itemArticleCard;
+
     private TextView itemArticleTitle;
     private TextView itemArticleContent;
     private TextView itemArticleTime;
@@ -58,7 +57,7 @@ public class AdapterArticle extends SimpleAdapter<Article> {
         itemArticleTime = viewHolder.findView(R.id.item_article_time);
         itemArticleTime.setText(article.getCreateDate());
         itemArticleLabel = viewHolder.findView(R.id.item_article_label);
-//        itemArticleLabel.setText(labels[Integer.parseInt(article.getClasses())]);
+
         itemArticleRelative = viewHolder.findView(R.id.item_article_relative);
         itemArticleRelative.setOnClickListener(new View.OnClickListener() {
             @Override

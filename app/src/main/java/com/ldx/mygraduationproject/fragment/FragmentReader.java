@@ -38,7 +38,7 @@ import butterknife.BindView;
 /**
  * Created by freeFreAme on 2019/1/22.
  */
-public class FragmentQuestion extends BaseFragment {
+public class FragmentReader extends BaseFragment {
     @BindView(R.id.fragment_health_banner)
     Banner fragmentHealthBanner;
     @BindView(R.id.fragment_health_toolbar_user)
@@ -53,10 +53,7 @@ public class FragmentQuestion extends BaseFragment {
     private Handler getArticlesHandler;
     private List<Article> articleArrayList;
     private AdapterArticle adapterArticle;
-    private List<Article> beans0 = null;
-    private List<Article> beans1 = null;
-    private List<Article> beans2 = null;
-    private List<Article> beans3 = null;
+
     private Article article = null;
 
     @Override
@@ -74,7 +71,6 @@ public class FragmentQuestion extends BaseFragment {
         super.initView();
         setBanner();
         setFragmentHealthArticleRv();
-
     }
 
 
@@ -149,6 +145,7 @@ public class FragmentQuestion extends BaseFragment {
 
     private void setFragmentHealthArticleRv() {
         adapterArticle = new AdapterArticle(mActivity, null);
+        adapterArticle.refreshData(articleArrayList);
         fragmentHealthArticleRv.setLayoutManager(new LinearLayoutManager(mActivity));
         fragmentHealthArticleRv.setAdapter(adapterArticle);
         getData( 1);
@@ -156,14 +153,12 @@ public class FragmentQuestion extends BaseFragment {
 
     public void getData( final int mode) {
 
-
         switch (mode) {
-            case 0:
-                adapterArticle.setData(beans0);
-                break;
+//            case 0:
+//                adapterArticle.setData(beans0);
+//                break;
             case 1:
-                beans1 = articleArrayList;
-                adapterArticle.setData(beans1);
+                adapterArticle.setData(articleArrayList);
                 break;
 //            case 2:
 //                beans2 = articleArrayList;

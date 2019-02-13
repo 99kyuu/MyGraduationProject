@@ -151,7 +151,8 @@
             android:background="@drawable/green_button_bg"
             android:text="@string/save"
             android:textColor="#ffffff"
-            android:textSize="@dimen/sp_21" />
+            android:textSize="@dimen/sp_21"
+            android:onClick="savePhysical"/>
     </LinearLayout>
 
 </LinearLayout>
