@@ -37,7 +37,7 @@ public class LineChartView extends View {
     private int mMargin10;  //  10dp的间距
     private int mWidth; //  控件宽度
     private int mHeight;  //  控件高度
-    private int max = 100, min = 0;  //  最大值、最小值
+    private int max = 200, min = 0;  //  最大值、最小值
     private float yInterval;  //  y轴坐标间隔
     private float xInterval;  //  x轴坐标间隔
 

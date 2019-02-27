@@ -35,7 +35,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.BindView;
-
+/**
+ * Created by freeFreAme on 2019/2/21.
+ */
 public class MainActivity extends BaseActivity  implements
         RadioGroup.OnCheckedChangeListener,ViewPager.OnPageChangeListener,LocalReceiver.Callback
 {

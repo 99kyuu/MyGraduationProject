@@ -16,7 +16,9 @@ import com.ldx.mygraduationproject.utils.StringUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
+/**
+ * Created by freeFreAme on 2019/2/13.
+ */
 public class ScoreActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
@@ -46,7 +48,7 @@ public class ScoreActivity extends BaseActivity {
     protected void initView() {
 //        String userName=(String)SPUtlis.get(ScoreActivity.this,AppConfig.AUTO_LOGIN_NAME,"");
         int score = MyApplication.getInstance().getScore();
-        scoreUserName.setText("ldx");
+        scoreUserName.setText((String) SPUtlis.get(ScoreActivity.this, AppConfig.AUTO_LOGIN_NAME,""));
         scoreDescription.setText("身体健康超过 "+ (score+5) +"%的人");
         scoreScore.setText(String.valueOf(score));
         scoreHealthNumber.setText(String.valueOf(score));

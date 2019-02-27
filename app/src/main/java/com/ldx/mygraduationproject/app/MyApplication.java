@@ -6,7 +6,7 @@ import android.content.Context;
 import org.litepal.LitePal;
 
 /**
- * Created by yuandl on 2016-10-18.
+ * Created by freeFreAme on 2019/1/26.
  */
 
 public class MyApplication extends Application {

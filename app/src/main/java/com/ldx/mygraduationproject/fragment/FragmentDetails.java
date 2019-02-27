@@ -11,12 +11,15 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.activity.HeartRateActivity;
+import com.ldx.mygraduationproject.activity.MainActivity;
 import com.ldx.mygraduationproject.activity.SetPlanActivity;
 import com.ldx.mygraduationproject.activity.PhysicalActivity;
 import com.ldx.mygraduationproject.bean.UserHeartRate;
@@ -26,6 +29,7 @@ import com.ldx.mygraduationproject.constant.AppConfig;
 import com.ldx.mygraduationproject.db.StepDataDao;
 import com.ldx.mygraduationproject.service.PhysicalService;
 import com.ldx.mygraduationproject.service.StepService;
+import com.ldx.mygraduationproject.utils.SPUtlis;
 import com.ldx.mygraduationproject.utils.StepCountCheckUtil;
 import com.ldx.mygraduationproject.utils.TimeUtil;
 import com.ldx.mygraduationproject.view.BeforeOrAfterCalendarView;
@@ -51,11 +55,7 @@ import butterknife.OnClick;
 
 
 /**
- * @author: ldx
- * @time: 2019/2/9
- * @version: 1.0
- * @exception: 无
- * @explain: 说明
+ * Created by freeFreAme on 2019/1/18.
  */
 public class FragmentDetails extends BaseFragment  implements android.os.Handler.Callback{
     //历史记录组件
@@ -127,22 +127,30 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
         super.initData();
         //具体时间
         curSelDate = TimeUtil.getCurrentDate();
-         getHeartRateFromNet("ldx");
-         getMaxHeartRateFromNet("ldx");
-         getMinHeartRateFromNet("ldx");
-         getUserPhysicalFromNet("ldx");
+         getHeartRateFromNet((String) SPUtlis.get(mActivity, AppConfig.AUTO_LOGIN_NAME,""));
+         getMaxHeartRateFromNet((String) SPUtlis.get(mActivity, AppConfig.AUTO_LOGIN_NAME,""));
+         getMinHeartRateFromNet((String) SPUtlis.get(mActivity, AppConfig.AUTO_LOGIN_NAME,""));
+         getUserPhysicalFromNet((String) SPUtlis.get(mActivity, AppConfig.AUTO_LOGIN_NAME,""));
          getMinHeartRateHandler=new Handler(){
              @Override
              public void handleMessage(Message msg) {
                 UserHeartRate userHeartRate=(UserHeartRate)msg.obj;
-                min_heart_rate_data.setText(userHeartRate.getUserHeartRate());
+                 if ((UserHeartRate)msg.obj==null) {
+                     Toast.makeText(mActivity, "用户暂时未拥有数据", Toast.LENGTH_SHORT).show();
+                 }else {
+                     min_heart_rate_data.setText(userHeartRate.getUserHeartRate());
+                 }
              }
          };
          getMaxHeartRateHandler=new  Handler() {
              @Override
              public void handleMessage(Message msg) {
                  UserHeartRate userHeartRate=(UserHeartRate) msg.obj;
-                 max_heart_rate_data.setText(userHeartRate.getUserHeartRate());
+                 if ((UserHeartRate)msg.obj==null) {
+                     Toast.makeText(mActivity, "用户暂时未拥有数据", Toast.LENGTH_SHORT).show();
+                 }else {
+                     max_heart_rate_data.setText(userHeartRate.getUserHeartRate());
+                 }
              }
          };
 
@@ -151,50 +159,54 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
             @Override
             public void handleMessage(Message msg) {
                 UserPhysical userPhysical=(UserPhysical) msg.obj;
+                if ((UserPhysical) msg.obj==null) {
+                    Toast.makeText(mActivity, "用户暂时未拥有数据", Toast.LENGTH_SHORT).show();
+                }else{
                 weightView.setPercent(Float.parseFloat(userPhysical.getUserWeight()));
                 weight_data_text.setText(userPhysical.getUserWeight()+"kg");
                 user_sex.setText(userPhysical.getUserSex());
                 user_height.setText(userPhysical.getUserHeight()+"cm");
                 String userBodyRate=physicalService.getBodyRate(Double.parseDouble(userPhysical.getUserHeight()),
                         Double.parseDouble(userPhysical.getUserHeight()),userPhysical.getUserSex());
-                user_survey_data.setText(userBodyRate);
+                user_survey_data.setText(userBodyRate);}
             }
         };
-        getMaxHeartRateHandler=new  Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                UserHeartRate userHeartRate=(UserHeartRate) msg.obj;
-                max_heart_rate_data.setText(userHeartRate.getUserHeartRate());
-            }
-        };
+
 
         //  初始化折线数据
 
          getHeartRateHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                userHeartRateList = (List<UserHeartRate>)msg.obj;
-                mItems = new ArrayList<>();
-                mItems.add(new LineChartView.ItemBean(1489507200,Integer.parseInt(userHeartRateList.get(0).getUserHeartRate())));
-                mItems.add(new LineChartView.ItemBean(1489593600,Integer.parseInt(userHeartRateList.get(1).getUserHeartRate())));
-                mItems.add(new LineChartView.ItemBean(1489680000,Integer.parseInt(userHeartRateList.get(2).getUserHeartRate())));
-                mItems.add(new LineChartView.ItemBean(1489766400, Integer.parseInt(userHeartRateList.get(3).getUserHeartRate())));
-                mItems.add(new LineChartView.ItemBean(1489852800, Integer.parseInt(userHeartRateList.get(4).getUserHeartRate())));
-                mItems.add(new LineChartView.ItemBean(1489939200, Integer.parseInt(userHeartRateList.get(5).getUserHeartRate())));
-                mItems.add(new LineChartView.ItemBean(1490025600, Integer.parseInt(userHeartRateList.get(6).getUserHeartRate())));
+//                if (msg.obj == null) {
+//                    Toast.makeText(mActivity, "用户暂时未拥有数据", Toast.LENGTH_SHORT).show();
+//                }else {
+                    userHeartRateList = (List<UserHeartRate>) msg.obj;
+                if (userHeartRateList.size() == 0) {
+                    Toast.makeText(mActivity, "用户暂时未拥有数据", Toast.LENGTH_SHORT).show();
+                }else{
+                    mItems = new ArrayList<>();
+                    mItems.add(new LineChartView.ItemBean(1489507200, Integer.parseInt(userHeartRateList.get(0).getUserHeartRate())));
+                    mItems.add(new LineChartView.ItemBean(1489593600, Integer.parseInt(userHeartRateList.get(1).getUserHeartRate())));
+                    mItems.add(new LineChartView.ItemBean(1489680000, Integer.parseInt(userHeartRateList.get(2).getUserHeartRate())));
+                    mItems.add(new LineChartView.ItemBean(1489766400, Integer.parseInt(userHeartRateList.get(3).getUserHeartRate())));
+                    mItems.add(new LineChartView.ItemBean(1489852800, Integer.parseInt(userHeartRateList.get(4).getUserHeartRate())));
+                    mItems.add(new LineChartView.ItemBean(1489939200, Integer.parseInt(userHeartRateList.get(5).getUserHeartRate())));
+                    mItems.add(new LineChartView.ItemBean(1490025600, Integer.parseInt(userHeartRateList.get(6).getUserHeartRate())));
 //                mItems.add(new LineChartView.ItemBean(1490112000, Integer.parseInt(userHeartRateList.get(6).getUserHeartRate())));
 //                mItems.add(new LineChartView.ItemBean(1490198400, Integer.parseInt(userHeartRateList.get(1).getUserHeartRate())));
 //                mItems.add(new LineChartView.ItemBean(1490284800, Integer.parseInt(userHeartRateList.get(1).getUserHeartRate())));
-                shadeColors= new int[]{
-                        Color.argb(100, 161,216,139), Color.argb(55, 183,235,139),
-                        Color.argb(20, 221,249,197)};
+                    shadeColors = new int[]{
+                            Color.argb(100, 161, 216, 139), Color.argb(55, 183, 235, 139),
+                            Color.argb(20, 221, 249, 197)};
 
-                //  设置折线数据
-                lineChartView.setItems(mItems);
-                //  设置渐变颜色
-                lineChartView.setShadeColors(shadeColors);
-                //  开启动画
-                lineChartView.startAnim(lineChartView,2000);
+                    //  设置折线数据
+                    lineChartView.setItems(mItems);
+                    //  设置渐变颜色
+                    lineChartView.setShadeColors(shadeColors);
+                    //  开启动画
+                    lineChartView.startAnim(lineChartView, 2000);
+                }
             }
         };
 

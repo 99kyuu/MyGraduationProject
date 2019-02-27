@@ -21,6 +21,7 @@ import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.bean.UserPlan;
 import com.ldx.mygraduationproject.constant.AppConfig;
 import com.ldx.mygraduationproject.db.StepDataDao;
+import com.ldx.mygraduationproject.fragment.FragmentDetails;
 import com.ldx.mygraduationproject.utils.NetUtils;
 import com.ldx.mygraduationproject.utils.SPUtlis;
 import com.squareup.okhttp.Call;
@@ -153,7 +154,7 @@ public class SetPlanActivity extends BaseActivity {
 
         if (NetUtils.isConnected(this) == true) {
 
-            getUserPlanByNet("ldx");
+            getUserPlanByNet((String) SPUtlis.get(SetPlanActivity.this, AppConfig.AUTO_LOGIN_NAME,""));
             getPlanHandler = new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
@@ -248,7 +249,8 @@ public class SetPlanActivity extends BaseActivity {
             userPlan.setRemindTime(remindTime);
         }
         if (NetUtils.isConnected(this) == true) {
-            saveUserPlanToNet("ldx", remindTime, isRemind, planSteps);
+            saveUserPlanToNet((String) SPUtlis.get(SetPlanActivity.this, AppConfig.AUTO_LOGIN_NAME,""), remindTime, isRemind, planSteps);
+
         } else {
             userPlan.save();
             Toast.makeText(this, ""+"计划本地存储成功", Toast.LENGTH_SHORT).show();

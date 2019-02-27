@@ -128,12 +128,12 @@ public class FragmentRegister extends BaseFragment {
             Map<String, Object> r = (HashMap) msg.obj;
             if ((Integer) r.get("code") == 1) {
                 Toast.makeText(mActivity, "" + r.get("msg"), Toast.LENGTH_SHORT).show();
-
+                ((LoginActivity)mActivity).setLoginTabIndex(0);
             }
             if ((Integer) r.get("code") == 0) {
 
                 Toast.makeText(mActivity, "" + r.get("msg"), Toast.LENGTH_SHORT).show();
-                ((LoginActivity)mActivity).setLoginTabIndex(0);
+
             }
         }
     };

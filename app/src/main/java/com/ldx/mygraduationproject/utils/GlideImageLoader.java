@@ -6,12 +6,7 @@ import android.widget.ImageView;
 import com.youth.banner.loader.ImageLoader;
 
 /**
- * @author: tao
- * @time: 2018/8/24
- * @e-mail: 1462320178@qq.com
- * @version: 1.0
- * @exception: 无
- * @explain: 说明
+ * Created by freeFreAme on 2019/1/19.
  */
 public class GlideImageLoader extends ImageLoader {
     @Override

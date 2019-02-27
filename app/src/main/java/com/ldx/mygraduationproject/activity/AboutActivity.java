@@ -6,7 +6,9 @@ import com.ldx.mygraduationproject.R;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
+/**
+ * Created by freeFreAme on 2019/1/24.
+ */
 public class AboutActivity extends BaseActivity {
 
     @BindView(R.id.about_back)

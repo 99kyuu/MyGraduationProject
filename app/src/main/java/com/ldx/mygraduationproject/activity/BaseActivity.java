@@ -22,6 +22,9 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.reactivex.disposables.Disposable;
 //import io.reactivex.disposables.Disposable;
+/**
+ * Created by freeFreAme on 2019/1/22.
+ */
 
 public abstract class BaseActivity extends AppCompatActivity {
 

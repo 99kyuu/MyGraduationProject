@@ -5,12 +5,7 @@ import android.text.TextUtils;
 import java.util.regex.Pattern;
 
 /**
- * @author: Tao
- * @time: 2017/8/4
- * @e-mail: 1462320178@qq.com
- * @version: 1.0
- * @exception: 无
- * @explain: 常用的正则验证
+ * Created by freeFreAme on 2019/1/29.
  */
 public class RegularUtils {
 

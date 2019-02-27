@@ -5,9 +5,7 @@ import org.litepal.annotation.Column;
 import org.litepal.crud.LitePalSupport;
 
 /**
- * Created by fySpring
- * Date : 2017/3/24
- * To do :
+ * Created by freeFreAme on 2019/1/29.
  */
 
 public class UserStep extends LitePalSupport{

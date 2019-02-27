@@ -8,12 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 /**
- * @author: Tao
- * @time: 2017/8/4
- * @e-mail: 1462320178@qq.com
- * @version: 1.0
- * @exception: 无
- * @explain: 网络工具类
+ * Created by freeFreAme on 2019/1/19.
  */
 public class NetUtils {
 

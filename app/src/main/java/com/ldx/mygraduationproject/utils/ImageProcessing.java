@@ -1,5 +1,7 @@
 package com.ldx.mygraduationproject.utils;
-
+/**
+ * Created by freeFreAme on 2019/1/19.
+ */
 public abstract class ImageProcessing {
 
 	private static int decodeYUV420SPtoRedSum(byte[] yuv420sp, int width,int height) {

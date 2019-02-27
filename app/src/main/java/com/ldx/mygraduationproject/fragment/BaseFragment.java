@@ -18,12 +18,7 @@ import io.reactivex.disposables.Disposable;
 //import io.reactivex.disposables.Disposable;
 
 /**
- * @author: ldx
- * @time: 2019/12/29
- * @e-mail: ldx970101@gmail.com
- * @version: 1.0
- * @exception: 无
- * @explain: 说明
+ * Created by freeFreAme on 2019/1/18.
  */
 public abstract class BaseFragment extends Fragment {
     protected Disposable disposable;

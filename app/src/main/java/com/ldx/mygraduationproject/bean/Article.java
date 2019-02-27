@@ -4,11 +4,7 @@ import org.litepal.annotation.Column;
 import org.litepal.crud.LitePalSupport;
 
 /**
- * @author: ldx
- * @time: 2019/2/1
- * @version: 1.0
- * @exception: 无
- * @explain: 文章实体类
+ * Created by freeFreAme on 2019/1/22.
  */
 public class Article extends LitePalSupport {
 

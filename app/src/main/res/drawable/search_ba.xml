@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <corners
+        android:topLeftRadius="@dimen/dp_20"
+        android:topRightRadius="@dimen/dp_20"
+        android:bottomLeftRadius="@dimen/dp_20"
+        android:bottomRightRadius="@dimen/dp_20"/><!-- 设置圆角半径 -->
+
+    <padding
+        android:left="@dimen/dp_4"
+        android:top="2dp"
+        android:right="@dimen/dp_4"
+        android:bottom="2dp"/><!-- 各方向的间隔 -->
+
+    <solid
+        android:color="@android:color/white"/><!-- 填充的颜色 -->
+
+
+</shape>

@@ -9,6 +9,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -53,7 +54,6 @@ public class FragmentReader extends BaseFragment {
     private Handler getArticlesHandler;
     private List<Article> articleArrayList;
     private AdapterArticle adapterArticle;
-
     private Article article = null;
 
     @Override
@@ -70,7 +70,7 @@ public class FragmentReader extends BaseFragment {
     protected void initView() {
         super.initView();
         setBanner();
-        setFragmentHealthArticleRv();
+//        setFragmentHealthArticleRv();
     }
 
 
@@ -86,7 +86,7 @@ public class FragmentReader extends BaseFragment {
     @SuppressLint("HandlerLeak")
     private void setBanner() {
         fragmentHealthBanner.setImageLoader(new GlideImageLoader());
-        //设置图片集合
+
         List<Integer> images = new ArrayList<>();
         images.add(R.drawable.news_image_1);
         images.add(R.drawable.news_image_2);
@@ -95,27 +95,26 @@ public class FragmentReader extends BaseFragment {
         images.add(R.drawable.news_image_5);
         images.add(R.drawable.news_image_6);
         fragmentHealthBanner.setImages(images);
-        //banner设置方法全部调用完毕时最后调用
         fragmentHealthBanner.start();
         getArticleFromNet();
-
-
         getArticlesHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
 
-                articleArrayList = (List<Article>) msg.obj;
+                 articleArrayList = (List<Article>) msg.obj;
+                adapterArticle = new AdapterArticle(mActivity, null);
+                fragmentHealthArticleRv.setLayoutManager(new LinearLayoutManager(mActivity));
+                fragmentHealthArticleRv.setAdapter(adapterArticle);
+                getData( );
                 fragmentHealthBanner.setOnBannerListener(new OnBannerListener() {
                     @Override
                     public void OnBannerClick(final int position) {
-//                Article bean =com.alibaba.fastjson.JSONArray.parseObject(AppConfig.DATE,Article.class);
                         switch (position) {
-
                             case 0:
                                 article = (articleArrayList.get(0));
                                 break;
                             case 1:
-                                article = (articleArrayList.get(0));
+                                article = (articleArrayList.get(1));
                                 break;
                             case 2:
                                 article = com.alibaba.fastjson.JSONArray.parseObject(AppConfig.DATE2, Article.class);
@@ -131,6 +130,9 @@ public class FragmentReader extends BaseFragment {
                                 break;
 
                         }
+
+                        //banner设置方法全部调用完毕时最后调用
+
                         Intent intent = new Intent(mActivity, WebActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putInt(AppConfig.WEB_INTENT_MODE, WebActivity.MODE_ARTICLE);
@@ -143,36 +145,15 @@ public class FragmentReader extends BaseFragment {
         };
     }
 
-    private void setFragmentHealthArticleRv() {
-        adapterArticle = new AdapterArticle(mActivity, null);
-        adapterArticle.refreshData(articleArrayList);
-        fragmentHealthArticleRv.setLayoutManager(new LinearLayoutManager(mActivity));
-        fragmentHealthArticleRv.setAdapter(adapterArticle);
-        getData( 1);
-    }
+//    private void setFragmentHealthArticleRv() {
+////        adapterArticle = new AdapterArticle(mActivity, null);
+////        fragmentHealthArticleRv.setLayoutManager(new LinearLayoutManager(mActivity));
+////        fragmentHealthArticleRv.setAdapter(adapterArticle);
+////        getData( );
+//    }
 
-    public void getData( final int mode) {
-
-        switch (mode) {
-//            case 0:
-//                adapterArticle.setData(beans0);
-//                break;
-            case 1:
-                adapterArticle.setData(articleArrayList);
-                break;
-//            case 2:
-//                beans2 = articleArrayList;
-//                adapterArticle.setData(beans2);
-//                break;
-//            case 3:
-//                beans3 = articleArrayList;
-//                adapterArticle.setData(beans3);
-//                break;
-//            case 4:
-//                beans0 = (ArrayList<Article>) bean.getData().getContent();
-//                adapterArticle.setData(beans0);
-//                break;
-        }
+    public void getData( ) {
+        adapterArticle.setData(articleArrayList);
     }
 
 
@@ -182,18 +163,7 @@ public class FragmentReader extends BaseFragment {
         mImmersionBar.titleBar(fragmentHealthToolbar).init();
     }
 
-    //
-//    @OnClick({R.id.fragment_health_toolbar_user, R.id.fragment_health_toolbar_search})
-//    public void onViewClicked(View view) {
-//        switch (view.getId()) {
-//            case R.id.fragment_health_toolbar_user:
-//                ((MainActivity)mActivity).openDraw();
-//                break;
-//            case R.id.fragment_health_toolbar_search:
-//                ((MainActivity)mActivity).goSearch();
-//                break;
-//        }
-//    }
+
     public void getArticleFromNet() {
         OkHttpClient mOkHttpClient = new OkHttpClient();
         FormEncodingBuilder builder = new FormEncodingBuilder();

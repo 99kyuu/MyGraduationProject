@@ -15,10 +15,8 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.ldx.mygraduationproject.R;
-
 /**
- * 计步View
- * Created by DYJ on 2017/8/3.
+ * Created by freeFreAme on 2019/1/22.
  */
 public class RunningView extends View {
     /**
@@ -246,4 +244,5 @@ public class RunningView extends View {
             numberTextSize = dipToPx(5);
         }
     }
+
 }

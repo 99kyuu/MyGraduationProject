@@ -8,11 +8,7 @@ import java.lang.reflect.Method;
 import java.util.Map;
 
 /**
- * @author: ldx
- * @time: 2019/8/4
- * @version: 1.0
- * @exception: 无
- * @explain: SP 统一管理类
+ * Created by freeFreAme on 2019/1/18.
  */
 public class SPUtlis {
 

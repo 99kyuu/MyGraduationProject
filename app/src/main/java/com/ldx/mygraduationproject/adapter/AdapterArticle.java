@@ -20,15 +20,9 @@ import com.ldx.mygraduationproject.utils.GlideUtils;
 import java.util.List;
 
 /**
- * @author: tao
- * @time: 2018/8/25
- * @e-mail: 1462320178@qq.com
- * @version: 1.0
- * @exception: 无
- * @explain: 说明
+ * Created by freeFreAme on 2019/1/24.
  */
 public class AdapterArticle extends SimpleAdapter<Article> {
-
 
     public AdapterArticle(Context context){
         super(context, R.layout.item_article);
@@ -46,6 +40,7 @@ public class AdapterArticle extends SimpleAdapter<Article> {
     public AdapterArticle(Context context, List<Article> data) {
         super(context, data, R.layout.item_article);
     }
+
 
     @Override
     protected void change(BaseViewHolder viewHolder, final Article article, int position) {

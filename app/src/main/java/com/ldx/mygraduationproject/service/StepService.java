@@ -51,8 +51,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by ldx
- * Date : 2019/1/29
+ * Created by freeFreAme on 2019/1/29.
  */
 
 public class StepService extends Service implements SensorEventListener {

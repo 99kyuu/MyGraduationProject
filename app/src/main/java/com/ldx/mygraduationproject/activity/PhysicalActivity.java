@@ -13,6 +13,8 @@ import com.ldx.mygraduationproject.R;
 
 
 import com.ldx.mygraduationproject.constant.AppConfig;
+import com.ldx.mygraduationproject.fragment.FragmentDetails;
+import com.ldx.mygraduationproject.utils.SPUtlis;
 import com.ldx.mygraduationproject.utils.TimeUtil;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
@@ -80,8 +82,9 @@ public class PhysicalActivity extends BaseActivity {
     }
 
     public void savePhysical(View view){
-        AddUserPhysicalToNet("ldx",height_value.getText().toString(),
+        AddUserPhysicalToNet((String) SPUtlis.get(PhysicalActivity.this, AppConfig.AUTO_LOGIN_NAME,""),height_value.getText().toString(),
                 weight_value.getText().toString(),userSex,curSelDate);
+        MainActivity.getInstance().initView();
     }
     public void AddUserPhysicalToNet(String userName,String userHeight,String userWeight,
                                      String userSex,String curDate){

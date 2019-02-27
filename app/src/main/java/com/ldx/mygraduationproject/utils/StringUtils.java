@@ -2,12 +2,7 @@ package com.ldx.mygraduationproject.utils;
 
 
 /**
- * @author: tao
- * @time: 2018/9/5
- * @e-mail: 1462320178@qq.com
- * @version: 1.0
- * @exception: 无
- * @explain: 解决后台某些字符的问题
+ * Created by freeFreAme on 2019/1/31.
  */
 public class StringUtils {
 

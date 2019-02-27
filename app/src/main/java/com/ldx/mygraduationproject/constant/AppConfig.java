@@ -1,7 +1,7 @@
 package com.ldx.mygraduationproject.constant;
 
 /**
- * Created by Administrator on 2018/2/1.
+ * Created by freeFreAme on 2019/1/22.
  */
 
 public class AppConfig {

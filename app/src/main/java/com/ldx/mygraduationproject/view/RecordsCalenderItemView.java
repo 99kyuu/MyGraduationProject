@@ -15,7 +15,7 @@ import com.ldx.mygraduationproject.activity.MainActivity;
 
 
 /**
- * 查看一周内每天的历史纪录日历Item布局
+ * Created by freeFreAme on 2019/1/31.
  */
 
 public class RecordsCalenderItemView extends RelativeLayout {

@@ -127,7 +127,7 @@ public class FragmentLogin extends BaseFragment {
 //            return;
         try {
             userLogin(userName,userPwd);
-           afterLogin(userName,userPwd,isAuto);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -173,7 +173,7 @@ public class FragmentLogin extends BaseFragment {
             }
             if((Integer)r.get("code")==1){
                 Toast.makeText(mActivity, ""+r.get("msg"), Toast.LENGTH_SHORT).show();
-
+                afterLogin(userName,userPwd,isAuto);
             }
             if((Integer)r.get("code")==2){
 

@@ -44,7 +44,7 @@ import io.reactivex.schedulers.Schedulers;
 
 
 /**
- * 等待接口BUG修改
+ * Created by freeFreAme on 2019/1/26.
  */
 public class ForgetActivity extends BaseActivity {
 
@@ -121,7 +121,7 @@ public class ForgetActivity extends BaseActivity {
                 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
                 @Override
                 public void accept(Long aLong) throws Exception {
-                    Log.d("fantasychongstatus", String.valueOf(60- aLong));
+                    Log.d("fantasychongstatus", String.valueOf(120- aLong));
                     //此处有一个问题，当创建订阅，activity被销毁会造成空指针错误
                     if (ForgetActivity.this.isDestroyed() == true) {
                         if (disposable.isDisposed()==false) {

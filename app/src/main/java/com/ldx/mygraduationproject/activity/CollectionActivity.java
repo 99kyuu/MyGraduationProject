@@ -16,7 +16,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
+/**
+ * Created by freeFreAme on 2019/1/22.
+ */
 public class CollectionActivity extends BaseActivity {
 
     @BindView(R.id.toolbar_back)

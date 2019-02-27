@@ -43,6 +43,7 @@ import android.widget.Toast;
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.constant.AppConfig;
 import com.ldx.mygraduationproject.utils.ImageProcessing;
+import com.ldx.mygraduationproject.utils.SPUtlis;
 import com.ldx.mygraduationproject.utils.TimeUtil;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
@@ -98,7 +99,7 @@ public class HeartRateActivity extends Activity {
     private String heartbeatValueShow;
     /**
      * 类型枚举
-     * @author liuyazhuang
+     * @author ldx
      *
      */
     public static enum TYPE {
@@ -139,7 +140,7 @@ public class HeartRateActivity extends Activity {
         heartbeatValue=heart_rate_text.getText().toString();
         if (heartbeatValue!= null) {
             Toast.makeText(context, ""+heartbeatValueShow, Toast.LENGTH_SHORT).show();
-            saveHeartRateToNet("ldx",heartbeatValue,CURRENT_DATE);
+            saveHeartRateToNet((String) SPUtlis.get(HeartRateActivity.this, AppConfig.AUTO_LOGIN_NAME,""),heartbeatValue,CURRENT_DATE);
         }
 
     }

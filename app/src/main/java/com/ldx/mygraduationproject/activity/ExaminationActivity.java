@@ -27,6 +27,9 @@ import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+/**
+ * Created by freeFreAme on 2019/1/22.
+ */
 
 public class ExaminationActivity extends BaseActivity {
 

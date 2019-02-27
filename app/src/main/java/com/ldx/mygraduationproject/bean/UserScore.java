@@ -4,11 +4,7 @@ import org.litepal.annotation.Column;
 import org.litepal.crud.LitePalSupport;
 
 /**
- * @author: ldx
- * @time: 2019/2/1
- * @version: 1.0
- * @exception: 无
- * @explain: 用于在本地数据库存储体检单成绩
+ * Created by freeFreAme on 2019/1/28.
  */
 public class UserScore extends LitePalSupport {
     @Column(unique = true,nullable = false)

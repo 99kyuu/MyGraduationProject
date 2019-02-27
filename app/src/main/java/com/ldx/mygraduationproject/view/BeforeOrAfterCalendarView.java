@@ -14,9 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by fySpring
- * Date : 2017/2/21
- * To do :查看当前日期前七天或后七天日历
+ * Created by freeFreAme on 2019/1/18.
  */
 
 public class BeforeOrAfterCalendarView extends RelativeLayout {

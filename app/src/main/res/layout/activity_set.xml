@@ -101,12 +101,13 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:layout_weight="1"
-            android:textSize="@dimen/sp_18"
-            android:textColor="#666666"
-            android:text="@string/version"
+            android:id="@+id/version"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/version"
+            android:textColor="#666666"
+            android:textSize="@dimen/sp_18" />
 
         <ImageView
             android:layout_marginTop="@dimen/dp_4"

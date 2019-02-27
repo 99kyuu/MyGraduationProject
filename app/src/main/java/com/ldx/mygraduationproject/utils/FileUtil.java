@@ -10,11 +10,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 /**
- * @author: ldx
- * @time: 2018/1/29
- * @version: 1.0
- * @exception: 无
- * @explain: 说明
+ * Created by freeFreAme on 2019/1/18.
  */
 public class FileUtil {
 

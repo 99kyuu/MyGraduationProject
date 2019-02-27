@@ -8,7 +8,9 @@ import android.widget.TextView;
 import com.ldx.mygraduationproject.R;
 import butterknife.BindView;
 import butterknife.OnClick;
-
+/**
+ * Created by freeFreAme on 2019/1/29.
+ */
 public class SetActivity extends BaseActivity {
 
 
@@ -22,7 +24,8 @@ public class SetActivity extends BaseActivity {
     TextView setFinish;
     @BindView(R.id.edit_pwd)
     TextView editPwd;
-
+    @BindView(R.id.version)
+    TextView version;
     @Override
     protected int setLayoutId() {
         return R.layout.activity_set;
@@ -40,7 +43,7 @@ public class SetActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.toolbar_back, R.id.set_finish,R.id.edit_pwd})
+    @OnClick({R.id.toolbar_back, R.id.set_finish,R.id.edit_pwd,R.id.version})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_back:
@@ -53,6 +56,8 @@ public class SetActivity extends BaseActivity {
                 break;
             case R.id.edit_pwd:
                 startActivity(new Intent(SetActivity.this,ForgetActivity.class));
+            case R.id.version:
+                startActivity(new Intent(SetActivity.this,SearchActivity.class));
         }
     }
 }
