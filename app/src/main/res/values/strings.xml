@@ -20,6 +20,8 @@
     <string name="update_pwd">修改密码</string>
     <string name="set">设置界面</string>
     <string name="version">版本：1.0（2019.02.12）</string>
+    <string name="min_step">最少</string>
+    <string name="max_step">最多</string>
      <!--<string-array name="ages">-->
         <!--<item>婴儿 0</item>-->
         <!--<item>童年 1-10</item>-->

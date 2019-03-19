@@ -147,6 +147,12 @@ public class MainActivity extends BaseActivity  implements
                             startActivity(new Intent(MainActivity.this,ScoreActivity.class));
                         }
                         break;
+                    case"步数计划":
+                        startActivity(new Intent(MainActivity.this,SetPlanActivity.class));
+                        break;
+                    case "身高体重":
+                        startActivity(new Intent(MainActivity.this,PhysicalActivity.class));
+                        break;
                     case "关注":
                         startActivity(new Intent(MainActivity.this,CollectionActivity.class));
                         break;

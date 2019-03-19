@@ -14,6 +14,8 @@ public class AppConfig {
 
 //    192.168.124.9
     //192.168.1.104
+
+    //aliyun 106.14.204.72
     //用户类下功能 /userApi
     public final static String SERVER_URL_PATH = "http://192.168.1.104:8100/api";
     public final static String REGISTER_NEW_USER= SERVER_URL_PATH.concat("/security/register_new_user");
@@ -32,8 +34,13 @@ public class AppConfig {
     public final static String GET_MAX_USER_HEART_RATE_BY_USER_NAME=SERVER_URL_PATH.concat("/heartrate/get_max_user_heart_rate_by_user_name");
     public final static String GET_MIN_USER_HEART_RATE_BY_USER_NAME=SERVER_URL_PATH.concat("/heartrate/get_min_user_heart_rate_by_user_name");
     //身体数据类
-    public final static String GET_USER_PHYSICAL_BY_USER_NAME=SERVER_URL_PATH.concat("/physical/get_user_physical_by_user_name");
+    public final static String GET_USER_PHYSICAL_BY_USER_NAME_FOR_ALL=SERVER_URL_PATH.concat("/physical/get_user_physical_by_user_name_for_all");
     public final static String ADD_USER_PHYSICAL=SERVER_URL_PATH.concat("/physical/add_user_physical");
+    public final static String GET_USER_PHYSICAL_BY_USER_NAME=SERVER_URL_PATH.concat("/physical/get_user_physical_by_user_name");
+    public final static String GET_MIN_USER_WEIGHT_BY_USER_NAME=SERVER_URL_PATH.concat("/physical/get_min_user_weight_by_user_name");
+    public final static String GET_MAX_USER_WEIGHT_BY_USER_NAME=SERVER_URL_PATH.concat("/physical/get_max_user_weight_by_user_name");
+
+
     //计步类
     public static final int MSG_FROM_CLIENT = 0;
     public static final int MSG_FROM_SERVER = 1;

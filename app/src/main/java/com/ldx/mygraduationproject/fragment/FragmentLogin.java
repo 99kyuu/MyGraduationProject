@@ -74,8 +74,8 @@ public class FragmentLogin extends BaseFragment {
 
     @Override
     protected void initData() {
-//        isAuto = (Boolean) SPUtlis.get(mActivity, MedicalCareConstant.IS_AUTO_LOGIN,isAuto);
-//        setImageSelect();
+        isAuto = (Boolean) SPUtlis.get(mActivity, AppConfig.IS_AUTO_LOGIN,isAuto);
+        setImageSelect();
     }
 
     private void setImageSelect(){
@@ -90,7 +90,13 @@ public class FragmentLogin extends BaseFragment {
     protected void initView() {
         if (isAuto){
             userName = (String) SPUtlis.get(mActivity,AppConfig.AUTO_LOGIN_NAME,"");
+            userPwd = (String) SPUtlis.get(mActivity,AppConfig.AUTO_LOGIN_PASS,"");
             loginUsername.setText(userName);
+            try {
+                userLogin(userName,userPwd);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

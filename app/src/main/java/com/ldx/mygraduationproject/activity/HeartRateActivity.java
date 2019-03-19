@@ -2,7 +2,6 @@ package com.ldx.mygraduationproject.activity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -141,6 +140,7 @@ public class HeartRateActivity extends Activity {
         if (heartbeatValue!= null) {
             Toast.makeText(context, ""+heartbeatValueShow, Toast.LENGTH_SHORT).show();
             saveHeartRateToNet((String) SPUtlis.get(HeartRateActivity.this, AppConfig.AUTO_LOGIN_NAME,""),heartbeatValue,CURRENT_DATE);
+            MainActivity.getInstance().initView();
         }
 
     }
@@ -205,7 +205,7 @@ public class HeartRateActivity extends Activity {
         previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         //		image = findViewById(R.id.image);
         heart_rate_show =  findViewById(R.id.heart_rate_show);
-        heart_rate_text=findViewById(R.id.heart_rate_text);
+        heart_rate_text=findViewById(R.id.weight_text);
         pixel_value =  findViewById(R.id.pixel_value);
         pulse_count =  findViewById(R.id.pulse_count);
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);

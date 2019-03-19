@@ -48,9 +48,10 @@
         <activity android:name=".activity.AboutActivity"/>
         <activity android:name=".activity.SetActivity"/>
         <activity android:name=".activity.CollectionActivity"/>
-        <activity android:name=".activity.PhysicalActivity" android:theme="@style/dialogStyle"/>
+        <activity android:name=".activity.PhysicalActivity" />
+        <activity android:name=".activity.Last7DayStepActivity" android:theme="@style/dialogStyle"/>
         <!-- 设置每日步数 -->
-        <activity android:name=".activity.SetPlanActivity" android:theme="@style/dialogStyle"/>
+        <activity android:name=".activity.SetPlanActivity" />
         <activity android:name=".activity.SearchActivity"/>
         <!-- 计步功能 -->
         <service

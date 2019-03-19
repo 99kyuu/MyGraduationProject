@@ -84,8 +84,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:text="1.6公里" />
+                    android:layout_centerHorizontal="true" />
 
             </RelativeLayout>
         </android.support.v7.widget.CardView>
@@ -122,7 +121,7 @@
                     app:textSize="@dimen/dp_12" />
 
                 <ImageView
-                    android:id="@+id/heart_rate_image"
+                    android:id="@+id/weight_image"
                     android:layout_width="@dimen/dp_25"
                     android:layout_height="@dimen/dp_25"
                     android:layout_alignLeft="@+id/LineChartView"
@@ -133,75 +132,75 @@
                     app:srcCompat="@drawable/heart_rate" />
 
                 <TextView
-                    android:id="@+id/heart_rate_text"
+                    android:id="@+id/weight_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/heart_rate_image"
+                    android:layout_alignBottom="@+id/weight_image"
                     android:layout_marginLeft="@dimen/dp_14"
                     android:layout_marginStart="@dimen/dp_14"
-                    android:layout_toEndOf="@+id/heart_rate_image"
-                    android:layout_toRightOf="@+id/heart_rate_image"
+                    android:layout_toEndOf="@+id/weight_image"
+                    android:layout_toRightOf="@+id/weight_image"
                     android:text="@string/heart_rate" />
 
                 <TextView
-                    android:id="@+id/max_heart_rate_text"
+                    android:id="@+id/max_weight_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_toEndOf="@+id/max_heart_rate_image"
-                    android:layout_toRightOf="@+id/max_heart_rate_image"
+                    android:layout_toEndOf="@+id/max_weight_image"
+                    android:layout_toRightOf="@+id/max_weight_image"
                     android:text="@string/max_heart_rate" />
 
                 <ImageView
-                    android:id="@+id/max_heart_rate_image"
+                    android:id="@+id/max_weight_image"
                     android:layout_width="@dimen/dp_10"
                     android:layout_height="@dimen/dp_10"
-                    android:layout_alignLeft="@+id/heart_rate_image"
-                    android:layout_alignStart="@+id/heart_rate_image"
-                    android:layout_alignTop="@+id/max_heart_rate_text"
+                    android:layout_alignLeft="@+id/weight_image"
+                    android:layout_alignStart="@+id/weight_image"
+                    android:layout_alignTop="@+id/max_weight_text"
                     app:srcCompat="@drawable/circle_red" />
 
                 <ImageView
-                    android:id="@+id/min_heart_rate_image"
+                    android:id="@+id/min_weight_image"
                     android:layout_width="@dimen/dp_10"
                     android:layout_height="@dimen/dp_10"
-                    android:layout_alignTop="@+id/min_heart_rate_text"
+                    android:layout_alignTop="@+id/min_weight_text"
                     android:layout_marginLeft="@dimen/dp_14"
                     android:layout_marginStart="@dimen/dp_14"
-                    android:layout_toEndOf="@+id/heart_rate_text"
-                    android:layout_toRightOf="@+id/heart_rate_text"
+                    android:layout_toEndOf="@+id/weight_text"
+                    android:layout_toRightOf="@+id/weight_text"
                     app:srcCompat="@drawable/circle_green" />
 
                 <TextView
-                    android:id="@+id/min_heart_rate_text"
+                    android:id="@+id/min_weight_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/max_heart_rate_text"
-                    android:layout_alignBottom="@+id/max_heart_rate_text"
-                    android:layout_toEndOf="@+id/min_heart_rate_image"
-                    android:layout_toRightOf="@+id/min_heart_rate_image"
+                    android:layout_alignBaseline="@+id/max_weight_text"
+                    android:layout_alignBottom="@+id/max_weight_text"
+                    android:layout_toEndOf="@+id/min_weight_image"
+                    android:layout_toRightOf="@+id/min_weight_image"
                     android:text="@string/min_heart_rate" />
 
                 <TextView
                     android:id="@+id/max_heart_rate_data"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/heart_rate_text"
+                    android:layout_alignLeft="@+id/weight_text"
                     android:layout_alignParentBottom="true"
-                    android:layout_alignStart="@+id/heart_rate_text"
-                    android:layout_toLeftOf="@+id/min_heart_rate_image"
-                    android:layout_toStartOf="@+id/min_heart_rate_image"
+                    android:layout_alignStart="@+id/weight_text"
+                    android:layout_toLeftOf="@+id/min_weight_image"
+                    android:layout_toStartOf="@+id/min_weight_image"
                     android:text="80" />
 
                 <TextView
                     android:id="@+id/min_heart_rate_data"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/min_heart_rate_text"
+                    android:layout_alignBottom="@+id/min_weight_text"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_toEndOf="@+id/min_heart_rate_text"
-                    android:layout_toRightOf="@+id/min_heart_rate_text"
+                    android:layout_toEndOf="@+id/min_weight_text"
+                    android:layout_toRightOf="@+id/min_weight_text"
                     android:text="60" />
             </RelativeLayout>
         </android.support.v7.widget.CardView>

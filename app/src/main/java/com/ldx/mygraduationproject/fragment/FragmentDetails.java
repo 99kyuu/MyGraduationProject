@@ -19,11 +19,13 @@ import android.widget.Toast;
 
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.activity.HeartRateActivity;
+import com.ldx.mygraduationproject.activity.Last7DayStepActivity;
 import com.ldx.mygraduationproject.activity.MainActivity;
 import com.ldx.mygraduationproject.activity.SetPlanActivity;
 import com.ldx.mygraduationproject.activity.PhysicalActivity;
 import com.ldx.mygraduationproject.bean.UserHeartRate;
 import com.ldx.mygraduationproject.bean.UserPhysical;
+import com.ldx.mygraduationproject.bean.UserPlan;
 import com.ldx.mygraduationproject.bean.UserStep;
 import com.ldx.mygraduationproject.constant.AppConfig;
 import com.ldx.mygraduationproject.db.StepDataDao;
@@ -57,7 +59,7 @@ import butterknife.OnClick;
 /**
  * Created by freeFreAme on 2019/1/18.
  */
-public class FragmentDetails extends BaseFragment  implements android.os.Handler.Callback{
+public class FragmentDetails extends BaseFragment implements android.os.Handler.Callback {
     //历史记录组件
     private BeforeOrAfterCalendarView calenderView;
 
@@ -110,12 +112,16 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
     private Handler getMaxHeartRateHandler;
     private Handler getMinHeartRateHandler;
     private Handler getUserPhysicalHandler;
-    PhysicalService physicalService=new PhysicalService();
+    private Handler getPlanHandler;
+    private Integer totalStepNum;
+    PhysicalService physicalService = new PhysicalService();
+
     @Override
     protected int setLayoutId() {
         return R.layout.fragment_details;
 
     }
+
     @Override
     protected void initView() {
 
@@ -127,64 +133,66 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
         super.initData();
         //具体时间
         curSelDate = TimeUtil.getCurrentDate();
-         getHeartRateFromNet((String) SPUtlis.get(mActivity, AppConfig.AUTO_LOGIN_NAME,""));
-         getMaxHeartRateFromNet((String) SPUtlis.get(mActivity, AppConfig.AUTO_LOGIN_NAME,""));
-         getMinHeartRateFromNet((String) SPUtlis.get(mActivity, AppConfig.AUTO_LOGIN_NAME,""));
-         getUserPhysicalFromNet((String) SPUtlis.get(mActivity, AppConfig.AUTO_LOGIN_NAME,""));
-         getMinHeartRateHandler=new Handler(){
-             @Override
-             public void handleMessage(Message msg) {
-                UserHeartRate userHeartRate=(UserHeartRate)msg.obj;
-                 if ((UserHeartRate)msg.obj==null) {
-                     Toast.makeText(mActivity, "用户暂时未拥有数据", Toast.LENGTH_SHORT).show();
-                 }else {
-                     min_heart_rate_data.setText(userHeartRate.getUserHeartRate());
-                 }
-             }
-         };
-         getMaxHeartRateHandler=new  Handler() {
-             @Override
-             public void handleMessage(Message msg) {
-                 UserHeartRate userHeartRate=(UserHeartRate) msg.obj;
-                 if ((UserHeartRate)msg.obj==null) {
-                     Toast.makeText(mActivity, "用户暂时未拥有数据", Toast.LENGTH_SHORT).show();
-                 }else {
-                     max_heart_rate_data.setText(userHeartRate.getUserHeartRate());
-                 }
-             }
-         };
-
-        //体重身高数据
-        getUserPhysicalHandler=new Handler(){
+        getHeartRateFromNet((String) SPUtlis.get(mActivity, AppConfig.AUTO_LOGIN_NAME, ""));
+        getMaxHeartRateFromNet((String) SPUtlis.get(mActivity, AppConfig.AUTO_LOGIN_NAME, ""));
+        getMinHeartRateFromNet((String) SPUtlis.get(mActivity, AppConfig.AUTO_LOGIN_NAME, ""));
+        getUserPhysicalFromNet((String) SPUtlis.get(mActivity, AppConfig.AUTO_LOGIN_NAME, ""));
+        getUserPlanByNet((String) SPUtlis.get(mActivity, AppConfig.AUTO_LOGIN_NAME, ""));
+        getMinHeartRateHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                UserPhysical userPhysical=(UserPhysical) msg.obj;
-                if ((UserPhysical) msg.obj==null) {
+                UserHeartRate userHeartRate = (UserHeartRate) msg.obj;
+                if ((UserHeartRate) msg.obj == null) {
                     Toast.makeText(mActivity, "用户暂时未拥有数据", Toast.LENGTH_SHORT).show();
-                }else{
-                weightView.setPercent(Float.parseFloat(userPhysical.getUserWeight()));
-                weight_data_text.setText(userPhysical.getUserWeight()+"kg");
-                user_sex.setText(userPhysical.getUserSex());
-                user_height.setText(userPhysical.getUserHeight()+"cm");
-                String userBodyRate=physicalService.getBodyRate(Double.parseDouble(userPhysical.getUserHeight()),
-                        Double.parseDouble(userPhysical.getUserHeight()),userPhysical.getUserSex());
-                user_survey_data.setText(userBodyRate);}
+                } else {
+                    min_heart_rate_data.setText(userHeartRate.getUserHeartRate());
+                }
+            }
+        };
+        getMaxHeartRateHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                UserHeartRate userHeartRate = (UserHeartRate) msg.obj;
+                if ((UserHeartRate) msg.obj == null) {
+                    Toast.makeText(mActivity, "用户暂时未拥有数据", Toast.LENGTH_SHORT).show();
+                } else {
+                    max_heart_rate_data.setText(userHeartRate.getUserHeartRate());
+                }
+            }
+        };
+
+        //体重身高数据
+        getUserPhysicalHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                UserPhysical userPhysical = (UserPhysical) msg.obj;
+                if ((UserPhysical) msg.obj == null) {
+                    Toast.makeText(mActivity, "用户暂时未拥有数据", Toast.LENGTH_SHORT).show();
+                } else {
+                    weightView.setPercent(Float.parseFloat(userPhysical.getUserWeight()));
+                    weight_data_text.setText(userPhysical.getUserWeight() + "kg");
+                    user_sex.setText(userPhysical.getUserSex());
+                    user_height.setText(userPhysical.getUserHeight() + "cm");
+                    String userBodyRate = physicalService.getBodyRate(Double.parseDouble(userPhysical.getUserHeight()),
+                            Double.parseDouble(userPhysical.getUserHeight()), userPhysical.getUserSex());
+                    user_survey_data.setText(userBodyRate);
+                }
             }
         };
 
 
-        //  初始化折线数据
+        //  初始化心率数据
 
-         getHeartRateHandler = new Handler() {
+        getHeartRateHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
 //                if (msg.obj == null) {
 //                    Toast.makeText(mActivity, "用户暂时未拥有数据", Toast.LENGTH_SHORT).show();
 //                }else {
-                    userHeartRateList = (List<UserHeartRate>) msg.obj;
+                userHeartRateList = (List<UserHeartRate>) msg.obj;
                 if (userHeartRateList.size() == 0) {
                     Toast.makeText(mActivity, "用户暂时未拥有数据", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     mItems = new ArrayList<>();
                     mItems.add(new LineChartView.ItemBean(1489507200, Integer.parseInt(userHeartRateList.get(0).getUserHeartRate())));
                     mItems.add(new LineChartView.ItemBean(1489593600, Integer.parseInt(userHeartRateList.get(1).getUserHeartRate())));
@@ -209,6 +217,30 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
                 }
             }
         };
+        //
+        getPlanHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                UserPlan userPlanNet = (UserPlan) msg.obj;
+                if ((UserPlan) msg.obj == null) {
+                    Toast.makeText(mActivity, "用户暂时未拥有数据", Toast.LENGTH_SHORT).show();
+                } else {
+                    UserStep userStep = stepDataDao.getCurDataByDate(curSelDate);
+                    String isRemind = userPlanNet.getIsRemind();
+                    String remindTime = userPlanNet.getRemindTime();
+                    Log.e("aa",""+userPlanNet.getPlanSteps());
+                    totalStepNum = Integer.parseInt(userPlanNet.getPlanSteps());
+                    if (userStep != null) {
+                        int steps = Integer.parseInt(userStep.getSteps());
+                        //获取全局的步数
+                        runningView.setCurrentCount(0, totalStepNum, steps);
+                        Log.e("aaaaaaa", "" + totalStepNum);
+                    } else {
+                        runningView.setCurrentCount(0, totalStepNum, 0);
+                    }
+                }
+            }
+        };
 
 
         //用户历史步数
@@ -226,20 +258,22 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
             supportTv.setVisibility(View.VISIBLE);
         }
     }
-    @OnClick({R.id.running_count_card,R.id.heart_rate_card,R.id.weight_card})
+
+    @OnClick({R.id.running_count_card, R.id.heart_rate_card,R.id.weight_card})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.running_count_card:
-                mActivity.startActivity(new Intent(mActivity,SetPlanActivity.class));
+                mActivity.startActivity(new Intent(mActivity, Last7DayStepActivity.class));
                 break;
             case R.id.heart_rate_card:
                 mActivity.startActivity(new Intent(mActivity, HeartRateActivity.class));
                 break;
             case R.id.weight_card:
-                mActivity.startActivity(new Intent(mActivity, PhysicalActivity.class));
+                mActivity.startActivity(new Intent(mActivity, Last7DayStepActivity.class));
                 break;
         }
     }
+
     @Override
     protected void setListener() {
         super.setListener();
@@ -255,12 +289,12 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
     }
 
     private boolean isBind = false;
-        private Messenger mGetReplyMessenger = new Messenger(new Handler((Handler.Callback) mActivity));
-        private Messenger messenger;
+    private Messenger mGetReplyMessenger = new Messenger(new Handler((Handler.Callback) mActivity));
+    private Messenger messenger;
 
-        /**
-         * 开启计步服务
-         */
+    /**
+     * 开启计步服务
+     */
     private void setupService() {
         Intent intent = new Intent(mActivity, StepService.class);
         isBind = getContext().bindService(intent, conn, Context.BIND_AUTO_CREATE);
@@ -325,8 +359,8 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
 
     /**
      * 设置记录数据
-     *
      */
+
     private void setDatas() {
         UserStep userStep = stepDataDao.getCurDataByDate(curSelDate);
 
@@ -338,7 +372,6 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
             //计算总公里数
             totalKmTv.setText(countTotalKM(steps));
             //跑步数据
-            runningView.setCurrentCount(0, 10000, steps);
             mile_data.setText(countTotalKM(steps));
         } else {
             //获取全局的步数
@@ -399,12 +432,13 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
         }
         return false;
     }
+
     /***
      * 从云端获取历史心率数据的部分*/
-    private void getHeartRateFromNet(String userName){
+    private void getHeartRateFromNet(String userName) {
         OkHttpClient mOkHttpClient = new OkHttpClient();
         FormEncodingBuilder builder = new FormEncodingBuilder();
-        builder.add("user_name",userName);
+        builder.add("user_name", userName);
         final Request request = new Request.Builder()
                 .url(AppConfig.GET_USER_HEART_RATE_BY_USER_NAME)
                 .post(builder.build())
@@ -419,7 +453,7 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
             @Override
             public void onResponse(Response response) throws IOException {
                 String responseStr = response.body().string();
-                List<UserHeartRate> userHeartRates=new ArrayList<>();
+                List<UserHeartRate> userHeartRates = new ArrayList<>();
                 userHeartRates = com.alibaba.fastjson.JSONArray.parseArray(responseStr, UserHeartRate.class);
                 Message msg = getHeartRateHandler.obtainMessage();
                 msg.obj = userHeartRates;
@@ -429,10 +463,10 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
         });
     }
 
-    private void getMaxHeartRateFromNet(String userName){
+    private void getMaxHeartRateFromNet(String userName) {
         OkHttpClient mOkHttpClient = new OkHttpClient();
         FormEncodingBuilder builder = new FormEncodingBuilder();
-        builder.add("user_name",userName);
+        builder.add("user_name", userName);
         final Request request = new Request.Builder()
                 .url(AppConfig.GET_MAX_USER_HEART_RATE_BY_USER_NAME)
                 .post(builder.build())
@@ -447,7 +481,7 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
             @Override
             public void onResponse(Response response) throws IOException {
                 String responseStr = response.body().string();
-                UserHeartRate userHeartRates=new UserHeartRate();
+                UserHeartRate userHeartRates = new UserHeartRate();
                 userHeartRates = com.alibaba.fastjson.JSONArray.parseObject(responseStr, UserHeartRate.class);
                 Message msg = getMaxHeartRateHandler.obtainMessage();
                 msg.obj = userHeartRates;
@@ -456,10 +490,11 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
             }
         });
     }
-    private void getMinHeartRateFromNet(String userName){
+
+    private void getMinHeartRateFromNet(String userName) {
         OkHttpClient mOkHttpClient = new OkHttpClient();
         FormEncodingBuilder builder = new FormEncodingBuilder();
-        builder.add("user_name",userName);
+        builder.add("user_name", userName);
         final Request request = new Request.Builder()
                 .url(AppConfig.GET_MIN_USER_HEART_RATE_BY_USER_NAME)
                 .post(builder.build())
@@ -474,7 +509,7 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
             @Override
             public void onResponse(Response response) throws IOException {
                 String responseStr = response.body().string();
-                UserHeartRate userHeartRates=new UserHeartRate();
+                UserHeartRate userHeartRates = new UserHeartRate();
                 userHeartRates = com.alibaba.fastjson.JSONArray.parseObject(responseStr, UserHeartRate.class);
                 Message msg = getMinHeartRateHandler.obtainMessage();
                 msg.obj = userHeartRates;
@@ -483,12 +518,13 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
             }
         });
     }
-    public void getUserPhysicalFromNet(String userName){
+
+    public void getUserPhysicalFromNet(String userName) {
         OkHttpClient mOkHttpClient = new OkHttpClient();
         FormEncodingBuilder builder = new FormEncodingBuilder();
-        builder.add("user_name",userName);
+        builder.add("user_name", userName);
         final Request request = new Request.Builder()
-                .url(AppConfig.GET_USER_PHYSICAL_BY_USER_NAME)
+                .url(AppConfig.GET_USER_PHYSICAL_BY_USER_NAME_FOR_ALL)
                 .post(builder.build())
                 .build();
         Call call = mOkHttpClient.newCall(request);
@@ -501,7 +537,7 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
             @Override
             public void onResponse(Response response) throws IOException {
                 String responseStr = response.body().string();
-                UserPhysical userPhysical=new UserPhysical();
+                UserPhysical userPhysical = new UserPhysical();
                 userPhysical = com.alibaba.fastjson.JSONArray.parseObject(responseStr, UserPhysical.class);
                 Message msg = getUserPhysicalHandler.obtainMessage();
                 msg.obj = userPhysical;
@@ -511,6 +547,33 @@ public class FragmentDetails extends BaseFragment  implements android.os.Handler
         });
     }
 
+    public void getUserPlanByNet(String userName) {
+        OkHttpClient mOkHttpClient = new OkHttpClient();
+        FormEncodingBuilder builder = new FormEncodingBuilder();
+        builder.add("user_name", userName);
+        final Request request = new Request.Builder()
+                .url(AppConfig.GET_USER_STEP_PLAN_BY_USERNAME)
+                .post(builder.build())
+                .build();
+        Call call = mOkHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                String responseStr = response.body().string();
+                UserPlan userPlan = new UserPlan();
+                userPlan = com.alibaba.fastjson.JSONArray.parseObject(responseStr, UserPlan.class);
+                Message msg = getPlanHandler.obtainMessage();
+                msg.obj = userPlan;
+                getPlanHandler.sendMessage(msg);
+
+            }
+        });
+    }
 
 
     @Override

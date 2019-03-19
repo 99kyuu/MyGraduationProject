@@ -10,18 +10,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
-import com.gyf.barlibrary.OnKeyboardListener;
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.bean.UserPlan;
 import com.ldx.mygraduationproject.constant.AppConfig;
-import com.ldx.mygraduationproject.db.StepDataDao;
-import com.ldx.mygraduationproject.fragment.FragmentDetails;
 import com.ldx.mygraduationproject.utils.NetUtils;
 import com.ldx.mygraduationproject.utils.SPUtlis;
 import com.squareup.okhttp.Call;
@@ -31,7 +25,6 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import org.litepal.LitePal;
-
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -250,7 +243,7 @@ public class SetPlanActivity extends BaseActivity {
         }
         if (NetUtils.isConnected(this) == true) {
             saveUserPlanToNet((String) SPUtlis.get(SetPlanActivity.this, AppConfig.AUTO_LOGIN_NAME,""), remindTime, isRemind, planSteps);
-
+            startActivity(new Intent(SetPlanActivity.this,MainActivity.class));
         } else {
             userPlan.save();
             Toast.makeText(this, ""+"计划本地存储成功", Toast.LENGTH_SHORT).show();
