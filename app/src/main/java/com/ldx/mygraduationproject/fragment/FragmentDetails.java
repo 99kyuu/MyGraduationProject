@@ -19,10 +19,7 @@ import android.widget.Toast;
 
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.activity.HeartRateActivity;
-import com.ldx.mygraduationproject.activity.Last7DayStepActivity;
-import com.ldx.mygraduationproject.activity.MainActivity;
-import com.ldx.mygraduationproject.activity.SetPlanActivity;
-import com.ldx.mygraduationproject.activity.PhysicalActivity;
+import com.ldx.mygraduationproject.activity.Last7DayWeightActivity;
 import com.ldx.mygraduationproject.bean.UserHeartRate;
 import com.ldx.mygraduationproject.bean.UserPhysical;
 import com.ldx.mygraduationproject.bean.UserPlan;
@@ -263,13 +260,13 @@ public class FragmentDetails extends BaseFragment implements android.os.Handler.
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.running_count_card:
-                mActivity.startActivity(new Intent(mActivity, Last7DayStepActivity.class));
+                mActivity.startActivity(new Intent(mActivity, Last7DayWeightActivity.class));
                 break;
             case R.id.heart_rate_card:
                 mActivity.startActivity(new Intent(mActivity, HeartRateActivity.class));
                 break;
             case R.id.weight_card:
-                mActivity.startActivity(new Intent(mActivity, Last7DayStepActivity.class));
+                mActivity.startActivity(new Intent(mActivity, Last7DayWeightActivity.class));
                 break;
         }
     }

@@ -138,7 +138,7 @@ public class FragmentLogin extends BaseFragment {
             e.printStackTrace();
         }
     }
-    //注册用户方法
+    //用户登录方法
     private void userLogin(String userName,String userPwd) throws
             IOException {
         OkHttpClient mOkHttpClient = new OkHttpClient();

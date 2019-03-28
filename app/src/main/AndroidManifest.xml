@@ -24,6 +24,13 @@
         android:name=".app.MyApplication">
         <!---->
         <!--宣告activity-->
+        <!--loading界面-->
+        <activity android:name=".activity.LoadingActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <!--主界面-->
         <activity android:name="com.ldx.mygraduationproject.activity.MainActivity">
         </activity>
@@ -37,10 +44,7 @@
         <activity android:name=".activity.WebActivity"  />
         <!--登入界面-->
         <activity android:name=".activity.LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity android:name=".activity.ExaminationActivity" />
         <activity android:name=".activity.ScoreActivity" />
@@ -49,7 +53,7 @@
         <activity android:name=".activity.SetActivity"/>
         <activity android:name=".activity.CollectionActivity"/>
         <activity android:name=".activity.PhysicalActivity" />
-        <activity android:name=".activity.Last7DayStepActivity" android:theme="@style/dialogStyle"/>
+        <activity android:name=".activity.Last7DayWeightActivity" android:theme="@style/dialogStyle"/>
         <!-- 设置每日步数 -->
         <activity android:name=".activity.SetPlanActivity" />
         <activity android:name=".activity.SearchActivity"/>
