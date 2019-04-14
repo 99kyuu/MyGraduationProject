@@ -259,4 +259,7 @@ public class MainActivity extends BaseActivity  implements
         headerUserHealthState.setText(StringUtils.getStateForScore(score));
         headerProgress.setProgress(score);
     }
+    public void goSearch() {
+        startActivity(new Intent(MainActivity.this,SearchActivity.class));
+    }
 }

@@ -47,6 +47,7 @@ public class AppConfig {
     //文章
     public static final String GET_ALL_ARTICLE=SERVER_URL_PATH.concat("/article/get_all_article");
     public static final String GET_CLASSES_ARTICLE=SERVER_URL_PATH.concat("/article/get_classes_article");
+    public static final String GET_SEARCH_ARTICLE=SERVER_URL_PATH.concat("/article/get_search_article");
     /*是否自动登录*/
     public static String IS_AUTO_LOGIN = "IS_AUTO_LOGIN";
     /*自动登录用户名*/

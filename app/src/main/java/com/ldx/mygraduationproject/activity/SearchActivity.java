@@ -58,7 +58,7 @@ public class SearchActivity extends BaseActivity {
     private LayoutInflater mInflater = null;
     private ArrayList<String> list = new ArrayList<>();
     private AdapterArticle adapterArticle = null ;
-    private Handler getArticlesHandler;
+    private Handler getGetArticlesHandlerByKeyWord;
     @Override
     protected int setLayoutId() {
         return R.layout.activity_search;
@@ -66,7 +66,6 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        getArticleFromNet();
         list.add("二手烟的危害");
         list.add("感冒");
         list.add("发烧");
@@ -123,40 +122,28 @@ public class SearchActivity extends BaseActivity {
         if (key.isEmpty()){
             Toast.makeText(SearchActivity.this,"输入为空",Toast.LENGTH_LONG).show();
             return;
+        }else{
+            getArticleFromNetByArticleTitle(key);
         }
-        getArticlesHandler = new Handler() {
+        getGetArticlesHandlerByKeyWord = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 List<Article> articles=(ArrayList) msg.obj;
                 adapterArticle.refreshData(articles);
             }
             };
-//        UserBean bean = MedicalCareApplication.getInstance().getUserBean();
-//        disposable = NetworkClient.getUserApi()
-//                .searchAllArticleByTitlePage(bean.getAutoSessionToken(),"0","10",key)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Consumer<ResponseBean<DateBean<ArticleBean>>>() {
-//                    @Override
-//                    public void accept(@NonNull ResponseBean<DateBean<ArticleBean>> bean) throws Exception {
-//                        Log.d("userRegister成功",bean.toString());
-//                        if (bean.getData().getContent().size() == 0){
-//                            Toast.makeText(SearchActivity.this,"无数据",Toast.LENGTH_LONG).show();
-//                        }
-//
-//                    }
-//                }, new Consumer<Throwable>() {
-//                    @Override
-//                    public void accept(@NonNull Throwable throwable) throws Exception {
-//                        Log.d("userRegister错误",throwable.toString());
-//                    }
-//                });
+
+
+
+
     }
-    public void getArticleFromNet() {
+    public void getArticleFromNetByArticleTitle(String keyword) {
         OkHttpClient mOkHttpClient = new OkHttpClient();
         FormEncodingBuilder builder = new FormEncodingBuilder();
+        builder.add("keyword", keyword);
         final Request request = new Request.Builder()
-                .url(AppConfig.GET_ALL_ARTICLE)
+                .url(AppConfig.GET_SEARCH_ARTICLE)
+                .post(builder.build())
                 .build();
         Call call = mOkHttpClient.newCall(request);
         call.enqueue(new Callback() {
@@ -170,9 +157,10 @@ public class SearchActivity extends BaseActivity {
                 String responseStr = response.body().string();
                 List<Article> articles = new ArrayList<>();
                 articles = com.alibaba.fastjson.JSONArray.parseArray(responseStr, Article.class);
-                Message msg = getArticlesHandler.obtainMessage();
+                Message msg = getGetArticlesHandlerByKeyWord.obtainMessage();
                 msg.obj = articles;
-                getArticlesHandler.sendMessage(msg);
+                getGetArticlesHandlerByKeyWord.sendMessage(msg);
+
             }
         });
     }

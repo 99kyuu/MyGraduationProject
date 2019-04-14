@@ -16,46 +16,46 @@
         app:contentInsetStart="@dimen/dp_0"
         app:contentInsetRight="@dimen/dp_0">
 
-            <LinearLayout
-                android:layout_weight="1"
-                android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginRight="@dimen/dp_16"
+            android:layout_weight="1"
+            android:background="@drawable/search_ba"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginLeft="@dimen/dp_16"
-                android:layout_marginRight="@dimen/dp_16"
-                android:background="@drawable/search_ba">
+                android:layout_marginLeft="@dimen/dp_8"
+                android:layout_weight="0"
+                android:background="@drawable/search" />
 
-                <ImageView
-                    android:background="@drawable/search"
-                    android:layout_marginLeft="@dimen/dp_8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0"/>
+            <EditText
+                android:id="@+id/search_ed"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dp_4"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="文章"
+                android:singleLine="true"
+                android:textColorHint="#BDBCBC"
+                android:textSize="@dimen/sp_14" />
 
-                <EditText
-                    android:id="@+id/search_ed"
-                    android:layout_marginLeft="@dimen/dp_4"
-                    android:hint="文章"
-                    android:singleLine="true"
-                    android:textColorHint="#BDBCBC"
-                    android:textSize="@dimen/sp_14"
-                    android:background="@null"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/search_tx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/dp_8"
+                android:layout_weight="0"
+                android:text="搜索"
+                android:textColor="#BDBCBC"
+                android:textSize="@dimen/sp_14" />
 
-                <TextView
-                    android:id="@+id/search_tx"
-                    android:layout_marginRight="@dimen/dp_8"
-                    android:layout_gravity="center"
-                    android:text="搜索"
-                    android:textSize="@dimen/sp_14"
-                    android:textColor="#BDBCBC"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0"/>
-
-            </LinearLayout>
+        </LinearLayout>
 
     </android.support.v7.widget.Toolbar>
 

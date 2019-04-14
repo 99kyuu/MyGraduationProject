@@ -42,17 +42,16 @@
                     android:layout_marginLeft="@dimen/dp_25"
                     android:src="@drawable/user"
                     android:layout_gravity="left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20" />
 
                 <ImageView
                     android:id="@+id/fragment_health_toolbar_search"
-                    android:src="@drawable/search"
-                    android:layout_marginRight="@dimen/dp_25"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
                     android:layout_gravity="right"
-                    />
+                    android:layout_marginRight="@dimen/dp_25"
+                    android:src="@drawable/search" />
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.CollapsingToolbarLayout>
 

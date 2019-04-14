@@ -377,5 +377,16 @@ public class FragmentHeath extends BaseFragment {
             }
         });
     }
+    @OnClick({R.id.fragment_health_toolbar_user, R.id.fragment_health_toolbar_search})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.fragment_health_toolbar_user:
+                ((MainActivity)mActivity).openDraw();
+                break;
+            case R.id.fragment_health_toolbar_search:
+                ((MainActivity)mActivity).goSearch();
+                break;
+        }
+    }
 }
 
