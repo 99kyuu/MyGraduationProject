@@ -68,7 +68,6 @@ public class MainActivity extends BaseActivity  implements
     private static MainActivity mainActivity ;
     public static int screenWidth, screenHeight;
 
-
     private BaseFragmentStatePagerAdapter baseFragmentStatePagerAdapter;
     @Override
     protected int setLayoutId() {
@@ -83,7 +82,10 @@ public class MainActivity extends BaseActivity  implements
         Display display = windowManager.getDefaultDisplay();
         screenWidth = display.getWidth();
         screenHeight = display.getHeight();
+
     }
+
+
 
     @Override
     protected void initView() {

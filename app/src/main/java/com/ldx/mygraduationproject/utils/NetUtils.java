@@ -65,11 +65,21 @@ public class NetUtils {
     public static void openSetting(Activity activity)
     {
         Intent intent = new Intent("/");
-        ComponentName cm = new ComponentName("com.android.settings",
-                "com.android.settings.WirelessSettings");
-        intent.setComponent(cm);
-        intent.setAction("android.intent.action.VIEW");
-        activity.startActivityForResult(intent, 0);
+        if(android.os.Build.VERSION.SDK_INT > 10 ){
+            ComponentName cm = new ComponentName("com.android.settings",
+                    "com.android.settings.Settings");
+            intent.setComponent(cm);
+            intent.setAction("android.intent.action.VIEW");
+            activity.startActivityForResult(intent, 0);
+        }else{
+            ComponentName cm = new ComponentName("com.android.settings",
+                    "com.android.settings.WirelessSettings");
+            intent.setComponent(cm);
+            intent.setAction("android.intent.action.VIEW");
+            activity.startActivityForResult(intent, 0);
+        }
+
+
     }
 
 

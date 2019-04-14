@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.app.MyApplication;
 import com.ldx.mygraduationproject.constant.AppConfig;
+import com.ldx.mygraduationproject.utils.NetUtils;
 import com.ldx.mygraduationproject.utils.SPUtlis;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
@@ -58,7 +59,7 @@ public class LoadingActivity extends BaseActivity {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == IS_LOGIN) {
-                startActivity(new Intent(LoadingActivity.this, MainActivity.class));
+                startActivity(new Intent(LoadingActivity.this, LoadingActivity.class));
                 finish();
             }
             if (msg.what == UN_LOGIN) {
@@ -72,24 +73,36 @@ public class LoadingActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        Log.d("StartActivity", "111111111");
         time1 = System.currentTimeMillis();
-        boolean isAuto = (boolean) SPUtlis.get(LoadingActivity.this, AppConfig.IS_AUTO_LOGIN, false);
+        boolean isAuto = (boolean) SPUtlis.get(LoadingActivity.this, AppConfig
+                .IS_AUTO_LOGIN, false);
         if (isAuto) {
-            String userName = (String) SPUtlis.get(LoadingActivity.this, AppConfig.AUTO_LOGIN_NAME, "");
-            String userPwd = (String) SPUtlis.get(LoadingActivity.this, AppConfig.AUTO_LOGIN_PASS, "");
-            try {
-                userLogin(userName, userPwd);
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (NetUtils.isConnected(this)) {
+                String userName = (String) SPUtlis.get(LoadingActivity.this, AppConfig
+                        .AUTO_LOGIN_NAME, "");
+                String userPwd = (String) SPUtlis.get(LoadingActivity.this, AppConfig
+                        .AUTO_LOGIN_PASS, "");
+                try {
+                    userLogin(userName, userPwd);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Toast.makeText(LoadingActivity.this, "网络未连接，请连接",
+                        Toast.LENGTH_LONG).show();
+                NetUtils.openSetting(LoadingActivity.this);
             }
-//            Log.d("StartActivity获取", name + "   " + pass);
-//            MyApplication.getInstance().setUserBean(bean);
         } else {
-            Toast.makeText(LoadingActivity.this, "未设置自动登录,请登录", Toast.LENGTH_LONG).show();
-            sleep(UN_LOGIN);
+            if (NetUtils.isConnected(this)) {
+                Toast.makeText(LoadingActivity.this, "未设置自动登录,请登录",
+                        Toast.LENGTH_LONG).show();
+                sleep(UN_LOGIN);
+            }else{
+                Toast.makeText(LoadingActivity.this, "网络未连接，请连接",
+                        Toast.LENGTH_LONG).show();
+                NetUtils.openSetting(LoadingActivity.this);
+            }
         }
-
     }
 
     private void userLogin(String userName, String userPwd) throws

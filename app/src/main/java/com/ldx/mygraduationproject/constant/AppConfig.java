@@ -14,7 +14,7 @@ public class AppConfig {
 
 //    192.168.124.9
     //192.168.1.104
-
+//http://172.16.146.233学校
     //aliyun 106.14.204.72
     //用户类下功能 /userApi
     public final static String SERVER_URL_PATH = "http://192.168.1.104:8100/api";
@@ -46,6 +46,7 @@ public class AppConfig {
     public static final int MSG_FROM_SERVER = 1;
     //文章
     public static final String GET_ALL_ARTICLE=SERVER_URL_PATH.concat("/article/get_all_article");
+    public static final String GET_CLASSES_ARTICLE=SERVER_URL_PATH.concat("/article/get_classes_article");
     /*是否自动登录*/
     public static String IS_AUTO_LOGIN = "IS_AUTO_LOGIN";
     /*自动登录用户名*/

@@ -111,7 +111,21 @@ public class FragmentDetails extends BaseFragment implements android.os.Handler.
     private Handler getUserPhysicalHandler;
     private Handler getPlanHandler;
     private Integer totalStepNum;
+    private boolean run = false;
+    private final Handler getHandlerforisRefersh = new Handler();
     PhysicalService physicalService = new PhysicalService();
+
+    private final Runnable task = new Runnable() {
+        @Override
+        public void run() {
+            // TODO Auto-generated method stub
+            if (run) {
+                initData();
+                initView();
+                getHandlerforisRefersh.postDelayed(this, 20000000);
+            }
+        }
+    };
 
     @Override
     protected int setLayoutId() {
@@ -129,6 +143,8 @@ public class FragmentDetails extends BaseFragment implements android.os.Handler.
     protected void initData() {
         super.initData();
         //具体时间
+        run = true;
+        getHandlerforisRefersh.postDelayed(task, 60000);
         curSelDate = TimeUtil.getCurrentDate();
         getHeartRateFromNet((String) SPUtlis.get(mActivity, AppConfig.AUTO_LOGIN_NAME, ""));
         getMaxHeartRateFromNet((String) SPUtlis.get(mActivity, AppConfig.AUTO_LOGIN_NAME, ""));
@@ -404,10 +420,6 @@ public class FragmentDetails extends BaseFragment implements android.os.Handler.
         stepDataDao = new StepDataDao(mActivity);
         userStepList.clear();
         userStepList.addAll(stepDataDao.getAllDatas());
-        if (userStepList.size() >= 7) {
-            // TODO: 2019/1/24在这里获取历史记录条数，当条数达到7条或以上时，就开始删除第七天之前的数据,暂未实现
-
-        }
     }
 
     @Override

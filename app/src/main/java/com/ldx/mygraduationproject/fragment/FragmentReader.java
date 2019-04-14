@@ -5,20 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.activity.WebActivity;
 import com.ldx.mygraduationproject.adapter.AdapterArticle;
 import com.ldx.mygraduationproject.bean.Article;
-import com.ldx.mygraduationproject.bean.UserPlan;
 import com.ldx.mygraduationproject.constant.AppConfig;
 import com.ldx.mygraduationproject.utils.GlideImageLoader;
 import com.squareup.okhttp.Call;
@@ -58,7 +53,7 @@ public class FragmentReader extends BaseFragment {
 
     @Override
     protected int setLayoutId() {
-        return R.layout.fragment_health;
+        return R.layout.fragment_reader;
     }
 
     @Override
@@ -100,7 +95,6 @@ public class FragmentReader extends BaseFragment {
         getArticlesHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-
                  articleArrayList = (List<Article>) msg.obj;
                 adapterArticle = new AdapterArticle(mActivity, null);
                 fragmentHealthArticleRv.setLayoutManager(new LinearLayoutManager(mActivity));
@@ -130,9 +124,7 @@ public class FragmentReader extends BaseFragment {
                                 break;
 
                         }
-
                         //banner设置方法全部调用完毕时最后调用
-
                         Intent intent = new Intent(mActivity, WebActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putInt(AppConfig.WEB_INTENT_MODE, WebActivity.MODE_ARTICLE);
@@ -145,12 +137,12 @@ public class FragmentReader extends BaseFragment {
         };
     }
 
-//    private void setFragmentHealthArticleRv() {
-////        adapterArticle = new AdapterArticle(mActivity, null);
-////        fragmentHealthArticleRv.setLayoutManager(new LinearLayoutManager(mActivity));
-////        fragmentHealthArticleRv.setAdapter(adapterArticle);
-////        getData( );
-//    }
+    private void setFragmentHealthArticleRv() {
+        adapterArticle = new AdapterArticle(mActivity, null);
+        fragmentHealthArticleRv.setLayoutManager(new LinearLayoutManager(mActivity));
+        fragmentHealthArticleRv.setAdapter(adapterArticle);
+        getData( );
+    }
 
     public void getData( ) {
         adapterArticle.setData(articleArrayList);

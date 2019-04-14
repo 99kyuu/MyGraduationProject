@@ -153,9 +153,12 @@ public class SetPlanActivity extends BaseActivity {
                 public void handleMessage(Message msg) {
                     UserPlan userPlanNet = (UserPlan) msg.obj;
                     userPlan = userPlanNet;
-                    Log.e("e5",""+userPlan.getIsRemind());
-                    Log.e("e6",""+userPlan.getRemindTime());
-                    Log.e("e7",""+userPlan.getPlanSteps());
+                    if (userPlan == null) {
+                        Toast.makeText(SetPlanActivity.this, "当前无计划", Toast.LENGTH_SHORT).show();
+                    } else {
+                    Log.e("e5", "" + userPlan.getIsRemind());
+                    Log.e("e6", "" + userPlan.getRemindTime());
+                    Log.e("e7", "" + userPlan.getPlanSteps());
                     String planSteps = userPlan.getPlanSteps();
                     String isRemind = userPlan.getIsRemind();
                     String remindTime = userPlan.getRemindTime();
@@ -176,6 +179,7 @@ public class SetPlanActivity extends BaseActivity {
                     if (!remindTime.isEmpty()) {
                         tv_remind_time.setText(remindTime);
                     }
+                }
                 }
             };
         } else {

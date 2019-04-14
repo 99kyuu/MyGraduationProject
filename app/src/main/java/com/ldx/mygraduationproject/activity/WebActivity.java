@@ -74,9 +74,8 @@ public class WebActivity extends BaseActivity {
             toolbarTitle.setText("病症详情");
             content = content.trim();
             String s = "上呼吸道感染";
-            Log.i("WebActivity1",content + (content.equals(s)));
             content = AppConfig.BAIKE + content.trim();
-            Log.i("WebActivity2",content);
+
         }else {
 
         }
