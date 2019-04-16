@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
 
 import com.ldx.mygraduationproject.activity.MainActivity;
+import com.ldx.mygraduationproject.fragment.FragmentBuy;
 import com.ldx.mygraduationproject.fragment.FragmentHeath;
 import com.ldx.mygraduationproject.fragment.FragmentMedicalRecords;
 import com.ldx.mygraduationproject.fragment.FragmentReader;
@@ -21,8 +22,8 @@ public class BaseFragmentStatePagerAdapter extends FragmentStatePagerAdapter {
     private FragmentDetails fragmentDetails = null;
 //    private FragmentReader fragmentReader =null;
     private FragmentHeath fragmentHeath=null;
-    private FragmentMedicalRecords fragmentMedicalRecords=null;
-
+//    private FragmentMedicalRecords fragmentMedicalRecords=null;
+    private FragmentBuy fragmentBuy=null;
 
 
 
@@ -32,7 +33,8 @@ public class BaseFragmentStatePagerAdapter extends FragmentStatePagerAdapter {
         fragmentDetails = new FragmentDetails();
 //        fragmentReader =new FragmentReader();
         fragmentHeath=new FragmentHeath();
-        fragmentMedicalRecords=new FragmentMedicalRecords();
+//        fragmentMedicalRecords=new FragmentMedicalRecords();
+        fragmentBuy=new FragmentBuy();
     }
 
 
@@ -63,7 +65,7 @@ public class BaseFragmentStatePagerAdapter extends FragmentStatePagerAdapter {
                 fragment = fragmentDetails;
                 break;
             case MainActivity.PAGE_THREE:
-                fragment = fragmentMedicalRecords;
+                fragment = fragmentBuy;
         }
         return fragment;
     }

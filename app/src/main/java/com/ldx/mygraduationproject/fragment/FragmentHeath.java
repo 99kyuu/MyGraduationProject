@@ -43,12 +43,7 @@ import io.reactivex.schedulers.Schedulers;
 
 
 /**
- * @author: tao
- * @time: 2018/8/24
- * @e-mail: 1462320178@qq.com
- * @version: 1.0
- * @exception: 无
- * @explain: 说明
+ * Created by freeFreAme on 2018/12/26.
  */
 public class FragmentHeath extends BaseFragment {
 

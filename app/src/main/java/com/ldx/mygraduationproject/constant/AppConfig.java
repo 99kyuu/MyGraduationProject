@@ -17,7 +17,7 @@ public class AppConfig {
 //http://172.16.146.233学校
     //aliyun 106.14.204.72
     //用户类下功能 /userApi
-    public final static String SERVER_URL_PATH = "http://192.168.1.104:8100/api";
+    public final static String SERVER_URL_PATH = "http://192.168.1.102:8100/api";
     public final static String REGISTER_NEW_USER= SERVER_URL_PATH.concat("/security/register_new_user");
     public final static String USER_LOGIN= SERVER_URL_PATH.concat("/security/user_login");
     public final static String RESET_VALID_CODE= SERVER_URL_PATH.concat("/security/reset_valid_code");
@@ -48,6 +48,8 @@ public class AppConfig {
     public static final String GET_ALL_ARTICLE=SERVER_URL_PATH.concat("/article/get_all_article");
     public static final String GET_CLASSES_ARTICLE=SERVER_URL_PATH.concat("/article/get_classes_article");
     public static final String GET_SEARCH_ARTICLE=SERVER_URL_PATH.concat("/article/get_search_article");
+    //药品店
+    public static final String GET_ALL_MEDICINE=SERVER_URL_PATH.concat("/medicine/get_all_medicine");
     /*是否自动登录*/
     public static String IS_AUTO_LOGIN = "IS_AUTO_LOGIN";
     /*自动登录用户名*/
