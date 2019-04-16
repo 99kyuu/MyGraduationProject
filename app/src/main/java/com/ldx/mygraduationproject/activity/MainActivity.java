@@ -262,4 +262,7 @@ public class MainActivity extends BaseActivity  implements
     public void goSearch() {
         startActivity(new Intent(MainActivity.this,SearchActivity.class));
     }
+    public void goSearchForMedicine() {
+        startActivity(new Intent(MainActivity.this,SearchActivity.class));
+    }
 }

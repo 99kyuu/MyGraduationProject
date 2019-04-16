@@ -1,12 +1,14 @@
 package com.ldx.mygraduationproject.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.bean.Medicine;
+import com.ldx.mygraduationproject.utils.GlideUtils;
 
 import java.util.List;
 
@@ -31,7 +33,9 @@ public class AdapterMedicineUse extends SimpleAdapter<Medicine> {
 
     @Override
     protected void change(BaseViewHolder viewHolder, Medicine medicine, int position) {
-        itemMainCurrencyImg = viewHolder.findView(R.id.item_collection_img);
+        itemMainCurrencyImg = viewHolder.findView(R.id.item_main_currency_img);
+        Log.i("AdapterMedicine",medicine.getMedicineImg());
+        GlideUtils.loadImageView(mContext,"https://" + medicine.getMedicineImg(),itemMainCurrencyImg);
         itemMainCurrencyAdd = viewHolder.findView(R.id.item_main_currency_add);
         itemMainCurrencyName = viewHolder.findView(R.id.item_main_currency_name);
         itemMainCurrencyUse = viewHolder.findView(R.id.item_main_currency_use);

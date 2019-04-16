@@ -22,6 +22,7 @@ public class Medicine {
     private String medicineType;
     private String usedNum;
     private String usedRank;
+    private String medicineImg;
 
     public int getId() {
         return id;
@@ -79,6 +80,14 @@ public class Medicine {
         this.usedRank = usedRank;
     }
 
+    public String getMedicineImg() {
+        return medicineImg;
+    }
+
+    public void setMedicineImg(String medicineImg) {
+        this.medicineImg = medicineImg;
+    }
+
     @Override
     public String toString() {
         return "Medicine{" +
@@ -89,6 +98,7 @@ public class Medicine {
                 ", medicineType='" + medicineType + '\'' +
                 ", usedNum='" + usedNum + '\'' +
                 ", usedRank='" + usedRank + '\'' +
+                ", medicineImg='" + medicineImg + '\'' +
                 '}';
     }
 }

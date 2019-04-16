@@ -65,7 +65,9 @@ public class FragmentBuy extends BaseFragment {
     private AdapterMedicineUse adapterMedicineUse;
     private Handler getMedicinesHandler;
     private Handler getMedicinesByKeyHandler;
+    private Handler getMedicinesByTypeHandler;
     private List<Medicine> medicineArrayList;
+
     @Override
     protected int setLayoutId() {
         return R.layout.fragment_buy;
@@ -77,6 +79,11 @@ public class FragmentBuy extends BaseFragment {
         getMedicineFromNet();
         getTop100MedicineRankPage();
 //        getMedicineByNamePage();
+//        if (fragmentMainTab.getTabAt(0)) {
+//         findByType("");
+//        }
+
+//        findByType("");
     }
 
     @SuppressLint("HandlerLeak")
@@ -84,28 +91,18 @@ public class FragmentBuy extends BaseFragment {
         getMedicinesHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-               medicineArrayList = (List<Medicine>) msg.obj;
-               adapterMedicineUse.refreshData(medicineArrayList);
+                medicineArrayList = (List<Medicine>) msg.obj;
+                adapterMedicineUse.refreshData(medicineArrayList);
+                adapterMedicine.refreshData(medicineArrayList);
             }
         };
     }
 
-    public void getMedicineByNamePage() {
-//        disposable = NetworkClient.getUserApi()
-//                .getMedicineByNamePage(userBean.getAutoSessionToken(), "0", "10","感")
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Consumer<ResponseBean<DateBean<MedicineBean>>>() {
-//                    @Override
-//                    public void accept(@NonNull ResponseBean<DateBean<MedicineBean>> bean) throws Exception {
-//                        adapterMedicine.refreshData(bean.getData().getContent());
-//                    }
-//                }, new Consumer<Throwable>() {
-//                    @Override
-//                    public void accept(@NonNull Throwable throwable) throws Exception {
-//                        Log.d("getTop100Medicine", throwable.toString());
-//                    }
-//                });
+    public void getMedicineByNamePage( ) {
+
+
+        adapterMedicine.refreshData(medicineArrayList);
+
     }
 
     @Override
@@ -113,14 +110,11 @@ public class FragmentBuy extends BaseFragment {
         fragmentMainRecommendRv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
         adapterMedicine = new AdapterMedicine(mActivity);
         fragmentMainRecommendRv.setAdapter(adapterMedicine);
-
         fragmentMainTab.addTab(fragmentMainTab.newTab().setText("风热感冒"));
         fragmentMainTab.addTab(fragmentMainTab.newTab().setText("发烧"));
         fragmentMainTab.addTab(fragmentMainTab.newTab().setText("上呼吸道感染"));
         fragmentMainTab.addTab(fragmentMainTab.newTab().setText("清热解毒"));
         fragmentMainTab.addTab(fragmentMainTab.newTab().setText("支气管炎"));
-
-
         fragmentMainHotRv.setLayoutManager(new GridLayoutManager(mActivity, 2));
         adapterMedicineUse = new AdapterMedicineUse(mActivity);
         fragmentMainHotRv.setAdapter(adapterMedicineUse);
@@ -150,6 +144,7 @@ public class FragmentBuy extends BaseFragment {
                 .titleBar(toolbar)
                 .init();
     }
+
     public void getMedicineFromNet() {
         com.squareup.okhttp.OkHttpClient mOkHttpClient = new com.squareup.okhttp.OkHttpClient();
         FormEncodingBuilder builder = new FormEncodingBuilder();
@@ -175,12 +170,13 @@ public class FragmentBuy extends BaseFragment {
             }
         });
     }
-    public void getArticleFromNetByClasses4(String classes) {
+
+    public void findByType(String type) {
         com.squareup.okhttp.OkHttpClient mOkHttpClient = new com.squareup.okhttp.OkHttpClient();
         FormEncodingBuilder builder = new FormEncodingBuilder();
-        builder.add("classes", classes);
+        builder.add("type", type);
         final com.squareup.okhttp.Request request = new com.squareup.okhttp.Request.Builder()
-                .url(AppConfig.GET_ALL_MEDICINE)
+                .url(AppConfig.FIND_BY_TYPE)
                 .post(builder.build())
                 .build();
         com.squareup.okhttp.Call call = mOkHttpClient.newCall(request);
@@ -195,9 +191,9 @@ public class FragmentBuy extends BaseFragment {
                 String responseStr = response.body().string();
                 List<Medicine> articles = new ArrayList<>();
                 articles = com.alibaba.fastjson.JSONArray.parseArray(responseStr, Medicine.class);
-                Message msg = getMedicinesByKeyHandler.obtainMessage();
+                Message msg = getMedicinesByTypeHandler.obtainMessage();
                 msg.obj = articles;
-                getMedicinesByKeyHandler.sendMessage(msg);
+                getMedicinesByTypeHandler.sendMessage(msg);
 
             }
         });
@@ -210,7 +206,7 @@ public class FragmentBuy extends BaseFragment {
                 ((MainActivity) mActivity).openDraw();
                 break;
             case R.id.toolbar_search:
-                ((MainActivity) mActivity).goSearch();
+                ((MainActivity) mActivity).goSearchForMedicine();
                 break;
         }
     }

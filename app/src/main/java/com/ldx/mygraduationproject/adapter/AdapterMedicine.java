@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.bean.Medicine;
+import com.ldx.mygraduationproject.utils.GlideUtils;
 
 import java.util.List;
 
@@ -30,12 +31,15 @@ public class AdapterMedicine extends SimpleAdapter<Medicine> {
 
     @Override
     protected void change(BaseViewHolder viewHolder, Medicine medicine, int position) {
-        Log.i("AdapterMedicine",medicine.toString());
-        itemMainRecommendImg = viewHolder.findView(R.id.item_main_recommend_img);
+        Log.i("AdapterMedicine",medicine.getMedicineImg());
+
         itemMainCurrencyName = viewHolder.findView(R.id.item_main_recommend_name);
         itemMainCurrencyUse = viewHolder.findView(R.id.item_main_recommend_use);
         itemMainRecommendAdd = viewHolder.findView(R.id.item_main_recommend_add);
         itemMainCurrencyName.setText(medicine.getMedicineName());
         itemMainCurrencyUse.setText(medicine.getMedicinePrice() + "￥");
+        itemMainRecommendImg = viewHolder.findView(R.id.item_main_recommend_img);
+        GlideUtils.loadImageView(mContext,"https://" + medicine.getMedicineImg()
+                ,itemMainRecommendImg);
     }
 }
