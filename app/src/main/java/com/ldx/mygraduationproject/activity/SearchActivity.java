@@ -129,7 +129,10 @@ public class SearchActivity extends BaseActivity {
             @Override
             public void handleMessage(Message msg) {
                 List<Article> articles=(ArrayList) msg.obj;
-                adapterArticle.refreshData(articles);
+                if (articles.size()==0) {
+                    Toast.makeText(SearchActivity.this,"当前字段无数据",Toast.LENGTH_LONG).show();
+                }else{
+                adapterArticle.refreshData(articles);}
             }
             };
 

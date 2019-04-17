@@ -49,8 +49,8 @@ public class FragmentBuy extends BaseFragment {
     RecyclerView fragmentMainHotRv;
     @BindView(R.id.fragment_main_banner)
     Banner fragmentMainBanner;
-    @BindView(R.id.fragment_main_use_rv)
-    RecyclerView fragmentMainUseRv;
+//    @BindView(R.id.fragment_main_use_rv)
+//    RecyclerView fragmentMainUseRv;
     @BindView(R.id.fragment_main_tab)
     TabLayout fragmentMainTab;
     private ArrayList<Medicine> beans0 = null;
@@ -183,8 +183,8 @@ public class FragmentBuy extends BaseFragment {
         adapterMedicineUse = new AdapterMedicineUse(mActivity);
         fragmentMainHotRv.setAdapter(adapterMedicineUse);
         setBanner();
-        fragmentMainUseRv.setLayoutManager(new GridLayoutManager(mActivity, 2));
-        fragmentMainUseRv.setAdapter(adapterMedicineUse);
+//        fragmentMainUseRv.setLayoutManager(new GridLayoutManager(mActivity, 2));
+//        fragmentMainUseRv.setAdapter(adapterMedicineUse);
     }
     protected void initView() {
       getMedicineByNamePage();

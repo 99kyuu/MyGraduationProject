@@ -69,11 +69,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"></LinearLayout>
 
-                <ImageView
-                    android:background="@drawable/more"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
@@ -102,11 +97,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"></LinearLayout>
 
-                <ImageView
-                    android:background="@drawable/more"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
             </LinearLayout>
 
             <android.support.design.widget.TabLayout
@@ -129,38 +119,6 @@
                 android:layout_height="@dimen/dp_68">
 
             </com.youth.banner.Banner>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/dp_8">
-                <TextView
-                    android:text="常用药物"
-                    android:textColor="#333333"
-                    android:textSize="@dimen/sp_14"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent" />
-
-                <LinearLayout
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"></LinearLayout>
-
-                <ImageView
-                    android:background="@drawable/more"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/fragment_main_use_rv"
-                android:padding="@dimen/dp_12"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </android.support.v7.widget.RecyclerView>
 
 
         </LinearLayout>
