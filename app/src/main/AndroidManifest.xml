@@ -61,6 +61,7 @@
         <!-- 设置每日步数 -->
         <activity android:name=".activity.SetPlanActivity" />
         <activity android:name=".activity.SearchActivity"/>
+        <activity android:name=".activity.SearchActivityForMed"/>
         <!-- 计步功能 -->
         <service
             android:name=".service.StepService"

@@ -138,7 +138,7 @@ public class FragmentBuy extends BaseFragment {
 
             }
         };
-        fragmentMainRecommendRv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
+        fragmentMainRecommendRv.setLayoutManager(new GridLayoutManager(mActivity, 3));
         adapterMedicine = new AdapterMedicine(mActivity);
         fragmentMainRecommendRv.setAdapter(adapterMedicine);
         fragmentMainTab.addTab(fragmentMainTab.newTab().setText("风热感冒"));
