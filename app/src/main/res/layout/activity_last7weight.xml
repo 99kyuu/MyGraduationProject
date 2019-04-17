@@ -43,7 +43,7 @@
             android:layout_marginStart="@dimen/dp_14"
             android:layout_toEndOf="@+id/weight_image"
             android:layout_toRightOf="@+id/weight_image"
-            android:text="@string/running_count" />
+            android:text="@string/weight" />
 
         <TextView
             android:id="@+id/max_weight_text"
