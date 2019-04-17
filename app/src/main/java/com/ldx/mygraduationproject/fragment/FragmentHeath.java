@@ -195,13 +195,6 @@ public class FragmentHeath extends BaseFragment {
                 int index = tab.getPosition();
                 switch (index) {
                     case 0:
-//                                    if (beans0 == null) {
-//                                        //获取数据的操作
-//                                        getData("0", "10", "0", 0);
-//                                    } else {
-//                                        Log.i("FragmentHeath测试", beans0.toString());
-//                                        adapterArticle.setData(beans0);
-//                                    }
                         adapterArticle.setData(beans1);
                         break;
                     case 1:

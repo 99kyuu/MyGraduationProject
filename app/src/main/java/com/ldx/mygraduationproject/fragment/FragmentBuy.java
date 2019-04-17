@@ -1,5 +1,4 @@
 package com.ldx.mygraduationproject.fragment;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.activity.MainActivity;
 import com.ldx.mygraduationproject.activity.WebActivity;
@@ -26,15 +24,11 @@ import com.ldx.mygraduationproject.utils.GlideImageLoader;
 import com.ldx.mygraduationproject.utils.StringUtils;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.youth.banner.Banner;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.OnClick;
-
-
 import static android.support.constraint.Constraints.TAG;
 
 /**
@@ -59,15 +53,22 @@ public class FragmentBuy extends BaseFragment {
     RecyclerView fragmentMainUseRv;
     @BindView(R.id.fragment_main_tab)
     TabLayout fragmentMainTab;
-
-    private ArrayList<Medicine> list;
+    private ArrayList<Medicine> beans0 = null;
+    private ArrayList<Medicine> beans1 = null;
+    private ArrayList<Medicine> beans2 = null;
+    private ArrayList<Medicine> beans3 = null;
+    private ArrayList<Medicine> beans4 = null;
     private AdapterMedicine adapterMedicine;
     private AdapterMedicineUse adapterMedicineUse;
     private Handler getMedicinesHandler;
     private Handler getMedicinesByKeyHandler;
-    private Handler getMedicinesByTypeHandler;
+    private Handler getMedicinesByType0Handler;
+    private Handler getMedicinesByType1Handler;
+    private Handler getMedicinesByType2Handler;
+    private Handler getMedicinesByType3Handler;
+    private Handler getMedicinesByType4Handler;
     private List<Medicine> medicineArrayList;
-
+    private List<Medicine> medicineArrayListForType;
     @Override
     protected int setLayoutId() {
         return R.layout.fragment_buy;
@@ -75,15 +76,13 @@ public class FragmentBuy extends BaseFragment {
 
     @Override
     protected void initData() {
-//        userBean = AppConfig.getInstance().getUserBean();
         getMedicineFromNet();
         getTop100MedicineRankPage();
-//        getMedicineByNamePage();
-//        if (fragmentMainTab.getTabAt(0)) {
-//         findByType("");
-//        }
-
-//        findByType("");
+         findByType1("发烧");
+         findByType0("风热感冒");
+         findByType2("上呼吸道感染");
+         findByType3("清热解毒");
+         findByType4("支气管炎");
     }
 
     @SuppressLint("HandlerLeak")
@@ -92,21 +91,53 @@ public class FragmentBuy extends BaseFragment {
             @Override
             public void handleMessage(Message msg) {
                 medicineArrayList = (List<Medicine>) msg.obj;
-                adapterMedicineUse.refreshData(medicineArrayList);
                 adapterMedicine.refreshData(medicineArrayList);
             }
         };
     }
 
+    @SuppressLint("HandlerLeak")
     public void getMedicineByNamePage( ) {
+        getMedicinesByType0Handler= new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                medicineArrayListForType = (List<Medicine>) msg.obj;
+                beans0 = (ArrayList<Medicine>) medicineArrayListForType;
+                adapterMedicineUse.refreshData(beans0);
+            }
+        };
+        getMedicinesByType1Handler= new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                medicineArrayListForType = (List<Medicine>) msg.obj;
+                beans1 = (ArrayList<Medicine>) medicineArrayListForType;
 
+            }
+        };
+        getMedicinesByType2Handler= new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                medicineArrayListForType = (List<Medicine>) msg.obj;
+                beans2 = (ArrayList<Medicine>) medicineArrayListForType;
 
-        adapterMedicine.refreshData(medicineArrayList);
+            }
+        };
+        getMedicinesByType3Handler= new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                medicineArrayListForType = (List<Medicine>) msg.obj;
+                beans3 = (ArrayList<Medicine>) medicineArrayListForType;
 
-    }
+            }
+        };
+        getMedicinesByType4Handler= new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                medicineArrayListForType = (List<Medicine>) msg.obj;
+                beans4 = (ArrayList<Medicine>) medicineArrayListForType;
 
-    @Override
-    protected void initView() {
+            }
+        };
         fragmentMainRecommendRv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
         adapterMedicine = new AdapterMedicine(mActivity);
         fragmentMainRecommendRv.setAdapter(adapterMedicine);
@@ -115,17 +146,49 @@ public class FragmentBuy extends BaseFragment {
         fragmentMainTab.addTab(fragmentMainTab.newTab().setText("上呼吸道感染"));
         fragmentMainTab.addTab(fragmentMainTab.newTab().setText("清热解毒"));
         fragmentMainTab.addTab(fragmentMainTab.newTab().setText("支气管炎"));
+        fragmentMainTab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int index = tab.getPosition();
+                switch (index) {
+                    case 0:
+                        adapterMedicineUse.refreshData(beans0);
+                        break;
+                    case 1:
+                        adapterMedicineUse.refreshData(beans1);
+                        break;
+                    case 2:
+                        adapterMedicineUse.refreshData(beans2);
+                        break;
+                    case 3:
+                        adapterMedicineUse.refreshData(beans3);
+                        break;
+                    case 4:
+                        adapterMedicineUse.refreshData(beans4);
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
         fragmentMainHotRv.setLayoutManager(new GridLayoutManager(mActivity, 2));
         adapterMedicineUse = new AdapterMedicineUse(mActivity);
         fragmentMainHotRv.setAdapter(adapterMedicineUse);
-
         setBanner();
-
         fragmentMainUseRv.setLayoutManager(new GridLayoutManager(mActivity, 2));
         fragmentMainUseRv.setAdapter(adapterMedicineUse);
-
     }
-
+    protected void initView() {
+      getMedicineByNamePage();
+    }
     private void setBanner() {
         fragmentMainBanner.setImageLoader(new GlideImageLoader());
         //设置图片集合
@@ -170,11 +233,10 @@ public class FragmentBuy extends BaseFragment {
             }
         });
     }
-
-    public void findByType(String type) {
+    public void findByType0(String type0) {
         com.squareup.okhttp.OkHttpClient mOkHttpClient = new com.squareup.okhttp.OkHttpClient();
         FormEncodingBuilder builder = new FormEncodingBuilder();
-        builder.add("type", type);
+        builder.add("type", type0);
         final com.squareup.okhttp.Request request = new com.squareup.okhttp.Request.Builder()
                 .url(AppConfig.FIND_BY_TYPE)
                 .post(builder.build())
@@ -183,17 +245,116 @@ public class FragmentBuy extends BaseFragment {
         call.enqueue(new com.squareup.okhttp.Callback() {
             @Override
             public void onFailure(com.squareup.okhttp.Request request, IOException e) {
-
             }
-
             @Override
             public void onResponse(com.squareup.okhttp.Response response) throws IOException {
                 String responseStr = response.body().string();
                 List<Medicine> articles = new ArrayList<>();
                 articles = com.alibaba.fastjson.JSONArray.parseArray(responseStr, Medicine.class);
-                Message msg = getMedicinesByTypeHandler.obtainMessage();
+                Message msg = getMedicinesByType0Handler.obtainMessage();
                 msg.obj = articles;
-                getMedicinesByTypeHandler.sendMessage(msg);
+                getMedicinesByType0Handler.sendMessage(msg);
+
+            }
+        });
+    }
+    public void findByType1(String type1) {
+        com.squareup.okhttp.OkHttpClient mOkHttpClient = new com.squareup.okhttp.OkHttpClient();
+        FormEncodingBuilder builder = new FormEncodingBuilder();
+        builder.add("type", type1);
+        final com.squareup.okhttp.Request request = new com.squareup.okhttp.Request.Builder()
+                .url(AppConfig.FIND_BY_TYPE)
+                .post(builder.build())
+                .build();
+        com.squareup.okhttp.Call call = mOkHttpClient.newCall(request);
+        call.enqueue(new com.squareup.okhttp.Callback() {
+            @Override
+            public void onFailure(com.squareup.okhttp.Request request, IOException e) {
+            }
+            @Override
+            public void onResponse(com.squareup.okhttp.Response response) throws IOException {
+                String responseStr = response.body().string();
+                List<Medicine> articles = new ArrayList<>();
+                articles = com.alibaba.fastjson.JSONArray.parseArray(responseStr, Medicine.class);
+                Message msg = getMedicinesByType1Handler.obtainMessage();
+                msg.obj = articles;
+                getMedicinesByType1Handler.sendMessage(msg);
+
+            }
+        });
+    }
+    public void findByType2(String type2) {
+        com.squareup.okhttp.OkHttpClient mOkHttpClient = new com.squareup.okhttp.OkHttpClient();
+        FormEncodingBuilder builder = new FormEncodingBuilder();
+        builder.add("type", type2);
+        final com.squareup.okhttp.Request request = new com.squareup.okhttp.Request.Builder()
+                .url(AppConfig.FIND_BY_TYPE)
+                .post(builder.build())
+                .build();
+        com.squareup.okhttp.Call call = mOkHttpClient.newCall(request);
+        call.enqueue(new com.squareup.okhttp.Callback() {
+            @Override
+            public void onFailure(com.squareup.okhttp.Request request, IOException e) {
+            }
+            @Override
+            public void onResponse(com.squareup.okhttp.Response response) throws IOException {
+                String responseStr = response.body().string();
+                List<Medicine> articles = new ArrayList<>();
+                articles = com.alibaba.fastjson.JSONArray.parseArray(responseStr, Medicine.class);
+                Message msg = getMedicinesByType2Handler.obtainMessage();
+                msg.obj = articles;
+                getMedicinesByType2Handler.sendMessage(msg);
+
+            }
+        });
+    }
+    public void findByType3(String type3) {
+        com.squareup.okhttp.OkHttpClient mOkHttpClient = new com.squareup.okhttp.OkHttpClient();
+        FormEncodingBuilder builder = new FormEncodingBuilder();
+        builder.add("type", type3);
+        final com.squareup.okhttp.Request request = new com.squareup.okhttp.Request.Builder()
+                .url(AppConfig.FIND_BY_TYPE)
+                .post(builder.build())
+                .build();
+        com.squareup.okhttp.Call call = mOkHttpClient.newCall(request);
+        call.enqueue(new com.squareup.okhttp.Callback() {
+            @Override
+            public void onFailure(com.squareup.okhttp.Request request, IOException e) {
+            }
+            @Override
+            public void onResponse(com.squareup.okhttp.Response response) throws IOException {
+                String responseStr = response.body().string();
+                List<Medicine> articles = new ArrayList<>();
+                articles = com.alibaba.fastjson.JSONArray.parseArray(responseStr, Medicine.class);
+                Message msg = getMedicinesByType3Handler.obtainMessage();
+                msg.obj = articles;
+                getMedicinesByType3Handler.sendMessage(msg);
+
+            }
+        });
+    }
+
+    public void findByType4(String type4) {
+        com.squareup.okhttp.OkHttpClient mOkHttpClient = new com.squareup.okhttp.OkHttpClient();
+        FormEncodingBuilder builder = new FormEncodingBuilder();
+        builder.add("type", type4);
+        final com.squareup.okhttp.Request request = new com.squareup.okhttp.Request.Builder()
+                .url(AppConfig.FIND_BY_TYPE)
+                .post(builder.build())
+                .build();
+        com.squareup.okhttp.Call call = mOkHttpClient.newCall(request);
+        call.enqueue(new com.squareup.okhttp.Callback() {
+            @Override
+            public void onFailure(com.squareup.okhttp.Request request, IOException e) {
+            }
+            @Override
+            public void onResponse(com.squareup.okhttp.Response response) throws IOException {
+                String responseStr = response.body().string();
+                List<Medicine> articles = new ArrayList<>();
+                articles = com.alibaba.fastjson.JSONArray.parseArray(responseStr, Medicine.class);
+                Message msg = getMedicinesByType4Handler.obtainMessage();
+                msg.obj = articles;
+                getMedicinesByType4Handler.sendMessage(msg);
 
             }
         });
