@@ -1,0 +1,40 @@
+<com.getbase.floatingactionbutton.FloatingActionsMenu android:id="@+id/multiple_actions"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentEnd="true"
+
+    fab:fab_labelStyle="@style/menu_labels_style"
+    android:layout_marginBottom="16dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginEnd="16dp"
+    skin:enable="true"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skin="http://schemas.android.com/tools">
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/action_grid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        skin:enable="true"
+        fab:fab_colorPressed="#f1f1f1"/>
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/action_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        skin:enable="true"
+        fab:fab_colorPressed="#f1f1f1"/>
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/action_staggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        skin:enable="true"
+        fab:fab_colorPressed="#f1f1f1"/>
+
+</com.getbase.floatingactionbutton.FloatingActionsMenu>

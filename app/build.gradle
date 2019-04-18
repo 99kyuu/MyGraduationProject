@@ -50,4 +50,5 @@ dependencies {
     compile 'com.zkk.view:ZkkRulerView:1.0.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation files('libs/achartengine-1.0.0.jar')
+    compile 'com.getbase:floatingactionbutton:1.9.0'
 }

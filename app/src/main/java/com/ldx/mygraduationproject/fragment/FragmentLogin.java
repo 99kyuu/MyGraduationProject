@@ -197,6 +197,7 @@ public class FragmentLogin extends BaseFragment {
 //        Log.d("afterLogin",data.getUsername());
         SPUtlis.put(mActivity,AppConfig.AUTO_LOGIN_NAME,userName);
         SPUtlis.put(mActivity,AppConfig.AUTO_LOGIN_PASS,userPwd);
+//        SPUtlis.put(mActivity,AppConfig.AUTO_LOGIN_ID,);
         mActivity.startActivity(new Intent(mActivity, MainActivity.class));
         mActivity.finish();
     }

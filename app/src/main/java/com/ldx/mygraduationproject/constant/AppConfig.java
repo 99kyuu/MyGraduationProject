@@ -1,5 +1,7 @@
 package com.ldx.mygraduationproject.constant;
 
+import android.content.Intent;
+
 /**
  * Created by freeFreAme on 2019/1/22.
  */
@@ -58,8 +60,8 @@ public class AppConfig {
     public static String AUTO_LOGIN_NAME = "AUTO_LOGIN_NAME";
     /*自动登录密码*/
     public static String AUTO_LOGIN_PASS = "AUTO_LOGIN_PASS";
-
-
+    /*自动登录用户ID*/
+    public static String AUTO_LOGIN_ID="AUTO_LOGIN_ID";
     /* web activity 传参数*/
     public static String WEB_INTENT = "WEB_INTENT_Bundle";
     /* web activity 传参数*/
