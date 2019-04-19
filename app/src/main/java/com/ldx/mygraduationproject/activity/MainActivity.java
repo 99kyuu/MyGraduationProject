@@ -5,6 +5,9 @@ package com.ldx.mygraduationproject.activity;
  */
 import android.content.Intent;
 import android.os.Build;
+
+
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.adapter.BaseFragmentStatePagerAdapter;
 import com.ldx.mygraduationproject.constant.AppConfig;
@@ -20,6 +23,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+
 import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -35,6 +39,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.BindView;
+
+import static org.litepal.LitePalApplication.getContext;
+
 /**
  * Created by freeFreAme on 2019/2/21.
  */
@@ -57,7 +64,12 @@ public class MainActivity extends BaseActivity  implements
     RadioButton details_message;
     @BindView(R.id.user_record)
     RadioButton user_record;
-
+    @BindView(R.id.action_a)
+    FloatingActionButton action_a;
+    @BindView(R.id.action_b)
+    FloatingActionButton action_b;
+    @BindView(R.id.action_c)
+    FloatingActionButton action_c;
     private int score = 0;
     //几个代表页面的常量
     public static final int PAGE_ONE = 0;
@@ -99,6 +111,29 @@ public class MainActivity extends BaseActivity  implements
         viewPager.setCurrentItem(1);
         viewPager.addOnPageChangeListener(mainActivity);
         setHeader();
+        final FloatingActionButton actionA = (FloatingActionButton) findViewById(R.id.action_a);
+        actionA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //空
+            }
+        });
+//跳转到 FromPointToPoint 活动
+        final FloatingActionButton actionB = (FloatingActionButton) findViewById(R.id.action_b);
+        actionB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+//弹出提示
+        final FloatingActionButton actionC = (FloatingActionButton) findViewById(R.id.action_c);
+        actionC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this,"dianjile",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
@@ -265,4 +300,5 @@ public class MainActivity extends BaseActivity  implements
     public void goSearchForMedicine() {
         startActivity(new Intent(MainActivity.this,SearchActivityForMed.class));
     }
+
 }

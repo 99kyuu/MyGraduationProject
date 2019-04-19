@@ -54,11 +54,11 @@
         <item name="android:textColor">@drawable/tab_menu_text</item>
         <item name="android:textSize">18sp</item>
     </style>
-
-    <style name="menu_labels_style">
-        <item name="android:background">@drawable/fab_label_background</item>
-        <item name="android:textColor">@color/text_white</item>
+    <style name="floatingActionsMenu_fab_style">
+        <item name="android:background">@drawable/fab_label_background</item> //文字背景的样式
+        <item name="android:textColor">@color/text_white</item> //文字的颜色
     </style>
+
 
 
 </resources>

@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.MainActivity">
 
     <RadioGroup
@@ -48,18 +49,43 @@
         android:layout_above="@id/div_tab_bar"
         />
 
-    <com.getbase.floatingactionbutton.FloatingActionsMenu xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:fab="http://schemas.android.com/apk/res-auto"
-        xmlns:skin="http://schemas.android.com/tools"
-
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/multiple_actions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/rg_tab_bar"
+        android:layout_above="@+id/div_tab_bar"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        fab:fab_labelStyle="@style/menu_labels_style"
-        skin:enable="true"></com.getbase.floatingactionbutton.FloatingActionsMenu>
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        fab:fab_expandDirection="up"
+        fab:fab_labelStyle="@style/floatingActionsMenu_fab_style">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/action_a"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_size="mini"
+            fab:fab_icon="@drawable/action_cart"
+            fab:fab_title="购物车" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/action_b"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_size="mini"
+            fab:fab_title="订单" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/action_c"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_size="mini"
+            fab:fab_title="按钮三" />
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+
 
 
 </RelativeLayout>
