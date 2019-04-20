@@ -242,6 +242,7 @@
     <dimen name="dp_432">432.0dip</dimen>
     <dimen name="dp_440">440.0dip</dimen>
     <dimen name="dp_456">456.0dip</dimen>
+    <dimen name="dp_460">460.0dip</dimen>
     <dimen name="dp_468">468.0dip</dimen>
     <dimen name="dp_470">470.0dip</dimen>
     <dimen name="dp_475">475.0dip</dimen>

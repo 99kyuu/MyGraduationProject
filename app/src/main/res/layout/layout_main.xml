@@ -59,11 +59,12 @@
         android:layout_marginBottom="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
+        android:backgroundTint="@color/green"
         fab:fab_expandDirection="up"
         fab:fab_labelStyle="@style/floatingActionsMenu_fab_style">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/action_a"
+            android:id="@+id/action_cart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_size="mini"
@@ -71,18 +72,12 @@
             fab:fab_title="购物车" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/action_b"
+            android:id="@+id/action_order"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_size="mini"
+            fab:fab_icon="@drawable/action_order"
             fab:fab_title="订单" />
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/action_c"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_size="mini"
-            fab:fab_title="按钮三" />
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
 

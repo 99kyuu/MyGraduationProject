@@ -121,7 +121,7 @@ public class FragmentDetails extends BaseFragment implements android.os.Handler.
             // TODO Auto-generated method stub
             if (run) {
                 initData();
-                initView();
+
                 getHandlerforisRefersh.postDelayed(this, 20000000);
             }
         }
@@ -135,7 +135,17 @@ public class FragmentDetails extends BaseFragment implements android.os.Handler.
 
     @Override
     protected void initView() {
-
+        calenderView = new BeforeOrAfterCalendarView(mActivity);
+        movementCalenderLl.addView(calenderView);
+        if (StepCountCheckUtil.isSupportStepCountSensor(mActivity)) {
+            getRecordList();
+            supportTv.setVisibility(View.GONE);
+            setDatas();
+            setupService();
+        } else {
+            totalStepsTv.setText("0");
+            supportTv.setVisibility(View.VISIBLE);
+        }
     }
 
     @SuppressLint("HandlerLeak")
@@ -259,17 +269,17 @@ public class FragmentDetails extends BaseFragment implements android.os.Handler.
         //用户历史步数
 
 //        放到获取宽度之后
-        calenderView = new BeforeOrAfterCalendarView(mActivity);
-        movementCalenderLl.addView(calenderView);
-        if (StepCountCheckUtil.isSupportStepCountSensor(mActivity)) {
-            getRecordList();
-            supportTv.setVisibility(View.GONE);
-            setDatas();
-            setupService();
-        } else {
-            totalStepsTv.setText("0");
-            supportTv.setVisibility(View.VISIBLE);
-        }
+//        calenderView = new BeforeOrAfterCalendarView(mActivity);
+//        movementCalenderLl.addView(calenderView);
+//        if (StepCountCheckUtil.isSupportStepCountSensor(mActivity)) {
+//            getRecordList();
+//            supportTv.setVisibility(View.GONE);
+//            setDatas();
+//            setupService();
+//        } else {
+//            totalStepsTv.setText("0");
+//            supportTv.setVisibility(View.VISIBLE);
+//        }
     }
 
     @OnClick({R.id.running_count_card, R.id.heart_rate_card,R.id.weight_card})

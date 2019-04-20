@@ -3,6 +3,7 @@ package com.ldx.mygraduationproject.activity;
 /**
  * Created by freeFreAme on 2018/12/23.
  */
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 
@@ -10,10 +11,13 @@ import android.os.Build;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.adapter.BaseFragmentStatePagerAdapter;
+import com.ldx.mygraduationproject.bean.Cart;
+import com.ldx.mygraduationproject.bean.User;
 import com.ldx.mygraduationproject.constant.AppConfig;
 import com.ldx.mygraduationproject.utils.LocalReceiver;
 import com.ldx.mygraduationproject.utils.SPUtlis;
 import com.ldx.mygraduationproject.utils.StringUtils;
+import com.squareup.okhttp.FormEncodingBuilder;
 
 
 import android.os.Handler;
@@ -37,6 +41,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -64,12 +72,13 @@ public class MainActivity extends BaseActivity  implements
     RadioButton details_message;
     @BindView(R.id.user_record)
     RadioButton user_record;
-    @BindView(R.id.action_a)
-    FloatingActionButton action_a;
-    @BindView(R.id.action_b)
-    FloatingActionButton action_b;
-    @BindView(R.id.action_c)
-    FloatingActionButton action_c;
+    @BindView(R.id.action_cart)
+    FloatingActionButton action_cart;
+    @BindView(R.id.action_order)
+    FloatingActionButton action_order;
+    private Handler getHandlerforUserId;
+
+
     private int score = 0;
     //几个代表页面的常量
     public static final int PAGE_ONE = 0;
@@ -79,7 +88,8 @@ public class MainActivity extends BaseActivity  implements
     private static boolean isExit=false;
     private static MainActivity mainActivity ;
     public static int screenWidth, screenHeight;
-
+//    public static final String userName=(String) SPUtlis.get(MainActivity.this,
+//            AppConfig.AUTO_LOGIN_NAME, "");
     private BaseFragmentStatePagerAdapter baseFragmentStatePagerAdapter;
     @Override
     protected int setLayoutId() {
@@ -111,29 +121,24 @@ public class MainActivity extends BaseActivity  implements
         viewPager.setCurrentItem(1);
         viewPager.addOnPageChangeListener(mainActivity);
         setHeader();
-        final FloatingActionButton actionA = (FloatingActionButton) findViewById(R.id.action_a);
-        actionA.setOnClickListener(new View.OnClickListener() {
+        getUserId();
+        findIdByName((String) SPUtlis.get(MainActivity.this,
+           AppConfig.AUTO_LOGIN_NAME, ""));
+        action_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //空
+                startActivity(new Intent(MainActivity.this,CartActivity.class));
             }
         });
 //跳转到 FromPointToPoint 活动
-        final FloatingActionButton actionB = (FloatingActionButton) findViewById(R.id.action_b);
-        actionB.setOnClickListener(new View.OnClickListener() {
+        action_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
             }
         });
-//弹出提示
-        final FloatingActionButton actionC = (FloatingActionButton) findViewById(R.id.action_c);
-        actionC.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(MainActivity.this,"dianjile",Toast.LENGTH_SHORT).show();
-            }
-        });
+
+
     }
 
 
@@ -214,7 +219,17 @@ public class MainActivity extends BaseActivity  implements
     public void openDraw(){
         drawerLayout.openDrawer(Gravity.LEFT);
     }
-
+    @SuppressLint("HandlerLeak")
+    public void getUserId(){
+        getHandlerforUserId= new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                User userForId= (User) msg.obj;
+                SPUtlis.put(MainActivity.this,
+                        AppConfig.AUTO_LOGIN_ID,Integer.toString(userForId.getId()));
+            }
+        };
+    }
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (checkedId) {
@@ -300,5 +315,29 @@ public class MainActivity extends BaseActivity  implements
     public void goSearchForMedicine() {
         startActivity(new Intent(MainActivity.this,SearchActivityForMed.class));
     }
+    public void findIdByName(String userName) {
+        com.squareup.okhttp.OkHttpClient mOkHttpClient = new com.squareup.okhttp.OkHttpClient();
+        FormEncodingBuilder builder = new FormEncodingBuilder();
+        builder.add("user_name",userName);
+        final com.squareup.okhttp.Request request = new com.squareup.okhttp.Request.Builder()
+                .url(AppConfig.FIND_BY_USERNAME)
+                .post(builder.build())
+                .build();
+        com.squareup.okhttp.Call call = mOkHttpClient.newCall(request);
+        call.enqueue(new com.squareup.okhttp.Callback() {
+            @Override
+            public void onFailure(com.squareup.okhttp.Request request, IOException e) {
+            }
+            @Override
+            public void onResponse(com.squareup.okhttp.Response response) throws IOException {
+                String responseStr = response.body().string();
+                User user = new User();
+                user = com.alibaba.fastjson.JSONArray.parseObject(responseStr, User.class);
+                Message msg = getHandlerforUserId.obtainMessage();
+                msg.obj = user;
+                getHandlerforUserId.sendMessage(msg);
 
+            }
+        });
+    }
 }

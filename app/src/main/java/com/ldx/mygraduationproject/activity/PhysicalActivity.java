@@ -4,6 +4,7 @@ package com.ldx.mygraduationproject.activity;
 import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -47,6 +48,7 @@ public class PhysicalActivity extends BaseActivity {
     @BindView(R.id.btn_sex)
     CheckBox sex;
     private String userSex;
+    private String userId;
     //具体时间
     private String curSelDate = TimeUtil.getCurrentDate();
     @Override
@@ -56,7 +58,8 @@ public class PhysicalActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
+        userId=(String) SPUtlis.get(PhysicalActivity.this,
+                AppConfig.AUTO_LOGIN_ID, "");
         ruler_height.setOnValueChangeListener(new RulerView.OnValueChangeListener() {
             @Override
             public void onValueChange(float value) {
@@ -78,7 +81,7 @@ public class PhysicalActivity extends BaseActivity {
         }else{
             userSex="男";
         }
-
+        Log.e("acasdasf",""+userId);
     }
 
     public void savePhysical(View view){
@@ -95,6 +98,7 @@ public class PhysicalActivity extends BaseActivity {
         builder.add("user_weight",userWeight);
         builder.add("user_height",userHeight);
         builder.add("user_sex",userSex);
+        builder.add("user_id",userId);
         final Request request = new Request.Builder()
                 .url(AppConfig.ADD_USER_PHYSICAL)
                 .post(builder.build())

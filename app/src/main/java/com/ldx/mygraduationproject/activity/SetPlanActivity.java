@@ -62,7 +62,7 @@ public class SetPlanActivity extends BaseActivity {
     private String planSteps;
     private String isRemind;
     private String remindTime;
-
+    private String userId;
     public void getUserPlanByNet(String userName) {
         OkHttpClient mOkHttpClient = new OkHttpClient();
         FormEncodingBuilder builder = new FormEncodingBuilder();
@@ -99,6 +99,7 @@ public class SetPlanActivity extends BaseActivity {
         builder.add("remind_time", remindTime);
         builder.add("plan_steps", planSteps);
         builder.add("is_remind", isRemind);
+        builder.add("user_id", userId);
         final Request request = new Request.Builder()
                 .url(AppConfig.ADD_USER_PLAN)
                 .post(builder.build())
@@ -144,7 +145,8 @@ public class SetPlanActivity extends BaseActivity {
     @SuppressLint("HandlerLeak")
     @Override
     public void initData() {//获取锻炼计划
-
+        userId=(String) SPUtlis.get(SetPlanActivity.this,
+                AppConfig.AUTO_LOGIN_ID, "");
         if (NetUtils.isConnected(this) == true) {
 
             getUserPlanByNet((String) SPUtlis.get(SetPlanActivity.this, AppConfig.AUTO_LOGIN_NAME,""));

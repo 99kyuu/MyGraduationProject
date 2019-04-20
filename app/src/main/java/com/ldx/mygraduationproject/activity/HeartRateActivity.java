@@ -96,6 +96,7 @@ public class HeartRateActivity extends Activity {
     private static final int[] averageArray = new int[averageArraySize];
     private String heartbeatValue;
     private String heartbeatValueShow;
+    private String userId;
     /**
      * 类型枚举
      * @author ldx
@@ -131,7 +132,8 @@ public class HeartRateActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_heartrate);
         initConfig();
-
+        userId=(String) SPUtlis.get(HeartRateActivity.this,
+                AppConfig.AUTO_LOGIN_ID, "");
     }
     public void addHeartRate(View view){
         String CURRENT_DATE= TimeUtil.getCurrentDate();
@@ -528,6 +530,7 @@ public class HeartRateActivity extends Activity {
         builder.add("user_name", userName);
         builder.add("cur_date", CurDate);
         builder.add("heart_rate", HeartRate);
+        builder.add("user_id",userId);
         final Request request = new Request.Builder()
                 .url(AppConfig.ADD_USER_HEART_RATE)
                 .post(builder.build())

@@ -24,6 +24,7 @@ public class AppConfig {
     public final static String USER_LOGIN= SERVER_URL_PATH.concat("/security/user_login");
     public final static String RESET_VALID_CODE= SERVER_URL_PATH.concat("/security/reset_valid_code");
     public final static String RESET_USER_PASSWORD= SERVER_URL_PATH.concat("/security/reset_user_password");
+    public final static String FIND_BY_USERNAME=SERVER_URL_PATH.concat("/security/find_by_username");
     //步数类下的功能
     //计划类
     public final static String GET_USER_STEP_PLAN_BY_USERNAME=SERVER_URL_PATH.concat("/stepplan/get_user_step_plan_by_username");
