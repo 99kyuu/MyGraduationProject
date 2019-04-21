@@ -11,15 +11,10 @@ public class Cart {
     private String medicineNum;
     private String medicineImg;
     private Integer userId;
+    private int isChoosed;
+    private Boolean isCheck = false;
 
-    public Cart(Integer id, String medicineName, String medicinePrice, String medicineNum, String medicineImg, Integer userId) {
-        this.id = id;
-        this.medicineName = medicineName;
-        this.medicinePrice = medicinePrice;
-        this.medicineNum = medicineNum;
-        this.medicineImg = medicineImg;
-        this.userId = userId;
-    }
+
 
     public Integer getId() {
         return id;
@@ -67,5 +62,21 @@ public class Cart {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public int getIsChoosed() {
+        return isChoosed;
+    }
+
+    public void setIsChoosed(int isChoosed) {
+        this.isChoosed = isChoosed;
+    }
+
+    public Boolean getCheck() {
+        return isCheck;
+    }
+
+    public void setCheck(Boolean check) {
+        isCheck = check;
     }
 }

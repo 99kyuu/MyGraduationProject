@@ -55,6 +55,8 @@ public class AppConfig {
     public static final String GET_ALL_MEDICINE=SERVER_URL_PATH.concat("/medicine/get_all_medicine");
     public static final String FIND_BY_KEYWORD=SERVER_URL_PATH.concat("/medicine/find_by_keyword");
     public static final String FIND_BY_TYPE=SERVER_URL_PATH.concat("/medicine/find_by_type");
+   //购物车
+    public static final String FIND_BY_USER_ID=SERVER_URL_PATH.concat("/cart/find_by_user_id");
     /*是否自动登录*/
     public static String IS_AUTO_LOGIN = "IS_AUTO_LOGIN";
     /*自动登录用户名*/

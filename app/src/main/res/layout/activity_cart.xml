@@ -48,6 +48,7 @@
 
     </RelativeLayout>
     <ListView
+        android:id="@+id/list_cart"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_460" />
     <LinearLayout
