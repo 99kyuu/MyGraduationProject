@@ -25,7 +25,9 @@ import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 
@@ -38,6 +40,9 @@ public class CartActivity extends BaseActivity implements View.OnClickListener
     AdapterCart adapterCart=new AdapterCart(CartActivity.this);
     private boolean flag = false;
     private Handler getCartHandler;
+    private Handler addMedicineHandler;
+    private Handler deleteMedicineHandler;
+    private Handler delMedicinesHandler;
     private List<Cart> shoppingCartList = new ArrayList<>();
     @BindView(R.id.list_cart)
     ListView listCart;
@@ -51,6 +56,8 @@ public class CartActivity extends BaseActivity implements View.OnClickListener
     TextView tvSettlement;
     @BindView(R.id.bt_header_right)
     TextView btnEdit;//tv_edit
+    private double totalPrice = 0.00;// 购买的商品总价
+    private int totalCount = 0;// 购买的商品总数量
     @Override
     protected int setLayoutId() {
         return R.layout.activity_cart;
@@ -70,6 +77,8 @@ public class CartActivity extends BaseActivity implements View.OnClickListener
                 if (carts.size()==0) {
                     Toast.makeText(CartActivity.this,"当前字段无数据",Toast.LENGTH_LONG).show();
                 }else{
+                    adapterCart.setCheckInterface(CartActivity.this);
+                    adapterCart.setModifyCountInterface(CartActivity.this);
                     listCart.setAdapter(adapterCart);
                     adapterCart.setCartList(shoppingCartList);
                 }
@@ -80,6 +89,10 @@ public class CartActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void initView() {
         super.initView();
+        btnEdit.setOnClickListener(this);
+        ckAll.setOnClickListener(this);
+        tvSettlement.setOnClickListener(this);
+        btnBack.setOnClickListener(this);
     }
     public void getCartByUserId(String userId) {
         OkHttpClient mOkHttpClient = new OkHttpClient();
@@ -111,41 +124,71 @@ public class CartActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-//        switch (v.getId()) {
-//            //全选按钮
-//            case R.id.ck_all:
-//                if (shoppingCartList.size() != 0) {
-//                    if (ckAll.isChecked()) {
-//                        for (int i = 0; i < shoppingCartList.size(); i++) {
-//                            shoppingCartList.get(i).setChoosed(true);
-//                        }
-//                        adapterCart.notifyDataSetChanged();
-//                    } else {
-//                        for (int i = 0; i < shoppingCartList.size(); i++) {
-//                            shoppingCartList.get(i).setChoosed(false);
-//                        }
-//                        shoppingCartAdapter.notifyDataSetChanged();
-//                    }
-//                }
-//                statistics();
-//                break;
-//            case R.id.bt_header_right:
-//                flag = !flag;
-//                if (flag) {
-//                    btnEdit.setText("完成");
-//                    shoppingCartAdapter.isShow(false);
-//                } else {
-//                    btnEdit.setText("编辑");
-//                    shoppingCartAdapter.isShow(true);
-//                }
-//                break;
-//            case R.id.tv_settlement: //结算
-//                lementOnder();
-//                break;
-//            case R.id.btn_back:
-//                finish();
-//                break;
-//        }
+        switch (v.getId()) {
+            //全选按钮
+            case R.id.ck_all:
+                if (shoppingCartList.size() != 0) {
+                    if (ckAll.isChecked()) {
+                        for (int i = 0; i < shoppingCartList.size(); i++) {
+                            shoppingCartList.get(i).setChoosed(true);
+                        }
+                        adapterCart.notifyDataSetChanged();
+                    } else {
+                        for (int i = 0; i < shoppingCartList.size(); i++) {
+                            shoppingCartList.get(i).setChoosed(false);
+                        }
+                        adapterCart.notifyDataSetChanged();
+                    }
+                }
+                statistics();
+                break;
+            case R.id.bt_header_right:
+                flag = !flag;
+                if (flag) {
+                    btnEdit.setText("完成");
+                    adapterCart.isShow(false);
+                } else {
+                    btnEdit.setText("编辑");
+                    adapterCart.isShow(true);
+                }
+                break;
+            case R.id.tv_settlement: //结算
+                lementOnder();
+                break;
+            case R.id.btn_back:
+                finish();
+                break;
+        }
+    }
+    public void statistics() {
+        totalCount = 0;
+        totalPrice = 0.00;
+        for (int i = 0; i < shoppingCartList.size(); i++) {
+            Cart cart = shoppingCartList.get(i);
+            if (ckAll.isChecked()) {
+                totalCount++;
+                totalPrice += (Integer.parseInt(cart.getMedicinePrice())) *Integer.parseInt(cart.getMedicineNum());
+            }
+        }
+        tvShowPrice.setText("合计:" + totalPrice);
+        tvSettlement.setText("结算(" + totalCount + ")");
+    }
+    /**
+     * 结算订单、支付
+     */
+    private void lementOnder() {
+        //选中的需要提交的商品清单
+        for (Cart cart:shoppingCartList ){
+            boolean choosed = cart.getChoosed();
+            if (choosed){
+                String medicineName = cart.getMedicineName();
+                int medicineNum = Integer.parseInt(cart.getMedicineNum());
+                double medicinePrice = Double.parseDouble(cart.getMedicinePrice());
+            }
+        }
+        Toast.makeText(this, "总价："+totalPrice, Toast.LENGTH_SHORT).show();
+
+        //跳转到支付界面
     }
 
     @Override
@@ -155,21 +198,204 @@ public class CartActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void checkGroup(int position, boolean isChecked) {
+        shoppingCartList.get(position).setChoosed(isChecked);
+        if (isAllCheck())
+            ckAll.setChecked(true);
+        else
+            ckAll.setChecked(false);
+        adapterCart.notifyDataSetChanged();
+        statistics();
+    }
+    /**
+     * 遍历list集合
+     * @return
+     */
+    private boolean isAllCheck() {
 
+        for (Cart group : shoppingCartList) {
+            if (!group.getChoosed())
+                return false;
+        }
+        return true;
     }
 
+    @SuppressLint("HandlerLeak")
     @Override
     public void doIncrease(int position, View showCountView, boolean isChecked) {
+        Cart cart = shoppingCartList.get(position);
+        int currentCount = Integer.parseInt(cart.getMedicineNum());
+        currentCount++;
+        try {
+            addMedicineToCart(cart.getMedicineName(),cart.getMedicinePrice(),cart.getMedicineImg(),
+                    (String) SPUtlis.get(CartActivity.this, AppConfig.AUTO_LOGIN_ID, ""));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        addMedicineHandler= new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                Map<String,Object> r = (HashMap)msg.obj;
 
+                if((Integer)r.get("code")==1){
+                    Toast.makeText(CartActivity.this, ""+r.get("msg"),
+                            Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+        };
+        cart.setMedicineNum(String.valueOf(currentCount));
+        ((TextView) showCountView).setText(currentCount + "");
+        adapterCart.notifyDataSetChanged();
+        statistics();
     }
 
+    @SuppressLint("HandlerLeak")
     @Override
     public void doDecrease(int position, View showCountView, boolean isChecked) {
+        Cart cart = shoppingCartList.get(position);
+        int currentCount = Integer.parseInt(cart.getMedicineNum());
+        if (currentCount == 1) {
+            return;
+        }
+        currentCount--;
+        try {
+            delMedicineFromCart(cart.getMedicineName(), (String) SPUtlis.get(CartActivity.this, AppConfig.AUTO_LOGIN_ID, ""));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        deleteMedicineHandler= new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                Map<String,Object> r = (HashMap)msg.obj;
+                if((Integer)r.get("code")==1){
+                    Toast.makeText(CartActivity.this, ""+r.get("msg"),
+                            Toast.LENGTH_SHORT).show();
+                    }
+                if((Integer)r.get("code")==4){
+                    Toast.makeText(CartActivity.this, ""+r.get("msg"),
+                            Toast.LENGTH_SHORT).show();
+                }
+
+                }
+            };
+
+
+        cart.setMedicineNum(String.valueOf(currentCount));
+        ((TextView) showCountView).setText(currentCount + "");
+        adapterCart.notifyDataSetChanged();
+        statistics();
 
     }
 
+    @SuppressLint("HandlerLeak")
     @Override
     public void childDelete(int position) {
+        Cart cart = shoppingCartList.get(position);
+        shoppingCartList.remove(position);
+        try {
+            delMedicinesFromCart(cart.getMedicineName(), (String) SPUtlis.get(CartActivity.this, AppConfig.AUTO_LOGIN_ID, ""));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        delMedicinesHandler= new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                Map<String,Object> r = (HashMap)msg.obj;
+                if((Integer)r.get("code")==4){
+                    Toast.makeText(CartActivity.this, ""+r.get("msg"),
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+        adapterCart.notifyDataSetChanged();
+        statistics();
+    }
+    private void addMedicineToCart(String medicineName,String medicinePrice,String medicineImg,
+                                   String userId) throws IOException {
+        OkHttpClient mOkHttpClient = new OkHttpClient();
+        FormEncodingBuilder builder = new FormEncodingBuilder();
+        builder.add("medicine_name",medicineName);
+        builder.add("medicine_price",medicinePrice);
+        builder.add("medicine_img",medicineImg);
+        builder.add("user_id",userId);
+        final Request request = new Request.Builder()
+                .url(AppConfig.ADD_MEDICINE_TO_CART)
+                .post(builder.build())
+                .build();
+      /*  Response response = mOkHttpClient.newCall(request).execute();*/
+        Call call = mOkHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
 
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                String responseStr = response.body().string();
+                Map<String,Object> r =new HashMap<>();
+                r = com.alibaba.fastjson.JSONArray.parseObject(responseStr,HashMap.class);
+                Message msg = addMedicineHandler.obtainMessage();
+                msg.obj = r;
+                addMedicineHandler.sendMessage(msg);
+            }
+        });
+    }
+    private void delMedicineFromCart(String medicineName, String userId) throws IOException {
+        OkHttpClient mOkHttpClient = new OkHttpClient();
+        FormEncodingBuilder builder = new FormEncodingBuilder();
+        builder.add("medicine_name",medicineName);
+        builder.add("user_id",userId);
+        final Request request = new Request.Builder()
+                .url(AppConfig.DELETE_MEDICINE_FROM_CART)
+                .post(builder.build())
+                .build();
+      /*  Response response = mOkHttpClient.newCall(request).execute();*/
+        Call call = mOkHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                String responseStr = response.body().string();
+                Map<String,Object> r =new HashMap<>();
+                r = com.alibaba.fastjson.JSONArray.parseObject(responseStr,HashMap.class);
+                Message msg = deleteMedicineHandler.obtainMessage();
+                msg.obj = r;
+                deleteMedicineHandler.sendMessage(msg);
+            }
+        });
+    }
+    private void delMedicinesFromCart(String medicineName, String userId) throws IOException {
+        OkHttpClient mOkHttpClient = new OkHttpClient();
+        FormEncodingBuilder builder = new FormEncodingBuilder();
+        builder.add("medicine_name",medicineName);
+        builder.add("user_id",userId);
+        final Request request = new Request.Builder()
+                .url(AppConfig.DELETE_MEDICINES_FROM_CART)
+                .post(builder.build())
+                .build();
+      /*  Response response = mOkHttpClient.newCall(request).execute();*/
+        Call call = mOkHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                String responseStr = response.body().string();
+                Map<String,Object> r =new HashMap<>();
+                r = com.alibaba.fastjson.JSONArray.parseObject(responseStr,HashMap.class);
+                Message msg = delMedicinesHandler.obtainMessage();
+                msg.obj = r;
+                delMedicinesHandler.sendMessage(msg);
+            }
+        });
     }
 }

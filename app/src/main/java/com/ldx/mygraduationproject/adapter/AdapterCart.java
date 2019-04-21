@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +20,8 @@ import android.widget.TextView;
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.bean.Cart;
 import com.ldx.mygraduationproject.utils.GlideUtils;
-import com.ldx.mygraduationproject.utils.StringUtils;
-import com.youth.banner.loader.ImageLoader;
-
 import java.util.List;
+
 
 /**
  * Created by freeFreAme on 2019/4/20.
@@ -34,7 +34,6 @@ public class AdapterCart extends BaseAdapter {
     private CheckInterface checkInterface;
     private ModifyCountInterface modifyCountInterface;
     private Context context;
-
     public AdapterCart(Context context) {
         this.context = context;
     }
@@ -98,24 +97,13 @@ public class AdapterCart extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         final Cart cart = cartList.get(position);
-        boolean choosed ;
-        if (cart.getIsChoosed()== 1) {
-            choosed=true;
-        }else{
-            choosed=false;
-        }
-
+        boolean choosed = cart.getChoosed();
         if (choosed){
             holder.ckOneChose.setChecked(true);
         }else{
             holder.ckOneChose.setChecked(false);
         }
-//        String attribute = cart.getAttribute();
-//        if (!StringUtils.isEmpty(attribute)){
-//            holder.tvCommodityAttr.setText(attribute);
-//        }else{
-//            holder.tvCommodityAttr.setText(shoppingCartBean.getDressSize()+"");
-//        }
+
         holder.tvCommodityName.setText(cart.getMedicineName());
         holder.tvCommodityPrice.setText(cart.getMedicinePrice()+"");
         holder.tvCommodityNum.setText(" X"+cart.getMedicineNum()+"");
@@ -126,8 +114,7 @@ public class AdapterCart extends BaseAdapter {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        cart.setChoosed(((CheckBox) v).isChecked());
-                        cart.setIsChoosed(1);
+                        cart.setChoosed(((CheckBox) v).isChecked());
                         checkInterface.checkGroup(position, ((CheckBox) v).isChecked());//向外暴露接口
                     }
                 }
@@ -193,17 +180,17 @@ public class AdapterCart extends BaseAdapter {
         CheckBox ckOneChose;
         LinearLayout rlEdit;
         public ViewHolder(View itemView) {
-            ckOneChose = (CheckBox) itemView.findViewById(R.id.ck_chose);
-            ivShowPic = (ImageView) itemView.findViewById(R.id.iv_show_pic);
-            ivSub = (TextView) itemView.findViewById(R.id.iv_sub);
-            ivAdd = (TextView) itemView.findViewById(R.id.iv_add);
-            tvCommodityName = (TextView) itemView.findViewById(R.id.tv_commodity_name);
-            tvCommodityAttr = (TextView) itemView.findViewById(R.id.tv_commodity_attr);
-            tvCommodityPrice = (TextView) itemView.findViewById(R.id.tv_commodity_price);
-            tvCommodityNum = (TextView) itemView.findViewById(R.id.tv_commodity_num);
-            tvCommodityShowNum = (TextView) itemView.findViewById(R.id.tv_commodity_show_num);
-            tvCommodityDelete = (ImageView) itemView.findViewById(R.id.tv_commodity_delete);
-            rlEdit = (LinearLayout) itemView.findViewById(R.id.rl_edit);
+            ckOneChose = itemView.findViewById(R.id.ck_chose);
+            ivShowPic = itemView.findViewById(R.id.iv_show_pic);
+            ivSub = itemView.findViewById(R.id.iv_sub);
+            ivAdd = itemView.findViewById(R.id.iv_add);
+            tvCommodityName =  itemView.findViewById(R.id.tv_commodity_name);
+            tvCommodityAttr =  itemView.findViewById(R.id.tv_commodity_attr);
+            tvCommodityPrice = itemView.findViewById(R.id.tv_commodity_price);
+            tvCommodityNum =  itemView.findViewById(R.id.tv_commodity_num);
+            tvCommodityShowNum = itemView.findViewById(R.id.tv_commodity_show_num);
+            tvCommodityDelete = itemView.findViewById(R.id.tv_commodity_delete);
+            rlEdit=itemView.findViewById(R.id.rl_edit);
         }
     }
     /**
@@ -218,8 +205,6 @@ public class AdapterCart extends BaseAdapter {
          */
         void checkGroup(int position, boolean isChecked);
     }
-
-
     /**
      * 改变数量的接口
      */
@@ -249,4 +234,5 @@ public class AdapterCart extends BaseAdapter {
          */
         void childDelete(int position);
     }
+
 }

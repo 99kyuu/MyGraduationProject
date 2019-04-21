@@ -57,6 +57,9 @@ public class AppConfig {
     public static final String FIND_BY_TYPE=SERVER_URL_PATH.concat("/medicine/find_by_type");
    //购物车
     public static final String FIND_BY_USER_ID=SERVER_URL_PATH.concat("/cart/find_by_user_id");
+    public static final String ADD_MEDICINE_TO_CART=SERVER_URL_PATH.concat("/cart/add_medicine_to_cart");
+    public static final String DELETE_MEDICINE_FROM_CART=SERVER_URL_PATH.concat("/cart/delete_medicine_from_cart");
+    public static final String DELETE_MEDICINES_FROM_CART=SERVER_URL_PATH.concat("/cart/delete_medicines_from_cart");
     /*是否自动登录*/
     public static String IS_AUTO_LOGIN = "IS_AUTO_LOGIN";
     /*自动登录用户名*/

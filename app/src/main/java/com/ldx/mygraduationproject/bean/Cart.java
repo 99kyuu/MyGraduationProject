@@ -11,7 +11,7 @@ public class Cart {
     private String medicineNum;
     private String medicineImg;
     private Integer userId;
-    private int isChoosed;
+    private Boolean isChoosed=false;
     private Boolean isCheck = false;
 
 
@@ -64,12 +64,12 @@ public class Cart {
         this.userId = userId;
     }
 
-    public int getIsChoosed() {
+    public Boolean getChoosed() {
         return isChoosed;
     }
 
-    public void setIsChoosed(int isChoosed) {
-        this.isChoosed = isChoosed;
+    public void setChoosed(Boolean choosed) {
+        isChoosed = choosed;
     }
 
     public Boolean getCheck() {
