@@ -61,6 +61,7 @@ public class AppConfig {
     public static final String ADD_MEDICINE_TO_CART=SERVER_URL_PATH.concat("/cart/add_medicine_to_cart");
     public static final String DELETE_MEDICINE_FROM_CART=SERVER_URL_PATH.concat("/cart/delete_medicine_from_cart");
     public static final String DELETE_MEDICINES_FROM_CART=SERVER_URL_PATH.concat("/cart/delete_medicines_from_cart");
+    public static final String DELETE_MEDICINES_FROM_CART_BY_USER_ID=SERVER_URL_PATH.concat("/cart/delete_medicines_from_cart_by_user_id");
     //订单
     public static final String ADD_MEDICINE_TO_ORDER=SERVER_URL_PATH.concat("/order/add_medicine_to_order");
     /*是否自动登录*/

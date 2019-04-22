@@ -44,6 +44,7 @@ public class CartActivity extends BaseActivity implements View.OnClickListener
     private Handler delMedicinesHandler;
     private Handler buildOrderHandler;
     private Handler payMoneyHandler;
+    private Handler clearAllHandler;
     private List<Cart> shoppingCartList = new ArrayList<>();
     @BindView(R.id.list_cart)
     ListView listCart;
@@ -168,7 +169,7 @@ public class CartActivity extends BaseActivity implements View.OnClickListener
             Cart cart = shoppingCartList.get(i);
             if (ckAll.isChecked()) {
                 totalCount++;
-                totalPrice += (Integer.parseInt(cart.getMedicinePrice())) *Integer.parseInt(cart.getMedicineNum());
+                totalPrice += (Double.parseDouble(cart.getMedicinePrice())) *Double.parseDouble(cart.getMedicineNum());
             }
         }
         tvShowPrice.setText("合计:" + totalPrice);
@@ -220,19 +221,34 @@ public class CartActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void handleMessage(Message msg) {
                 Map<String,Object> r = (HashMap)msg.obj;
-
                 if((Integer)r.get("code")==1){
                     Toast.makeText(CartActivity.this, ""+r.get("msg"),
                             Toast.LENGTH_SHORT).show();
-
                 }
-
+                if((Integer)r.get("code")==2){
+                    Toast.makeText(CartActivity.this, ""+r.get("msg"),
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         };
-        Toast.makeText(this, "下单成功："+totalPrice, Toast.LENGTH_SHORT).show();
-
-
-        //跳转到支付界面
+        try {
+            clearAllMed((String) SPUtlis.get(CartActivity.this, AppConfig.AUTO_LOGIN_ID,
+                    ""));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        clearAllHandler= new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                Map<String,Object> r = (HashMap)msg.obj;
+                if((Integer)r.get("code")==1){
+                    Toast.makeText(CartActivity.this, ""+r.get("msg"),
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+        Toast.makeText(this, "支付成功："+totalPrice, Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     @Override
@@ -505,4 +521,32 @@ public class CartActivity extends BaseActivity implements View.OnClickListener
             }
         });
     }
+    private void clearAllMed(String userId) throws IOException {
+        OkHttpClient mOkHttpClient = new OkHttpClient();
+        final FormEncodingBuilder builder = new FormEncodingBuilder();
+        builder.add("user_id",userId);
+        final Request request = new Request.Builder()
+                .url(AppConfig.DELETE_MEDICINES_FROM_CART_BY_USER_ID)
+                .post(builder.build())
+                .build();
+      /*  Response response = mOkHttpClient.newCall(request).execute();*/
+        Call call = mOkHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                String responseStr = response.body().string();
+                Map<String,Object> r =new HashMap<>();
+                r = com.alibaba.fastjson.JSONArray.parseObject(responseStr,HashMap.class);
+                Message msg = clearAllHandler.obtainMessage();
+                msg.obj = r;
+                clearAllHandler.sendMessage(msg);
+            }
+        });
+    }
+
 }
