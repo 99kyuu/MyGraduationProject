@@ -25,6 +25,7 @@ public class AppConfig {
     public final static String RESET_VALID_CODE= SERVER_URL_PATH.concat("/security/reset_valid_code");
     public final static String RESET_USER_PASSWORD= SERVER_URL_PATH.concat("/security/reset_user_password");
     public final static String FIND_BY_USERNAME=SERVER_URL_PATH.concat("/security/find_by_username");
+    public static final String PAY_WALLET_FOR_CART=SERVER_URL_PATH.concat("/security/pay_wallet_for_cart");
     //步数类下的功能
     //计划类
     public final static String GET_USER_STEP_PLAN_BY_USERNAME=SERVER_URL_PATH.concat("/stepplan/get_user_step_plan_by_username");
@@ -60,6 +61,8 @@ public class AppConfig {
     public static final String ADD_MEDICINE_TO_CART=SERVER_URL_PATH.concat("/cart/add_medicine_to_cart");
     public static final String DELETE_MEDICINE_FROM_CART=SERVER_URL_PATH.concat("/cart/delete_medicine_from_cart");
     public static final String DELETE_MEDICINES_FROM_CART=SERVER_URL_PATH.concat("/cart/delete_medicines_from_cart");
+    //订单
+    public static final String ADD_MEDICINE_TO_ORDER=SERVER_URL_PATH.concat("/order/add_medicine_to_order");
     /*是否自动登录*/
     public static String IS_AUTO_LOGIN = "IS_AUTO_LOGIN";
     /*自动登录用户名*/

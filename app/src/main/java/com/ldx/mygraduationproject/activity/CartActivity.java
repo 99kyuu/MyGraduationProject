@@ -3,7 +3,6 @@ package com.ldx.mygraduationproject.activity;
 import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -43,6 +42,8 @@ public class CartActivity extends BaseActivity implements View.OnClickListener
     private Handler addMedicineHandler;
     private Handler deleteMedicineHandler;
     private Handler delMedicinesHandler;
+    private Handler buildOrderHandler;
+    private Handler payMoneyHandler;
     private List<Cart> shoppingCartList = new ArrayList<>();
     @BindView(R.id.list_cart)
     ListView listCart;
@@ -176,17 +177,60 @@ public class CartActivity extends BaseActivity implements View.OnClickListener
     /**
      * 结算订单、支付
      */
+    @SuppressLint("HandlerLeak")
     private void lementOnder() {
         //选中的需要提交的商品清单
-        for (Cart cart:shoppingCartList ){
+        for (Cart cart:shoppingCartList){
             boolean choosed = cart.getChoosed();
             if (choosed){
                 String medicineName = cart.getMedicineName();
                 int medicineNum = Integer.parseInt(cart.getMedicineNum());
                 double medicinePrice = Double.parseDouble(cart.getMedicinePrice());
+                String medicineImg=cart.getMedicineImg();
+                String orderAddress="厦门市集美区";
+                try {
+                    buildOrder((String) SPUtlis.get(CartActivity.this, AppConfig.AUTO_LOGIN_ID,
+                            ""),"1",medicineName,String.valueOf(medicinePrice),
+                            medicineImg,String.valueOf(medicineNum),orderAddress);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
-        Toast.makeText(this, "总价："+totalPrice, Toast.LENGTH_SHORT).show();
+        buildOrderHandler= new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                Map<String,Object> r = (HashMap)msg.obj;
+
+                if((Integer)r.get("code")==2){
+                    Toast.makeText(CartActivity.this, ""+r.get("msg"),
+                            Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+        };
+        try {
+            payMoney((String) SPUtlis.get(CartActivity.this, AppConfig.AUTO_LOGIN_NAME,
+                    ""),String.valueOf(totalPrice));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        payMoneyHandler= new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                Map<String,Object> r = (HashMap)msg.obj;
+
+                if((Integer)r.get("code")==1){
+                    Toast.makeText(CartActivity.this, ""+r.get("msg"),
+                            Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+        };
+        Toast.makeText(this, "下单成功："+totalPrice, Toast.LENGTH_SHORT).show();
+
 
         //跳转到支付界面
     }
@@ -395,6 +439,69 @@ public class CartActivity extends BaseActivity implements View.OnClickListener
                 Message msg = delMedicinesHandler.obtainMessage();
                 msg.obj = r;
                 delMedicinesHandler.sendMessage(msg);
+            }
+        });
+    }
+    private void buildOrder(String userId, String orderId,String medicineName,
+                            String medicinePrice,String medicineImg,String medicineNum,
+                            String orderAddress) throws IOException {
+        OkHttpClient mOkHttpClient = new OkHttpClient();
+        final FormEncodingBuilder builder = new FormEncodingBuilder();
+        builder.add("user_id",userId);
+        builder.add("order_id",orderId);
+        builder.add("medicine_name",medicineName);
+        builder.add("medicine_price",medicinePrice);
+        builder.add("medicine_img",medicineImg);
+        builder.add("medicine_num",medicineNum);
+        builder.add("order_address",orderAddress);
+        final Request request = new Request.Builder()
+                .url(AppConfig.ADD_MEDICINE_TO_ORDER)
+                .post(builder.build())
+                .build();
+      /*  Response response = mOkHttpClient.newCall(request).execute();*/
+        Call call = mOkHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                String responseStr = response.body().string();
+                Map<String,Object> r =new HashMap<>();
+                r = com.alibaba.fastjson.JSONArray.parseObject(responseStr,HashMap.class);
+                Message msg = buildOrderHandler.obtainMessage();
+                msg.obj = r;
+                buildOrderHandler.sendMessage(msg);
+            }
+        });
+    }
+    private void payMoney(String userName,String wallet) throws IOException {
+        OkHttpClient mOkHttpClient = new OkHttpClient();
+        final FormEncodingBuilder builder = new FormEncodingBuilder();
+        builder.add("user_name",userName);
+        builder.add("wallet",wallet);
+        final Request request = new Request.Builder()
+                .url(AppConfig.PAY_WALLET_FOR_CART)
+                .post(builder.build())
+                .build();
+      /*  Response response = mOkHttpClient.newCall(request).execute();*/
+        Call call = mOkHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                String responseStr = response.body().string();
+                Map<String,Object> r =new HashMap<>();
+                r = com.alibaba.fastjson.JSONArray.parseObject(responseStr,HashMap.class);
+                Message msg = payMoneyHandler.obtainMessage();
+                msg.obj = r;
+                payMoneyHandler.sendMessage(msg);
             }
         });
     }
