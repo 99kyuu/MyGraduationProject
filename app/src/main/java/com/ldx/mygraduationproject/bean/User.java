@@ -11,6 +11,9 @@ public class User {
     private String userName;
 
     private String userEmail;
+    private String userWallet;
+    private String userAddress;
+    private String userImg;
 
     public int getId() {
         return id;
@@ -34,5 +37,29 @@ public class User {
 
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
+    }
+
+    public String getUserWallet() {
+        return userWallet;
+    }
+
+    public void setUserWallet(String userWallet) {
+        this.userWallet = userWallet;
+    }
+
+    public String getUserAddress() {
+        return userAddress;
+    }
+
+    public void setUserAddress(String userAddress) {
+        this.userAddress = userAddress;
+    }
+
+    public String getUserImg() {
+        return userImg;
+    }
+
+    public void setUserImg(String userImg) {
+        this.userImg = userImg;
     }
 }

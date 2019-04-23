@@ -3,10 +3,11 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:background="@color/text_white">
+    android:background="@color/colorBackgroudMain">
 
-    <ListView
-        android:id="@+id/lv_main"
+    <ExpandableListView
+        android:layout_marginTop="3dp"
+        android:id="@+id/el_main_ordercenter"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

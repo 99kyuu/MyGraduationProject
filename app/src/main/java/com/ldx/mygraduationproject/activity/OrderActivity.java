@@ -1,5 +1,4 @@
 package com.ldx.mygraduationproject.activity;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
@@ -12,6 +11,7 @@ import android.widget.Toast;
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.bean.Order;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,13 +21,13 @@ public class OrderActivity extends BaseActivity {
 private ExpandableListView elMainOrdercenter;
 private Map<String,List<Order>> dataMap;
 private String[] titleArr;
-private int[] iconArr=new int[]{};
-private MyAdapter myAdapter;
 
+private MyAdapter myAdapter;
+    private int[] iconArr=new int[]{R.mipmap.ic_launcher,R.mipmap.ic_launcher,R.mipmap.ic_launcher};
 
     @Override
     protected int setLayoutId() {
-        return R.id.action_order;
+        return R.layout.activity_order;
     }
 
     @Override
@@ -39,37 +39,38 @@ private MyAdapter myAdapter;
  * 初始化数据
  */
     protected void initData(){
-        //初始化ExpandlistView的id
-        elMainOrdercenter=findViewById(R.id.el_main_ordercenter);
+        elMainOrdercenter=(ExpandableListView)findViewById(R.id.el_main_ordercenter);
         //初始化列表数据，正常由服务器返回的Json数据
         initJsonData();
         myAdapter=new MyAdapter();
         elMainOrdercenter.setAdapter(myAdapter);
         //设置列表展开
         for(int i=0;i<dataMap.size();i++){
-        elMainOrdercenter.expandGroup(i);
+            elMainOrdercenter.expandGroup(i);
         }
+
         }
-/**
- * 初始点击事件
- */
-private void initOnclickListener(){
+
+    @Override
+    protected void setListener() {
+        super.setListener();
         //设置父标题点击不能收缩
         elMainOrdercenter.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-@Override
-public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-        return true;
-        }
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                return false;
+            }
         });
         //订单子条目的点击事件
         elMainOrdercenter.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-@Override
-public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-        Toast.makeText(OrderActivity.this,"跳转到订单详细页面:"+childPosition,Toast.LENGTH_SHORT).show();
-        return false;
-        }
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                Toast.makeText(OrderActivity.this,"跳转到订单详细页面:"+childPosition,Toast.LENGTH_SHORT).show();
+                return false;
+            }
         });
-        }
+    }
+
 
 /**
  * ExpandableListviewAdapter初始化
@@ -174,58 +175,58 @@ private class MyAdapter extends BaseExpandableListAdapter {
     private void initJsonData(){
         dataMap=new HashMap<String,List<Order>>();
         titleArr=new String[]{"商城店铺1","商城店铺2","商城店铺3"};
-//        List<OrderInfo> list1=new ArrayList<OrderInfo>();
-//        List<OrderInfo> list2=new ArrayList<OrderInfo>();
-//        List<OrderInfo> list3=new ArrayList<OrderInfo>();
-//        OrderInfo orderInfo1=new OrderInfo();
-//        orderInfo1.setName(titleArr[0]+"_one");
-//        orderInfo1.setEvaluateState(true);
-//        orderInfo1.setDeleteState(false);
-//        OrderInfo orderInfo2=new OrderInfo();
-//        orderInfo2.setName(titleArr[0]+"_two");
-//        orderInfo2.setEvaluateState(false);
-//        orderInfo2.setDeleteState(true);
-//        OrderInfo orderInfo3=new OrderInfo();
-//        orderInfo3.setName(titleArr[0]+"_three");
-//        orderInfo3.setEvaluateState(true);
-//        orderInfo3.setDeleteState(true);
+        List<Order> list1=new ArrayList<Order>();
+        List<Order> list2=new ArrayList<>();
+        List<Order> list3=new ArrayList<Order>();
+        Order Order1=new Order();
+        Order1.setMedicineName(titleArr[0]+"_one");
+        Order1.setMedicineImg("1");
+        Order1.setMedicinePrice("1");
+        Order Order2=new Order();
+        Order2.setMedicineName(titleArr[0]+"_one");
+        Order2.setMedicineImg("1");
+        Order2.setMedicinePrice("1");
+        Order Order3=new Order();
+        Order3.setMedicineName(titleArr[0]+"_one");
+        Order3.setMedicineImg("1");
+        Order3.setMedicinePrice("1");
 //
-//        OrderInfo orderInfo4=new OrderInfo();
-//        orderInfo4.setName(titleArr[1]+"_one");
-//        orderInfo4.setEvaluateState(true);
-//        orderInfo4.setDeleteState(false);
-//        OrderInfo orderInfo5=new OrderInfo();
-//        orderInfo5.setName(titleArr[1]+"_two");
-//        orderInfo5.setEvaluateState(false);
-//        orderInfo5.setDeleteState(true);
+//        Order Order4=new Order();
+//        Order4.setName(titleArr[1]+"_one");
+//        Order4.setEvaluateState(true);
+//        Order4.setDeleteState(false);
+//        Order Order5=new Order();
+//        Order5.setName(titleArr[1]+"_two");
+//        Order5.setEvaluateState(false);
+//        Order5.setDeleteState(true);
 //
-//        OrderInfo orderInfo6=new OrderInfo();
-//        orderInfo6.setName(titleArr[2]+"_one");
-//        orderInfo6.setEvaluateState(true);
-//        orderInfo6.setDeleteState(false);
-//        OrderInfo orderInfo7=new OrderInfo();
-//        orderInfo7.setName(titleArr[2]+"_two");
-//        orderInfo7.setEvaluateState(false);
-//        orderInfo7.setDeleteState(true);
-//        OrderInfo orderInfo8=new OrderInfo();
-//        orderInfo8.setName(titleArr[2]+"_three");
-//        orderInfo8.setEvaluateState(true);
-//        orderInfo8.setDeleteState(true);
-//        OrderInfo orderInfo9=new OrderInfo();
-//        orderInfo9.setName(titleArr[2]+"_four");
-//        orderInfo9.setEvaluateState(false);
-//        orderInfo9.setDeleteState(false);
-//        list1.add(orderInfo1);
-//        list1.add(orderInfo2);
-//        list1.add(orderInfo3);
-//        list2.add(orderInfo4);
-//        list2.add(orderInfo5);
-//        list3.add(orderInfo6);
-//        list3.add(orderInfo7);
-//        list3.add(orderInfo8);
-//        list3.add(orderInfo9);
-//        dataMap.put(titleArr[0],list1);
-//        dataMap.put(titleArr[1],list2);
+//        Order Order6=new Order();
+//        Order6.setName(titleArr[2]+"_one");
+//        Order6.setEvaluateState(true);
+//        Order6.setDeleteState(false);
+//        Order Order7=new Order();
+//        Order7.setName(titleArr[2]+"_two");
+//        Order7.setEvaluateState(false);
+//        Order7.setDeleteState(true);
+//        Order Order8=new Order();
+//        Order8.setName(titleArr[2]+"_three");
+//        Order8.setEvaluateState(true);
+//        Order8.setDeleteState(true);
+//        Order Order9=new Order();
+//        Order9.setName(titleArr[2]+"_four");
+//        Order9.setEvaluateState(false);
+//        Order9.setDeleteState(false);
+        list1.add(Order1);
+        list1.add(Order2);
+        list1.add(Order3);
+//        list2.add(Order4);
+//        list2.add(Order5);
+//        list3.add(Order6);
+//        list3.add(Order7);
+//        list3.add(Order8);
+//        list3.add(Order9);
+        dataMap.put(titleArr[0],list1);
+        dataMap.put(titleArr[1],list2);
 //        dataMap.put(titleArr[2],list3);
     }
 }

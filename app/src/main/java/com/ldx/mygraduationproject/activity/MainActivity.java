@@ -12,8 +12,11 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.adapter.BaseFragmentStatePagerAdapter;
 import com.ldx.mygraduationproject.bean.Cart;
+import com.ldx.mygraduationproject.bean.Order;
 import com.ldx.mygraduationproject.bean.User;
 import com.ldx.mygraduationproject.constant.AppConfig;
+import com.ldx.mygraduationproject.utils.GlideImageLoader;
+import com.ldx.mygraduationproject.utils.GlideUtils;
 import com.ldx.mygraduationproject.utils.LocalReceiver;
 import com.ldx.mygraduationproject.utils.SPUtlis;
 import com.ldx.mygraduationproject.utils.StringUtils;
@@ -134,7 +137,7 @@ public class MainActivity extends BaseActivity  implements
         action_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(MainActivity.this,OrderActivity.class));
             }
         });
 
@@ -164,8 +167,6 @@ public class MainActivity extends BaseActivity  implements
         headerUserName.setText((String) SPUtlis.get(MainActivity.this, AppConfig.AUTO_LOGIN_NAME,""));
         headerUserHealthState.setText("未知");
         headerUserHealthNumber.setText(String.valueOf(score));
-
-
         myphoto = view.findViewById(R.id.header_user_photo);
         myphoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -227,6 +228,8 @@ public class MainActivity extends BaseActivity  implements
                 User userForId= (User) msg.obj;
                 SPUtlis.put(MainActivity.this,
                         AppConfig.AUTO_LOGIN_ID,Integer.toString(userForId.getId()));
+                GlideUtils.loadImageView(MainActivity.this,"https://" + userForId.getUserImg()
+                        ,myphoto);
             }
         };
     }
