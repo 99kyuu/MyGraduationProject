@@ -1,4 +1,7 @@
 package com.ldx.mygraduationproject.activity;
+import android.annotation.SuppressLint;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
@@ -10,7 +13,16 @@ import android.widget.Toast;
 
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.bean.Order;
+import com.ldx.mygraduationproject.constant.AppConfig;
+import com.ldx.mygraduationproject.utils.SPUtlis;
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +33,7 @@ public class OrderActivity extends BaseActivity {
 private ExpandableListView elMainOrdercenter;
 private Map<String,List<Order>> dataMap;
 private String[] titleArr;
-
+private Handler getOrderHandler;
 private MyAdapter myAdapter;
     private int[] iconArr=new int[]{R.mipmap.ic_launcher,R.mipmap.ic_launcher,R.mipmap.ic_launcher};
 
@@ -38,7 +50,36 @@ private MyAdapter myAdapter;
     /**
  * 初始化数据
  */
+    @SuppressLint("HandlerLeak")
     protected void initData(){
+        //从后台获取数据
+        getOrdersFromNet((String) SPUtlis.get(OrderActivity.this,
+                AppConfig.AUTO_LOGIN_ID, ""));
+        getOrderHandler= new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                List<Order> orders = (ArrayList)msg.obj;
+                dataMap=new HashMap<String,List<Order>>();
+                titleArr=new String[]{"商城店铺1","商城店铺2","商城店铺3"};
+                List<Order> list1=orders;
+                List<Order> list2=new ArrayList<>();
+                List<Order> list3=new ArrayList<Order>();
+                Order Order1=new Order();
+                Order1.setMedicineName(titleArr[0]+"_one");
+                Order1.setMedicineImg("1");
+                Order1.setMedicinePrice("1");
+                Order Order2=new Order();
+                Order2.setMedicineName(titleArr[0]+"_one");
+                Order2.setMedicineImg("1");
+                Order2.setMedicinePrice("1");
+                Order Order3=new Order();
+                Order3.setMedicineName(titleArr[0]+"_one");
+                Order3.setMedicineImg("1");
+                Order3.setMedicinePrice("1");
+
+
+            }
+        };
         elMainOrdercenter=(ExpandableListView)findViewById(R.id.el_main_ordercenter);
         //初始化列表数据，正常由服务器返回的Json数据
         initJsonData();
@@ -173,23 +214,7 @@ private class MyAdapter extends BaseExpandableListAdapter {
      * 初始化列表数据，正常由服务器返回的Json数据
      */
     private void initJsonData(){
-        dataMap=new HashMap<String,List<Order>>();
-        titleArr=new String[]{"商城店铺1","商城店铺2","商城店铺3"};
-        List<Order> list1=new ArrayList<Order>();
-        List<Order> list2=new ArrayList<>();
-        List<Order> list3=new ArrayList<Order>();
-        Order Order1=new Order();
-        Order1.setMedicineName(titleArr[0]+"_one");
-        Order1.setMedicineImg("1");
-        Order1.setMedicinePrice("1");
-        Order Order2=new Order();
-        Order2.setMedicineName(titleArr[0]+"_one");
-        Order2.setMedicineImg("1");
-        Order2.setMedicinePrice("1");
-        Order Order3=new Order();
-        Order3.setMedicineName(titleArr[0]+"_one");
-        Order3.setMedicineImg("1");
-        Order3.setMedicinePrice("1");
+
 //
 //        Order Order4=new Order();
 //        Order4.setName(titleArr[1]+"_one");
@@ -216,17 +241,44 @@ private class MyAdapter extends BaseExpandableListAdapter {
 //        Order9.setName(titleArr[2]+"_four");
 //        Order9.setEvaluateState(false);
 //        Order9.setDeleteState(false);
-        list1.add(Order1);
-        list1.add(Order2);
-        list1.add(Order3);
+//        list1.add(Order1);
+//        list1.add(Order2);
+//        list1.add(Order3);
 //        list2.add(Order4);
 //        list2.add(Order5);
 //        list3.add(Order6);
 //        list3.add(Order7);
 //        list3.add(Order8);
 //        list3.add(Order9);
-        dataMap.put(titleArr[0],list1);
-        dataMap.put(titleArr[1],list2);
+//        dataMap.put(titleArr[0],list1);
+//        dataMap.put(titleArr[1],list2);
 //        dataMap.put(titleArr[2],list3);
+    }
+    public void getOrdersFromNet(String userId){
+        OkHttpClient mOkHttpClient = new OkHttpClient();
+        FormEncodingBuilder builder = new FormEncodingBuilder();
+        builder.add("user_id",userId);
+        final Request request = new Request.Builder()
+                .url(AppConfig.FIND_ORDER_BY_USER_ID)
+                .post(builder.build())
+                .build();
+        Call call = mOkHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                String responseStr = response.body().string();
+                List<Order> articles = new ArrayList<>();
+                articles = com.alibaba.fastjson.JSONArray.parseArray(responseStr, Order.class);
+                Message msg = getOrderHandler.obtainMessage();
+                msg.obj = articles;
+                getOrderHandler.sendMessage(msg);
+
+            }
+        });
     }
 }

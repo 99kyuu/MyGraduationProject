@@ -64,6 +64,7 @@ public class AppConfig {
     public static final String DELETE_MEDICINES_FROM_CART_BY_USER_ID=SERVER_URL_PATH.concat("/cart/delete_medicines_from_cart_by_user_id");
     //订单
     public static final String ADD_MEDICINE_TO_ORDER=SERVER_URL_PATH.concat("/order/add_medicine_to_order");
+    public static final String FIND_ORDER_BY_USER_ID=SERVER_URL_PATH.concat("/find_order_by_user_id");
     /*是否自动登录*/
     public static String IS_AUTO_LOGIN = "IS_AUTO_LOGIN";
     /*自动登录用户名*/
