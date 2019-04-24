@@ -165,30 +165,34 @@ private class MyAdapter extends BaseExpandableListAdapter {
         //获取布局控件id
         TextView tvChildviewContent= convertView.findViewById(R.id.tv_childview_content);
         tvChildviewContent.setText(dataMap.get(titleArr[groupPosition]).get(childPosition).getMedicineName());
+        TextView tvPrice=convertView.findViewById(R.id.tv_price);
+        tvPrice.setText(dataMap.get(titleArr[groupPosition]).get(childPosition).getMedicinePrice());
+        TextView tvAddress = convertView.findViewById(R.id.tv_orderadress);
+        tvAddress.setText(dataMap.get(titleArr[groupPosition]).get(childPosition).getOrderAddress());
         ImageView ivChildViewImg=convertView.findViewById(R.id.iv_childview_content);
         GlideUtils.loadImageView(OrderActivity.this,"https://" +dataMap.get(titleArr[groupPosition]).get(childPosition).getMedicineImg()
                 ,ivChildViewImg);
         Button btnChildviewDelete= convertView.findViewById(R.id.btn_childview_delete);
-        Button btnChildviewEvaluate= convertView.findViewById(R.id.btn_childview_evaluate);
+//        Button btnChildviewEvaluate= convertView.findViewById(R.id.btn_childview_evaluate);
         //根据服务器返回的数据来显示和隐藏按钮
         final Order order=dataMap.get(titleArr[groupPosition]).get(childPosition);
-//        if(order.isEvaluateState()){
+//        if(true){
 //            btnChildviewEvaluate.setVisibility(View.VISIBLE);
 //        }else {
 //            btnChildviewEvaluate.setVisibility(View.GONE);
 //        }
-//        if(order.isDeleteState()){
-//            btnChildviewDelete.setVisibility(View.VISIBLE);
-//        }else {
-//            btnChildviewDelete.setVisibility(View.GONE);
-//        }
+        if(true){
+            btnChildviewDelete.setVisibility(View.VISIBLE);
+        }else {
+            btnChildviewDelete.setVisibility(View.GONE);
+        }
         //设置评价按钮的点击事件
-        btnChildviewEvaluate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(OrderActivity.this,"跳转到"+order.getMedicineName()+"的评价页面",Toast.LENGTH_SHORT).show();
-            }
-        });
+//        btnChildviewEvaluate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(OrderActivity.this,"跳转到"+order.getMedicineName()+"的评价页面",Toast.LENGTH_SHORT).show();
+//            }
+//        });
         //设置删除按钮的点击事件
         btnChildviewDelete.setOnClickListener(new View.OnClickListener() {
             @Override

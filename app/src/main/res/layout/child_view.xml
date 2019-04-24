@@ -5,6 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dp">
+
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/iv_childview_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:text="TextView" />
+
     <TextView
         android:layout_marginLeft="8dp"
         android:id="@+id/tv_childview_content"
@@ -13,7 +23,7 @@
 
     <ImageView
         android:id="@+id/iv_childview_content"
-        android:layout_width="50dp"
+        android:layout_width="80dp"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="61dp"
@@ -28,14 +38,14 @@
         android:gravity="right"
         android:layout_alignParentBottom="true"
         >
-        <Button
-            android:focusable="false"
-            android:visibility="gone"
-            android:id="@+id/btn_childview_evaluate"
-            android:layout_marginRight="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="评价"/>
+        <!--<Button-->
+            <!--android:focusable="false"-->
+            <!--android:visibility="gone"-->
+            <!--android:id="@+id/btn_childview_evaluate"-->
+            <!--android:layout_marginRight="5dp"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="评价"/>-->
         <Button
             android:focusable="false"
             android:visibility="gone"
@@ -43,7 +53,19 @@
             android:layout_marginRight="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="删除订单"/>
+            android:text="删除订单"
+            android:background="@drawable/green_button_bg"/>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_orderadress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="61dp"
+        android:layout_marginRight="61dp"
+        android:text="TextView" />
 
 </RelativeLayout>
