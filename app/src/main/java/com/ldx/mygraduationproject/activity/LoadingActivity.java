@@ -144,7 +144,11 @@ public class LoadingActivity extends BaseActivity {
                 Toast.makeText(LoadingActivity.this, "" + r.get("msg"), Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(LoadingActivity.this, MainActivity.class));
             }
-
+            try {
+                wait(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     };
 

@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.bean.Order;
 import com.ldx.mygraduationproject.constant.AppConfig;
+import com.ldx.mygraduationproject.utils.GlideUtils;
 import com.ldx.mygraduationproject.utils.SPUtlis;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
@@ -35,7 +36,7 @@ private Map<String,List<Order>> dataMap;
 private String[] titleArr;
 private Handler getOrderHandler;
 private MyAdapter myAdapter;
-    private int[] iconArr=new int[]{R.mipmap.ic_launcher,R.mipmap.ic_launcher,R.mipmap.ic_launcher};
+private String[] iconArr;
 
     @Override
     protected int setLayoutId() {
@@ -45,6 +46,7 @@ private MyAdapter myAdapter;
     @Override
     protected void initView() {
         super.initView();
+        elMainOrdercenter=(ExpandableListView)findViewById(R.id.el_main_ordercenter);
     }
 
     /**
@@ -60,35 +62,24 @@ private MyAdapter myAdapter;
             public void handleMessage(Message msg) {
                 List<Order> orders = (ArrayList)msg.obj;
                 dataMap=new HashMap<String,List<Order>>();
-                titleArr=new String[]{"商城店铺1","商城店铺2","商城店铺3"};
+                 titleArr=new String[orders.size()];
+                 iconArr=new String[orders.size()];
+                for (int i = 0; i <orders.size() ; i++) {
+                    titleArr[i]=String.valueOf(orders.get(0).getOrderId());
+                    iconArr[i]=String.valueOf(orders.get(0).getMedicineImg());
+                }
                 List<Order> list1=orders;
-                List<Order> list2=new ArrayList<>();
-                List<Order> list3=new ArrayList<Order>();
-                Order Order1=new Order();
-                Order1.setMedicineName(titleArr[0]+"_one");
-                Order1.setMedicineImg("1");
-                Order1.setMedicinePrice("1");
-                Order Order2=new Order();
-                Order2.setMedicineName(titleArr[0]+"_one");
-                Order2.setMedicineImg("1");
-                Order2.setMedicinePrice("1");
-                Order Order3=new Order();
-                Order3.setMedicineName(titleArr[0]+"_one");
-                Order3.setMedicineImg("1");
-                Order3.setMedicinePrice("1");
-
-
+                dataMap.put(String.valueOf(orders.get(0).getUserId()),list1);
+                myAdapter=new MyAdapter();
+                elMainOrdercenter.setAdapter(myAdapter);
+                //设置列表展开
+                for(int i=0;i<dataMap.size();i++){
+                    elMainOrdercenter.expandGroup(i);
+                }
             }
         };
-        elMainOrdercenter=(ExpandableListView)findViewById(R.id.el_main_ordercenter);
-        //初始化列表数据，正常由服务器返回的Json数据
-        initJsonData();
-        myAdapter=new MyAdapter();
-        elMainOrdercenter.setAdapter(myAdapter);
-        //设置列表展开
-        for(int i=0;i<dataMap.size();i++){
-            elMainOrdercenter.expandGroup(i);
-        }
+
+
 
         }
 
@@ -99,7 +90,7 @@ private MyAdapter myAdapter;
         elMainOrdercenter.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                return false;
+                return true;
             }
         });
         //订单子条目的点击事件
@@ -160,7 +151,8 @@ private class MyAdapter extends BaseExpandableListAdapter {
         }
         ImageView ivParentviewIcon=convertView.findViewById(R.id.iv_parentview_icon);
         TextView tvParentviewTitle= convertView.findViewById(R.id.tv_parentview_title);
-        ivParentviewIcon.setImageResource(iconArr[groupPosition]);
+//        GlideUtils.loadImageView(MainActivity.this,"https://" + userForId.getUserImg()
+//                ,myphoto);
         tvParentviewTitle.setText(titleArr[groupPosition]);
         return convertView;
     }
@@ -171,8 +163,11 @@ private class MyAdapter extends BaseExpandableListAdapter {
             convertView=View.inflate(OrderActivity.this,R.layout.child_view,null);
         }
         //获取布局控件id
-        TextView tvChildviewContent=(TextView) convertView.findViewById(R.id.tv_childview_content);
+        TextView tvChildviewContent= convertView.findViewById(R.id.tv_childview_content);
         tvChildviewContent.setText(dataMap.get(titleArr[groupPosition]).get(childPosition).getMedicineName());
+        ImageView ivChildViewImg=convertView.findViewById(R.id.iv_childview_content);
+        GlideUtils.loadImageView(OrderActivity.this,"https://" +dataMap.get(titleArr[groupPosition]).get(childPosition).getMedicineImg()
+                ,ivChildViewImg);
         Button btnChildviewDelete= convertView.findViewById(R.id.btn_childview_delete);
         Button btnChildviewEvaluate= convertView.findViewById(R.id.btn_childview_evaluate);
         //根据服务器返回的数据来显示和隐藏按钮
@@ -250,7 +245,7 @@ private class MyAdapter extends BaseExpandableListAdapter {
 //        list3.add(Order7);
 //        list3.add(Order8);
 //        list3.add(Order9);
-//        dataMap.put(titleArr[0],list1);
+
 //        dataMap.put(titleArr[1],list2);
 //        dataMap.put(titleArr[2],list3);
     }
@@ -272,10 +267,10 @@ private class MyAdapter extends BaseExpandableListAdapter {
             @Override
             public void onResponse(Response response) throws IOException {
                 String responseStr = response.body().string();
-                List<Order> articles = new ArrayList<>();
-                articles = com.alibaba.fastjson.JSONArray.parseArray(responseStr, Order.class);
+                List<Order> orders = new ArrayList<>();
+                orders = com.alibaba.fastjson.JSONArray.parseArray(responseStr, Order.class);
                 Message msg = getOrderHandler.obtainMessage();
-                msg.obj = articles;
+                msg.obj = orders;
                 getOrderHandler.sendMessage(msg);
 
             }
