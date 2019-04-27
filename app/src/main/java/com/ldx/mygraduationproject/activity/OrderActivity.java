@@ -35,6 +35,7 @@ private ExpandableListView elMainOrdercenter;
 private Map<String,List<Order>> dataMap;
 private String[] titleArr;
 private Handler getOrderHandler;
+private Handler delOrderHandler;
 private MyAdapter myAdapter;
 private String[] iconArr;
 
@@ -195,10 +196,27 @@ private class MyAdapter extends BaseExpandableListAdapter {
 //        });
         //设置删除按钮的点击事件
         btnChildviewDelete.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("HandlerLeak")
             @Override
             public void onClick(View v) {
                 dataMap.get(titleArr[groupPosition]).remove(childPosition);
                 myAdapter.notifyDataSetChanged();
+                try {
+                    delMed(String.valueOf(dataMap.get(titleArr[groupPosition]).get(childPosition).getOrderId()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                delOrderHandler= new Handler(){
+                    @Override
+                    public void handleMessage(Message msg) {
+                        Map<String,Object> r = (HashMap)msg.obj;
+                        if((Integer)r.get("code")==500){
+                            Toast.makeText(OrderActivity.this, ""+r.get("msg"),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                };
             }
         });
         return convertView;
@@ -252,6 +270,33 @@ private class MyAdapter extends BaseExpandableListAdapter {
 
 //        dataMap.put(titleArr[1],list2);
 //        dataMap.put(titleArr[2],list3);
+    }
+    private void delMed(String orderId) throws IOException {
+        OkHttpClient mOkHttpClient = new OkHttpClient();
+        final FormEncodingBuilder builder = new FormEncodingBuilder();
+        builder.add("order_id",orderId);
+        final Request request = new Request.Builder()
+                .url(AppConfig.DELETE_MEDICINE_FROM_ORDER)
+                .post(builder.build())
+                .build();
+      /*  Response response = mOkHttpClient.newCall(request).execute();*/
+        Call call = mOkHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                String responseStr = response.body().string();
+                Map<String,Object> r =new HashMap<>();
+                r = com.alibaba.fastjson.JSONArray.parseObject(responseStr,HashMap.class);
+                Message msg = delOrderHandler.obtainMessage();
+                msg.obj = r;
+                delOrderHandler.sendMessage(msg);
+            }
+        });
     }
     public void getOrdersFromNet(String userId){
         OkHttpClient mOkHttpClient = new OkHttpClient();

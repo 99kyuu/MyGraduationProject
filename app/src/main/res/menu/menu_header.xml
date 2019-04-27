@@ -19,6 +19,10 @@
             android:icon="@drawable/follow"
             android:title="身高体重" />
         <item
+            android:id="@+id/nav_helpself"
+            android:icon="@drawable/follow"
+            android:title="小病自诊" />
+        <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/follow"
             android:title="关注" />

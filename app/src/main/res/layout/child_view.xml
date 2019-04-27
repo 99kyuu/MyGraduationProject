@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:minHeight="100dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,25 +12,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/iv_childview_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_marginLeft="51dp"
+        android:layout_marginStart="51dp"
+        android:layout_toEndOf="@+id/tv_childview_content"
+        android:layout_toRightOf="@+id/tv_childview_content"
         android:text="TextView" />
 
     <TextView
-        android:layout_marginLeft="8dp"
         android:id="@+id/tv_childview_content"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <ImageView
         android:id="@+id/iv_childview_content"
         android:layout_width="80dp"
         android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="61dp"
-        android:layout_marginStart="61dp"
-        android:layout_toEndOf="@+id/tv_childview_content"
-        android:layout_toRightOf="@+id/tv_childview_content"
+        android:layout_toLeftOf="@+id/dizhi"
+        android:layout_toStartOf="@+id/dizhi"
         app:srcCompat="@drawable/bg_create_group" />
 
     <LinearLayout
@@ -67,5 +68,25 @@
         android:layout_marginEnd="61dp"
         android:layout_marginRight="61dp"
         android:text="TextView" />
+
+    <TextView
+        android:id="@+id/dizhi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/tv_orderadress"
+        android:layout_toStartOf="@+id/tv_orderadress"
+        android:text="TextView"
+        tools:text="地址" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tv_price"
+        android:layout_alignBottom="@+id/tv_price"
+        android:layout_toEndOf="@+id/tv_price"
+        android:layout_toRightOf="@+id/tv_price"
+        android:text=" ￥" />
 
 </RelativeLayout>

@@ -202,6 +202,9 @@ public class MainActivity extends BaseActivity  implements
                     case "关于":
                         startActivity(new Intent(MainActivity.this,AboutActivity.class));
                         break;
+                    case "小病自诊":
+                        startActivity(new Intent(MainActivity.this,HealthyActivity.class));
+                        break;
                     case "设置":
                         startActivity(new Intent(MainActivity.this,SetActivity.class));
                         break;

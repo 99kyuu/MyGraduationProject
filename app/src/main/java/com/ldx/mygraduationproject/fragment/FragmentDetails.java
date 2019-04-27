@@ -193,12 +193,12 @@ public class FragmentDetails extends BaseFragment implements android.os.Handler.
                     Toast.makeText(mActivity, "用户暂时未拥有数据", Toast.LENGTH_SHORT).show();
                 } else {
                     weightView.setPercent(Float.parseFloat(userPhysical.getUserWeight()));
-                    weight_data_text.setText(userPhysical.getUserWeight() + "kg");
-                    user_sex.setText(userPhysical.getUserSex());
-                    user_height.setText(userPhysical.getUserHeight() + "cm");
-                    String userBodyRate = physicalService.getBodyRate(Double.parseDouble(userPhysical.getUserHeight()),
-                            Double.parseDouble(userPhysical.getUserHeight()), userPhysical.getUserSex());
-                    user_survey_data.setText(userBodyRate);
+////                    weight_data_text.setText(userPhysical.getUserWeight() + "kg");
+//                    user_sex.setText(userPhysical.getUserSex());
+//                    user_height.setText(userPhysical.getUserHeight() + "cm");
+//                    String userBodyRate = physicalService.getBodyRate(Double.parseDouble(userPhysical.getUserHeight()),
+//                            Double.parseDouble(userPhysical.getUserHeight()), userPhysical.getUserSex());
+//                    user_survey_data.setText(userBodyRate);
                 }
             }
         };
