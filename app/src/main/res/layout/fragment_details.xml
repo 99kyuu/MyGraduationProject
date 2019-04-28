@@ -5,6 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 <com.ldx.mygraduationproject.view.BounceScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -514,10 +518,20 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/nofi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/weight_card"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/weight_card"
+            android:layout_marginLeft="65dp"
+            android:layout_marginStart="65dp"
+            android:layout_marginTop="11dp" />
 
 
     </RelativeLayout>
 </com.ldx.mygraduationproject.view.BounceScrollView>
-
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>
 

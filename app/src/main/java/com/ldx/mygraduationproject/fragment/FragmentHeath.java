@@ -6,13 +6,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.TabLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import com.google.gson.Gson;
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.activity.MainActivity;
@@ -29,23 +31,18 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
+
 
 
 /**
  * Created by freeFreAme on 2018/12/26.
  */
-public class FragmentHeath extends BaseFragment {
+public class FragmentHeath extends BaseFragment{
 
     @BindView(R.id.fragment_health_banner)
     Banner fragmentHealthBanner;
@@ -59,7 +56,8 @@ public class FragmentHeath extends BaseFragment {
     RecyclerView fragmentHealthArticleRv;
     @BindView(R.id.fragment_health_tab)
     TabLayout fragmentHealthTab;
-
+//    @BindView(R.id.srl_simple)
+//    SwipeRefreshLayout srl_simple;
     private AdapterArticle adapterArticle;
     private ArrayList<Article> beans1 = null;
     private ArrayList<Article> beans2 = null;
@@ -72,8 +70,22 @@ public class FragmentHeath extends BaseFragment {
     private Handler getGetArticlesHandlerByClasses4;
     private List<Article> articleArrayList;
     private Article article = null;
+    private boolean run = false;
+    private final Handler getHandlerforisRefersh = new Handler();
+        private final Runnable task = new Runnable() {
+        @Override
+        public void run() {
+            // TODO Auto-generated method stub
+            if (run) {
+                getArticleFromNetByClasses1("1");
+                getArticleFromNetByClasses2("2");
+                getArticleFromNetByClasses3("3");
+                getArticleFromNetByClasses4("4");
 
-
+                getHandlerforisRefersh.postDelayed(this, 20000);
+            }
+        }
+    };
     @Override
     protected int setLayoutId() {
         return R.layout.fragment_health;
@@ -82,6 +94,8 @@ public class FragmentHeath extends BaseFragment {
     @Override
     protected void initData() {
         super.initData();
+             run = true;
+       getHandlerforisRefersh.postDelayed(task, 20000);
     }
 
     @Override
@@ -376,5 +390,6 @@ public class FragmentHeath extends BaseFragment {
                 break;
         }
     }
+
 }
 

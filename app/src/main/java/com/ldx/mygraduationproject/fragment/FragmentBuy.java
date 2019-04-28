@@ -29,13 +29,14 @@ import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
-import static android.support.constraint.Constraints.TAG;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 
 /**
  * Created by freeFreAme on 2019/4/15.
  */
 
-public class FragmentBuy extends BaseFragment {
+public class FragmentBuy extends BaseFragment implements OnRefreshListener {
 
     @BindView(R.id.toolbar_user)
     ImageView toolbarUser;
@@ -49,6 +50,8 @@ public class FragmentBuy extends BaseFragment {
     RecyclerView fragmentMainHotRv;
     @BindView(R.id.fragment_main_banner)
     Banner fragmentMainBanner;
+    @BindView(R.id.srl_simple)
+    SwipeRefreshLayout srl_simple;
 //    @BindView(R.id.fragment_main_use_rv)
 //    RecyclerView fragmentMainUseRv;
     @BindView(R.id.fragment_main_tab)
@@ -187,7 +190,9 @@ public class FragmentBuy extends BaseFragment {
 //        fragmentMainUseRv.setAdapter(adapterMedicineUse);
     }
     protected void initView() {
-      getMedicineByNamePage();
+        srl_simple.setOnRefreshListener(this);
+        srl_simple.setColorSchemeResources(R.color.green);
+        getMedicineByNamePage();
     }
     private void setBanner() {
         fragmentMainBanner.setImageLoader(new GlideImageLoader());
@@ -371,4 +376,19 @@ public class FragmentBuy extends BaseFragment {
                 break;
         }
     }
+
+    @Override
+    public void onRefresh() {
+        mHandler.postDelayed(mRefresh, 2000);
+    }
+    private Handler mHandler = new Handler();
+    private Runnable mRefresh = new Runnable() {
+        @Override
+        public void run() {
+            initData();
+            getMedicineByNamePage();
+            srl_simple.setRefreshing(false);
+        }
+    };
+
 }

@@ -13,13 +13,16 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.activity.HeartRateActivity;
 import com.ldx.mygraduationproject.activity.Last7DayWeightActivity;
+import com.ldx.mygraduationproject.activity.MainActivity;
 import com.ldx.mygraduationproject.bean.UserHeartRate;
 import com.ldx.mygraduationproject.bean.UserPhysical;
 import com.ldx.mygraduationproject.bean.UserPlan;
@@ -56,7 +59,7 @@ import butterknife.OnClick;
 /**
  * Created by freeFreAme on 2019/1/18.
  */
-public class FragmentDetails extends BaseFragment implements android.os.Handler.Callback {
+public class FragmentDetails extends BaseFragment implements android.os.Handler.Callback,OnRefreshListener {
     //历史记录组件
     private BeforeOrAfterCalendarView calenderView;
 
@@ -72,7 +75,8 @@ public class FragmentDetails extends BaseFragment implements android.os.Handler.
     LinearLayout movementCalenderLl;
     @BindView(R.id.movement_total_km_time_tv)
     TextView kmTimeTv;
-
+    @BindView(R.id.nofi)
+    TextView nofi;
     //CardView组件
     private List<LineChartView.ItemBean> mItems;
     private int[] shadeColors;
@@ -90,12 +94,18 @@ public class FragmentDetails extends BaseFragment implements android.os.Handler.
     TextView max_heart_rate_data;
     @BindView(R.id.min_heart_rate_data)
     TextView min_heart_rate_data;
-    @BindView(R.id.survey_data1)
-    TextView user_height;
-    @BindView(R.id.survey_data2)
-    TextView user_sex;
-    @BindView(R.id.survey_data3)
-    TextView user_survey_data;
+//    @BindView(R.id.survey_data1)
+//    TextView user_height;
+//    @BindView(R.id.survey_data2)
+//    TextView user_sex;
+//    @BindView(R.id.survey_data3)
+//    TextView user_survey_data;
+    @BindView(R.id.buttonPlan)
+    Button buttonPlan;
+    @BindView(R.id.buttonWeight)
+    Button buttonWeighjt;
+    @BindView(R.id.swipeRefresh)
+    SwipeRefreshLayout swipeRefreshLayout;
     /**
      * 屏幕长度和宽度
      */
@@ -111,21 +121,21 @@ public class FragmentDetails extends BaseFragment implements android.os.Handler.
     private Handler getUserPhysicalHandler;
     private Handler getPlanHandler;
     private Integer totalStepNum;
-    private boolean run = false;
+//    private boolean run = false;
     private final Handler getHandlerforisRefersh = new Handler();
     PhysicalService physicalService = new PhysicalService();
 
-    private final Runnable task = new Runnable() {
-        @Override
-        public void run() {
-            // TODO Auto-generated method stub
-            if (run) {
-                initData();
-
-                getHandlerforisRefersh.postDelayed(this, 20000000);
-            }
-        }
-    };
+//    private final Runnable task = new Runnable() {
+//        @Override
+//        public void run() {
+//            // TODO Auto-generated method stub
+//            if (run) {
+//                initData();
+//
+//                getHandlerforisRefersh.postDelayed(this, 20000000);
+//            }
+//        }
+//    };
 
     @Override
     protected int setLayoutId() {
@@ -135,6 +145,8 @@ public class FragmentDetails extends BaseFragment implements android.os.Handler.
 
     @Override
     protected void initView() {
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(R.color.green);
         calenderView = new BeforeOrAfterCalendarView(mActivity);
         movementCalenderLl.addView(calenderView);
         if (StepCountCheckUtil.isSupportStepCountSensor(mActivity)) {
@@ -153,8 +165,8 @@ public class FragmentDetails extends BaseFragment implements android.os.Handler.
     protected void initData() {
         super.initData();
         //具体时间
-        run = true;
-        getHandlerforisRefersh.postDelayed(task, 60000);
+//        run = true;
+//        getHandlerforisRefersh.postDelayed(task, 60000);
         curSelDate = TimeUtil.getCurrentDate();
         getHeartRateFromNet((String) SPUtlis.get(mActivity, AppConfig.AUTO_LOGIN_NAME, ""));
         getMaxHeartRateFromNet((String) SPUtlis.get(mActivity, AppConfig.AUTO_LOGIN_NAME, ""));
@@ -602,6 +614,22 @@ public class FragmentDetails extends BaseFragment implements android.os.Handler.
         if (isBind) mActivity.unbindService(conn);
     }
 
+
+    @Override
+    public void onRefresh() {
+        Toast.makeText(mActivity, "正在刷新", Toast.LENGTH_SHORT).show();
+        nofi.setText("正在刷新");
+        getHandlerforisRefersh.postDelayed(isRefresh, 2000);
+    }
+    private Runnable isRefresh = new Runnable() {
+        @Override
+        public void run() {
+//            tv_simple.setText("刷新完成");
+            initData();
+            nofi.setText("正在刷新");
+            swipeRefreshLayout.setRefreshing(false);
+        }
+    };
 
 }
 

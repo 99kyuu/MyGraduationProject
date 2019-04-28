@@ -6,6 +6,8 @@
     tools:ignore="MergeRootFrame"
     >
 
+
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
@@ -116,6 +118,7 @@
             </android.support.design.widget.TabLayout>
 
 
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/fragment_health_article_rv"
                 android:layout_width="match_parent"
@@ -123,9 +126,12 @@
 
             </android.support.v7.widget.RecyclerView>
 
+
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
+
+
 
 
 </android.support.design.widget.CoordinatorLayout>
