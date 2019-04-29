@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 
 import com.ldx.mygraduationproject.R;
+import com.ldx.mygraduationproject.bean.Cash;
 import com.ldx.mygraduationproject.bean.User;
 import com.ldx.mygraduationproject.constant.AppConfig;
 import com.ldx.mygraduationproject.utils.GlideUtils;
@@ -44,6 +45,8 @@ public class WallteActivity extends BaseActivity {
     @BindView(R.id.money)
     TextView money;
     private Handler getHandlerforUserId;
+    private Handler addMoneyHandler;
+    private Handler cashHandler;
     @Override
     protected int setLayoutId() {
         return R.layout.activity_wallte;
@@ -80,28 +83,68 @@ public class WallteActivity extends BaseActivity {
                 break;
             case R.id.wallet_card:
                 break;
-            case R.id.cash:
+            case R.id.addcash:
 
                 final EditText et = new EditText(this);
                 new AlertDialog.Builder(this).setTitle("输入充值的金额")
                         .setIcon(R.drawable.launch_icon)
                         .setView(et)
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @SuppressLint("HandlerLeak")
                             public void onClick(DialogInterface dialog, int which) {
                                 String input = et.getText().toString();
                                 if (input.equals("")) {
-                                    Toast.makeText(getApplicationContext(), "搜索内容不能为空！" , Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "输入内容不能为空！" , Toast.LENGTH_LONG).show();
                                 }
                                 else {
-                                    Toast.makeText(getApplicationContext(), "搜索内容不能为空！" + input, Toast.LENGTH_LONG).show();
+                                    AddMoney((String) SPUtlis.get(WallteActivity.this, AppConfig.AUTO_LOGIN_NAME,
+                                            ""),input);
+                                    addMoneyHandler= new Handler() {
+                                        @Override
+                                        public void handleMessage(Message msg) {
+                                            Map<String,Object> r = (HashMap)msg.obj;
+                                            if((Integer)r.get("code")==1){
+                                                Toast.makeText(WallteActivity.this, ""+r.get("msg"),
+                                                        Toast.LENGTH_SHORT).show();
+                                            }
+
+                                        }
+                                    };
                                 }
                             }
                         }).setNegativeButton("取消", null)
                         .show();
-
-
                 break;
-            case R.id.addcash:
+            case R.id.cash:
+                final EditText et2 = new EditText(this);
+                new AlertDialog.Builder(this).setTitle("输入提现的金额")
+                        .setIcon(R.drawable.launch_icon)
+                        .setView(et2)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @SuppressLint("HandlerLeak")
+                            public void onClick(DialogInterface dialog, int which) {
+                                String input = et2.getText().toString();
+                                if (input.equals("")) {
+                                    Toast.makeText(getApplicationContext(), "输入内容不能为空！" , Toast.LENGTH_LONG).show();
+                                }
+                                else {
+                                    CashMoney((String) SPUtlis.get(WallteActivity.this, AppConfig.AUTO_LOGIN_NAME,
+                                            ""),input);
+                                    cashHandler= new Handler() {
+                                        @Override
+                                        public void handleMessage(Message msg) {
+                                            Map<String,Object> r = (HashMap)msg.obj;
+                                            if((Integer)r.get("code")==1){
+                                                Toast.makeText(WallteActivity.this, ""+r.get("msg"),
+                                                        Toast.LENGTH_SHORT).show();
+                                            }
+
+                                        }
+                                    };
+                                }
+                            }
+                        }).setNegativeButton("取消", null)
+                        .show();
                 break;
         }
     }
@@ -147,11 +190,37 @@ public class WallteActivity extends BaseActivity {
             @Override
             public void onResponse(com.squareup.okhttp.Response response) throws IOException {
                 String responseStr = response.body().string();
-                User user = new User();
-                user = com.alibaba.fastjson.JSONArray.parseObject(responseStr, User.class);
-                Message msg = getHandlerforUserId.obtainMessage();
-                msg.obj = user;
-                getHandlerforUserId.sendMessage(msg);
+                Map<String,Object> r =new HashMap<>();
+                r = com.alibaba.fastjson.JSONArray.parseObject(responseStr,HashMap.class);
+                Message msg = addMoneyHandler.obtainMessage();
+                msg.obj = r;
+                addMoneyHandler.sendMessage(msg);
+
+            }
+        });
+    }
+    public void CashMoney(String userName,String much) {
+        com.squareup.okhttp.OkHttpClient mOkHttpClient = new com.squareup.okhttp.OkHttpClient();
+        FormEncodingBuilder builder = new FormEncodingBuilder();
+        builder.add("user_name",userName);
+        builder.add("much",much);
+        final com.squareup.okhttp.Request request = new com.squareup.okhttp.Request.Builder()
+                .url(AppConfig.CASH_FOR_USER)
+                .post(builder.build())
+                .build();
+        com.squareup.okhttp.Call call = mOkHttpClient.newCall(request);
+        call.enqueue(new com.squareup.okhttp.Callback() {
+            @Override
+            public void onFailure(com.squareup.okhttp.Request request, IOException e) {
+            }
+            @Override
+            public void onResponse(com.squareup.okhttp.Response response) throws IOException {
+                String responseStr = response.body().string();
+                Map<String,Object> r =new HashMap<>();
+                r = com.alibaba.fastjson.JSONArray.parseObject(responseStr,HashMap.class);
+                Message msg = cashHandler.obtainMessage();
+                msg.obj = r;
+                cashHandler.sendMessage(msg);
 
             }
         });
