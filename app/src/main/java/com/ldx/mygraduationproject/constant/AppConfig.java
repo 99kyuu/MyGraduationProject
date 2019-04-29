@@ -66,6 +66,9 @@ public class AppConfig {
     public static final String ADD_MEDICINE_TO_ORDER=SERVER_URL_PATH.concat("/order/add_medicine_to_order");
     public static final String FIND_ORDER_BY_USER_ID=SERVER_URL_PATH.concat("/order/find_order_by_user_id");
     public static final String DELETE_MEDICINE_FROM_ORDER=SERVER_URL_PATH.concat("/order/delete_medicine_from_order");
+    //钱包
+    public static final String ADD_WALLET_FOR_USER=SERVER_URL_PATH.concat("/security/add_wallet_for_user");
+    public static final String CASH_FOR_USER=SERVER_URL_PATH.concat("/security/cash_for_user");
     /*是否自动登录*/
     public static String IS_AUTO_LOGIN = "IS_AUTO_LOGIN";
     /*自动登录用户名*/

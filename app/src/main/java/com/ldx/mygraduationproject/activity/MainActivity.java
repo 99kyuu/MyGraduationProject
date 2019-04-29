@@ -144,7 +144,8 @@ public class MainActivity extends BaseActivity  implements
 
     }
 
-
+    private LinearLayout mywallet;
+    private LinearLayout myshop;
     private ImageView myphoto;
     private TextView headerUserHealthNumber;
     private TextView headerUserHealthState;
@@ -154,7 +155,8 @@ public class MainActivity extends BaseActivity  implements
 
     private void setHeader(){
         View view = navView.getHeaderView(0);
-
+        mywallet = view.findViewById(R.id.header_my_wallet);
+        myshop = view.findViewById(R.id.header_my_shop);
         view01 = view.findViewById(R.id.header_obtain);
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT){
             view01.setVisibility(View.GONE);
@@ -175,7 +177,12 @@ public class MainActivity extends BaseActivity  implements
                 finish();
             }
         });
-
+        mywallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,WallteActivity.class));
+            }
+        });
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -233,6 +240,7 @@ public class MainActivity extends BaseActivity  implements
                         AppConfig.AUTO_LOGIN_ID,Integer.toString(userForId.getId()));
                 GlideUtils.loadImageView(MainActivity.this,"https://" + userForId.getUserImg()
                         ,myphoto);
+
             }
         };
     }

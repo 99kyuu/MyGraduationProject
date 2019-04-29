@@ -51,6 +51,7 @@
         <activity android:name=".activity.LoginActivity">
 
         </activity>
+        <activity android:name=".activity.WallteActivity"/>
         <activity android:name=".activity.OrderActivity" android:theme="@style/dialogStyle"/>
         <activity android:name=".activity.CartActivity" android:theme="@style/dialogStyle"/>
         <activity android:name=".activity.ExaminationActivity" />
