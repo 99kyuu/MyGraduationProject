@@ -49,6 +49,8 @@ import com.squareup.okhttp.Response;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by freeFreAme on 2019/1/29.
@@ -58,6 +60,8 @@ public class StepService extends Service implements SensorEventListener {
     public static final String TAG = "StepService";
     //Handler
     private Handler getCurDateStepHandler;
+    private Handler addUserStepHandler;
+    private Handler updateUserHandler;
     //当前日期
     private static String CURRENT_DATE;
     //当前步数
@@ -377,9 +381,17 @@ public class StepService extends Service implements SensorEventListener {
     /**
      * 保存当天的数据到数据库中，并去刷新通知栏
      */
+    @SuppressLint("HandlerLeak")
     private void saveStepData() {
-
         //查询数据库中的数据
+//        getUserStepByNet("ldx",CURRENT_DATE);
+//        getCurDateStepHandler=new Handler() {
+//            @Override
+//            public void handleMessage(Message msg) {
+//                UserStep userStep = (UserStep) msg.obj;
+//
+//            }
+//        };
         UserStep userStep = stepDataDao.getCurDataByDate(CURRENT_DATE);
         //为空则说明还没有该天的数据，有则说明已经开始当天的计步了
         if (userStep == null) {
@@ -387,12 +399,34 @@ public class StepService extends Service implements SensorEventListener {
             userStep = new UserStep();
             userStep.setCurDate(CURRENT_DATE);
             userStep.setSteps(String.valueOf(CURRENT_STEP));
+            AddUserPhysicalToNet("ldx",CURRENT_DATE,String.valueOf(CURRENT_STEP));
 
+            addUserStepHandler = new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    Map<String, Object> r = (HashMap) msg.obj;
+                    if ((Integer) r.get("code") == 1) {
+                        Log.e("abc", "" + r.get("msg"));
+
+                    }
+                }
+            };
             stepDataDao.addNewData(userStep);
         } else {
             //有则更新当前的数据
             userStep.setSteps(String.valueOf(CURRENT_STEP));
             stepDataDao.updateCurData(userStep);
+//            UpdateUserPhysicalToNet("ldx","2019年02月10日",String.valueOf(CURRENT_STEP));
+//            updateUserHandler = new Handler() {
+//                @Override
+//                public void handleMessage(Message msg) {
+//                    Map<String, Object> r = (HashMap) msg.obj;
+//                    if ((Integer) r.get("code") == 1) {
+//                        Log.e("abc", "" + r.get("msg"));
+//
+//                    }
+//                }
+//            };
         }
 
         builder.setContentIntent(PendingIntent.getActivity(this, 0, nfIntent, 0)) // 设置PendingIntent
@@ -440,7 +474,66 @@ public class StepService extends Service implements SensorEventListener {
             }
         });
     }
+    //添加步数
+    public void AddUserPhysicalToNet(String userName,String curDate,String totalSteps){
+        OkHttpClient mOkHttpClient = new OkHttpClient();
+        FormEncodingBuilder builder = new FormEncodingBuilder();
+        builder.add("user_name",userName);
+        builder.add("cur_date",curDate);
+        builder.add("total_steps",totalSteps);
+        final Request request = new Request.Builder()
+                .url(AppConfig.ADD_USER_STEP_DATA)
+                .post(builder.build())
+                .build();
+        Call call = mOkHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
 
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                String responseStr = response.body().string();
+                Map<String, Object> r = new HashMap<>();
+                r = com.alibaba.fastjson.JSONArray.parseObject(responseStr, HashMap.class);
+                Message msg = addUserStepHandler.obtainMessage();
+                msg.obj = r;
+                addUserStepHandler.sendMessage(msg);
+
+            }
+        });
+    }
+    //更新步数
+    public void UpdateUserPhysicalToNet(String userName,String curDate,String totalSteps){
+        OkHttpClient mOkHttpClient = new OkHttpClient();
+        FormEncodingBuilder builder = new FormEncodingBuilder();
+        builder.add("user_name",userName);
+        builder.add("cur_date",curDate);
+        builder.add("total_steps",totalSteps);
+        final Request request = new Request.Builder()
+                .url(AppConfig.UPDATE_USER_STEP_DATA)
+                .post(builder.build())
+                .build();
+        Call call = mOkHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                String responseStr = response.body().string();
+                Map<String, Object> r = new HashMap<>();
+                r = com.alibaba.fastjson.JSONArray.parseObject(responseStr, HashMap.class);
+                Message msg = addUserStepHandler.obtainMessage();
+                msg.obj = r;
+                addUserStepHandler.sendMessage(msg);
+
+            }
+        });
+    }
 
 
     @Override

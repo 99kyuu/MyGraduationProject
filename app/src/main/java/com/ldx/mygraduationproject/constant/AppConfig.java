@@ -32,6 +32,8 @@ public class AppConfig {
     public final static String ADD_USER_PLAN=SERVER_URL_PATH.concat("/stepplan/add_user_plan");
     //步数类
     public final static String FIND_BY_CURDATE=SERVER_URL_PATH.concat("/stepcount/find_by_curDate");
+    public static final String ADD_USER_STEP_DATA=SERVER_URL_PATH.concat("/stepcount/add_user_step_data");
+    public static final String UPDATE_USER_STEP_DATA=SERVER_URL_PATH.concat("/stepcount/update_user_step_data");
     //心率类
     public final static String ADD_USER_HEART_RATE=SERVER_URL_PATH.concat("/heartrate/add_user_heart_rate");
     public final static String GET_USER_HEART_RATE_BY_USER_NAME=SERVER_URL_PATH.concat("/heartrate/get_user_heart_rate_by_user_name");
@@ -45,7 +47,7 @@ public class AppConfig {
     public final static String GET_MAX_USER_WEIGHT_BY_USER_NAME=SERVER_URL_PATH.concat("/physical/get_max_user_weight_by_user_name");
 
 
-    //计步类
+    //计步服务
     public static final int MSG_FROM_CLIENT = 0;
     public static final int MSG_FROM_SERVER = 1;
     //文章

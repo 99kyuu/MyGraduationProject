@@ -90,7 +90,7 @@ public class PhysicalActivity extends BaseActivity {
         MainActivity.getInstance().initView();
     }
     public void AddUserPhysicalToNet(String userName,String userHeight,String userWeight,
-                                     String userSex,String curDate){
+                                      String userSex,String curDate){
         OkHttpClient mOkHttpClient = new OkHttpClient();
         FormEncodingBuilder builder = new FormEncodingBuilder();
         builder.add("user_name",userName);
