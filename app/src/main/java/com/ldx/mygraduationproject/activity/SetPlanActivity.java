@@ -1,8 +1,12 @@
 package com.ldx.mygraduationproject.activity;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -16,6 +20,7 @@ import android.widget.Toast;
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.bean.UserPlan;
 import com.ldx.mygraduationproject.constant.AppConfig;
+import com.ldx.mygraduationproject.service.ArmService;
 import com.ldx.mygraduationproject.utils.NetUtils;
 import com.ldx.mygraduationproject.utils.SPUtlis;
 import com.squareup.okhttp.Call;
@@ -63,6 +68,25 @@ public class SetPlanActivity extends BaseActivity {
     private String isRemind;
     private String remindTime;
     private String userId;
+
+    private AlarmManager alarmManager;
+    private PendingIntent pendingIntent;
+    private IntentFilter armIntentFilter = null;
+    private ArmService armBroadcastRecvier = null;
+    @Override
+    protected void initView() {
+        super.initView();
+        armIntentFilter=new IntentFilter();
+        //这里定义接受器监听广播的类型，这里添加相应的广播
+        armIntentFilter.addAction("com.ldx.steplan.service");
+        //实例化接收器
+        armBroadcastRecvier=new ArmService();
+        registerReceiver(armBroadcastRecvier,armIntentFilter);
+        //闹钟管理器
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+    }
+
     public void getUserPlanByNet(String userName) {
         OkHttpClient mOkHttpClient = new OkHttpClient();
         FormEncodingBuilder builder = new FormEncodingBuilder();
@@ -279,6 +303,14 @@ public class SetPlanActivity extends BaseActivity {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                 calendar.set(Calendar.MINUTE, minute);
+
+                Intent intent=new Intent(new Intent(SetPlanActivity.this,
+                        ArmService.class));
+                intent.setAction("com.ldx.steplan.service");
+                pendingIntent= PendingIntent.getBroadcast(SetPlanActivity.this,0x103,intent,0);
+                //设置闹钟
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),6000, pendingIntent);
+
                 String remindtime = calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE);
                 Date date = null;
                 try {
@@ -294,6 +326,14 @@ public class SetPlanActivity extends BaseActivity {
             }
         }, hour, minute, true).show();
     }
+    public void cancelAlarmCycle(View view){
+        alarmManager.cancel(pendingIntent);
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(armBroadcastRecvier);
+    }
 }
 

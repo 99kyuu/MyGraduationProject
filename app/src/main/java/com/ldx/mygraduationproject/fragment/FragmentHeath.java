@@ -203,6 +203,7 @@ public class FragmentHeath extends BaseFragment{
         fragmentHealthTab.addTab(fragmentHealthTab.newTab().setText("流行疾病"));
         fragmentHealthTab.addTab(fragmentHealthTab.newTab().setText("医学热点"));
         fragmentHealthTab.addTab(fragmentHealthTab.newTab().setText("疾病预防"));
+        fragmentHealthTab.getTabAt(0).select();
         fragmentHealthTab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

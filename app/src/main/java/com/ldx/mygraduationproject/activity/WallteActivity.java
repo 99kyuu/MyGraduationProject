@@ -94,7 +94,7 @@ public class WallteActivity extends BaseActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 String input = et.getText().toString();
                                 if (input.equals("")) {
-                                    Toast.makeText(getApplicationContext(), "输入内容不能为空！" , Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "输入数额不能为空！" , Toast.LENGTH_LONG).show();
                                 }
                                 else {
                                     AddMoney((String) SPUtlis.get(WallteActivity.this, AppConfig.AUTO_LOGIN_NAME,
@@ -125,9 +125,10 @@ public class WallteActivity extends BaseActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 String input = et2.getText().toString();
                                 if (input.equals("")) {
-                                    Toast.makeText(getApplicationContext(), "输入内容不能为空！" , Toast.LENGTH_LONG).show();
-                                }
-                                else {
+                                    Toast.makeText(getApplicationContext(), "输入数额不能为空！" , Toast.LENGTH_LONG).show();
+                                }else if (Double.parseDouble(input) >Double.parseDouble(money.getText().toString())) {
+                                    Toast.makeText(getApplicationContext(), "输入数额不能大于钱包额度！" , Toast.LENGTH_LONG).show();
+                                } else {
                                     CashMoney((String) SPUtlis.get(WallteActivity.this, AppConfig.AUTO_LOGIN_NAME,
                                             ""),input);
                                     cashHandler= new Handler() {

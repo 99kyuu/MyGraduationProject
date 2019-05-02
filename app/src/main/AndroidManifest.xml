@@ -51,6 +51,7 @@
         <activity android:name=".activity.LoginActivity">
 
         </activity>
+        <activity android:name=".activity.RemindActivity" android:theme="@style/dialogStyle"/>
         <activity android:name=".activity.WallteActivity"/>
         <activity android:name=".activity.OrderActivity" android:theme="@style/dialogStyle"/>
         <activity android:name=".activity.CartActivity" android:theme="@style/dialogStyle"/>
@@ -66,6 +67,12 @@
         <activity android:name=".activity.SetPlanActivity" />
         <activity android:name=".activity.SearchActivity"/>
         <activity android:name=".activity.SearchActivityForMed"/>
+        <!--提醒功能-->
+        <receiver android:name=".service.ArmService">
+            <intent-filter>
+                <action android:name="com.ldx.steplan.service"></action>
+            </intent-filter>
+        </receiver>
         <!-- 计步功能 -->
         <service
             android:name=".service.StepService"

@@ -166,4 +166,16 @@
         android:textColor="#ffffff"
         android:textSize="@dimen/sp_21" />
 
+    <Button
+        android:id="@+id/buttonCancel"
+        android:layout_width="312dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_36"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/green_button_bg"
+        android:onClick="cancelAlarmCycle"
+        android:text="关闭提醒"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/sp_21" />
+
 </LinearLayout>
