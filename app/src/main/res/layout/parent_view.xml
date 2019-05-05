@@ -5,14 +5,16 @@
     android:layout_height="match_parent"
     android:gravity="center_vertical"
     android:background="@color/text_white">
+
     <ImageView
-        android:layout_marginLeft="8dp"
         android:id="@+id/iv_parentview_icon"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp" />
+
     <TextView
-        android:layout_marginLeft="8dp"
         android:id="@+id/tv_parentview_title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp" />
 </LinearLayout>

@@ -51,11 +51,23 @@ public class WallteActivity extends BaseActivity {
     protected int setLayoutId() {
         return R.layout.activity_wallte;
     }
-
+    private boolean run = false;
+    private final Handler getHandlerforisRefersh = new Handler();
+    private final Runnable task = new Runnable() {
+        @Override
+        public void run() {
+            // TODO Auto-generated method stub
+            if (run) {
+               initData();
+                getHandlerforisRefersh.postDelayed(this, 20000);
+            }
+        }
+    };
     @SuppressLint("HandlerLeak")
     @Override
     protected void initData() {
         super.initData();
+
         findIdByName((String) SPUtlis.get(WallteActivity.this,
                 AppConfig.AUTO_LOGIN_NAME, ""));
         getHandlerforUserId= new Handler() {
@@ -67,6 +79,13 @@ public class WallteActivity extends BaseActivity {
                 money.setText(userForId.getUserWallet());
             }
         };
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
+        run=true;
+        getHandlerforisRefersh.postDelayed(task, 20000);
     }
 
     @Override

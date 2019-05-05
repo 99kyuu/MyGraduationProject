@@ -139,7 +139,7 @@ private class MyAdapter extends BaseExpandableListAdapter {
     public long getChildId(int groupPosition, int childPosition) {
         return childPosition;
     }
-    //  按函数的名字来理解应该是是否具有稳定的id，这个方法目前一直都是返回false，没有去改动过
+    //
     @Override
     public boolean hasStableIds() {
         return false;
@@ -202,7 +202,7 @@ private class MyAdapter extends BaseExpandableListAdapter {
                 dataMap.get(titleArr[groupPosition]).remove(childPosition);
                 myAdapter.notifyDataSetChanged();
                 try {
-                    delMed(String.valueOf(dataMap.get(titleArr[groupPosition]).get(childPosition).getOrderId()));
+                    delMed(String.valueOf(dataMap.get(titleArr[groupPosition]).get(childPosition).getId()));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -210,7 +210,7 @@ private class MyAdapter extends BaseExpandableListAdapter {
                     @Override
                     public void handleMessage(Message msg) {
                         Map<String,Object> r = (HashMap)msg.obj;
-                        if((Integer)r.get("code")==500){
+                        if((Integer)r.get("code")==200){
                             Toast.makeText(OrderActivity.this, ""+r.get("msg"),
                                     Toast.LENGTH_SHORT).show();
                         }

@@ -12,11 +12,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/iv_childview_content"
-        android:layout_marginLeft="51dp"
-        android:layout_marginStart="51dp"
-        android:layout_toEndOf="@+id/tv_childview_content"
-        android:layout_toRightOf="@+id/tv_childview_content"
-        android:text="TextView" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="77dp"
+        android:layout_marginRight="77dp" />
 
     <TextView
         android:id="@+id/tv_childview_content"
@@ -29,9 +28,12 @@
         android:id="@+id/iv_childview_content"
         android:layout_width="80dp"
         android:layout_height="50dp"
-        android:layout_toLeftOf="@+id/dizhi"
-        android:layout_toStartOf="@+id/dizhi"
-        app:srcCompat="@drawable/bg_create_group" />
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_toLeftOf="@+id/tv_price"
+        android:layout_toStartOf="@+id/tv_price"
+        app:srcCompat="@drawable/medicines" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,14 +50,14 @@
             <!--android:layout_height="wrap_content"-->
             <!--android:text="评价"/>-->
         <Button
-            android:focusable="false"
-            android:visibility="gone"
             android:id="@+id/btn_childview_delete"
-            android:layout_marginRight="5dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/sp_25"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/green_button_bg"
+            android:focusable="false"
             android:text="删除订单"
-            android:background="@drawable/green_button_bg"/>
+            android:visibility="gone" />
     </LinearLayout>
 
     <TextView
@@ -66,18 +68,15 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginEnd="61dp"
-        android:layout_marginRight="61dp"
-        android:text="TextView" />
+        android:layout_marginRight="61dp" />
 
     <TextView
         android:id="@+id/dizhi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/tv_price"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/tv_orderadress"
-        android:layout_toStartOf="@+id/tv_orderadress"
-        android:text="TextView"
-        tools:text="地址" />
+        android:layout_alignRight="@+id/tv_price" />
 
     <TextView
         android:id="@+id/textView4"
