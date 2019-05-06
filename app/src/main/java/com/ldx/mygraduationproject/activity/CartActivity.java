@@ -3,6 +3,7 @@ package com.ldx.mygraduationproject.activity;
 import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -13,7 +14,9 @@ import android.widget.Toast;
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.adapter.AdapterCart;
 import com.ldx.mygraduationproject.bean.Cart;
+import com.ldx.mygraduationproject.bean.User;
 import com.ldx.mygraduationproject.constant.AppConfig;
+import com.ldx.mygraduationproject.utils.GlideUtils;
 import com.ldx.mygraduationproject.utils.SPUtlis;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
@@ -45,6 +48,9 @@ public class CartActivity extends BaseActivity implements View.OnClickListener
     private Handler buildOrderHandler;
     private Handler payMoneyHandler;
     private Handler clearAllHandler;
+    private Handler getHandlerforUserId;
+    private String orderAddress;
+
     private List<Cart> shoppingCartList = new ArrayList<>();
     @BindView(R.id.list_cart)
     ListView listCart;
@@ -60,6 +66,7 @@ public class CartActivity extends BaseActivity implements View.OnClickListener
     TextView btnEdit;//tv_edit
     private double totalPrice = 0.00;// 购买的商品总价
     private int totalCount = 0;// 购买的商品总数量
+
     @Override
     protected int setLayoutId() {
         return R.layout.activity_cart;
@@ -71,6 +78,8 @@ public class CartActivity extends BaseActivity implements View.OnClickListener
         super.initData();
         getCartByUserId((String) SPUtlis.get(CartActivity.this,
                 AppConfig.AUTO_LOGIN_ID, ""));
+        findIdByName((String) SPUtlis.get(CartActivity.this,
+                AppConfig.AUTO_LOGIN_NAME, ""));
         getCartHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -84,6 +93,16 @@ public class CartActivity extends BaseActivity implements View.OnClickListener
                     listCart.setAdapter(adapterCart);
                     adapterCart.setCartList(shoppingCartList);
                 }
+            }
+        };
+        getHandlerforUserId= new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                User userForId= (User) msg.obj;
+                SPUtlis.put(CartActivity.this,
+                        AppConfig.AUTO_LOGIN_ID,Integer.toString(userForId.getId()));
+                orderAddress=userForId.getUserAddress();
+
             }
         };
     }
@@ -181,14 +200,18 @@ public class CartActivity extends BaseActivity implements View.OnClickListener
     @SuppressLint("HandlerLeak")
     private void lementOnder() {
         //选中的需要提交的商品清单
+
         for (Cart cart:shoppingCartList){
             boolean choosed = cart.getChoosed();
+
             if (choosed){
                 String medicineName = cart.getMedicineName();
                 int medicineNum = Integer.parseInt(cart.getMedicineNum());
                 double medicinePrice = Double.parseDouble(cart.getMedicinePrice());
                 String medicineImg=cart.getMedicineImg();
-                String orderAddress="厦门市集美区";
+
+//                String orderAddress="x厦门";
+
                 try {
                     buildOrder((String) SPUtlis.get(CartActivity.this, AppConfig.AUTO_LOGIN_ID,
                             ""),"1",medicineName,String.valueOf(medicinePrice),
@@ -548,5 +571,29 @@ public class CartActivity extends BaseActivity implements View.OnClickListener
             }
         });
     }
+    public void findIdByName(String userName) {
+        com.squareup.okhttp.OkHttpClient mOkHttpClient = new com.squareup.okhttp.OkHttpClient();
+        FormEncodingBuilder builder = new FormEncodingBuilder();
+        builder.add("user_name",userName);
+        final com.squareup.okhttp.Request request = new com.squareup.okhttp.Request.Builder()
+                .url(AppConfig.FIND_BY_USERNAME)
+                .post(builder.build())
+                .build();
+        com.squareup.okhttp.Call call = mOkHttpClient.newCall(request);
+        call.enqueue(new com.squareup.okhttp.Callback() {
+            @Override
+            public void onFailure(com.squareup.okhttp.Request request, IOException e) {
+            }
+            @Override
+            public void onResponse(com.squareup.okhttp.Response response) throws IOException {
+                String responseStr = response.body().string();
+                User user = new User();
+                user = com.alibaba.fastjson.JSONArray.parseObject(responseStr, User.class);
+                Message msg = getHandlerforUserId.obtainMessage();
+                msg.obj = user;
+                getHandlerforUserId.sendMessage(msg);
 
+            }
+        });
+    }
 }
