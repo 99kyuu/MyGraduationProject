@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.google.gson.Gson;
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.app.MyApplication;
@@ -19,20 +18,11 @@ import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
-
 import org.litepal.LitePal;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
-import okhttp3.RequestBody;
 
 /**
  * Created by freeFreAme on 2019/3/28.

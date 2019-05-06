@@ -139,10 +139,13 @@ public class HeartRateActivity extends Activity {
         String CURRENT_DATE= TimeUtil.getCurrentDate();
         heartbeatValueShow=heart_rate_show.getText().toString();
         heartbeatValue=heart_rate_text.getText().toString();
-        if (heartbeatValue!= null) {
+        if (heartbeatValue!= null ||heartbeatValueShow!=null) {
             Toast.makeText(context, ""+heartbeatValueShow, Toast.LENGTH_SHORT).show();
             saveHeartRateToNet((String) SPUtlis.get(HeartRateActivity.this, AppConfig.AUTO_LOGIN_NAME,""),heartbeatValue,CURRENT_DATE);
+
             MainActivity.getInstance().initView();
+        }else{
+            Toast.makeText(context, "为检测完成", Toast.LENGTH_SHORT).show();
         }
 
     }

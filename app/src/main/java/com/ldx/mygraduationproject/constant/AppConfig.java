@@ -71,6 +71,8 @@ public class AppConfig {
     //钱包
     public static final String ADD_WALLET_FOR_USER=SERVER_URL_PATH.concat("/security/add_wallet_for_user");
     public static final String CASH_FOR_USER=SERVER_URL_PATH.concat("/security/cash_for_user");
+    //地址
+    public static final String SET_ADDRESS=SERVER_URL_PATH.concat("/security/set_address");
     /*是否自动登录*/
     public static String IS_AUTO_LOGIN = "IS_AUTO_LOGIN";
     /*自动登录用户名*/

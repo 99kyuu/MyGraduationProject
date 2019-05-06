@@ -51,4 +51,5 @@ dependencies {
     implementation 'com.getbase:floatingactionbutton:1.10.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation files('libs/achartengine-1.0.0.jar')
+    compile 'com.github.ywp0919:AddressPickerLib:1.0.1'
 }
