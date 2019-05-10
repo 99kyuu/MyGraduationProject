@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -34,7 +35,7 @@ public class AdapterArticle extends SimpleAdapter<Article> {
     private TextView itemArticleTitle;
     private TextView itemArticleContent;
     private TextView itemArticleTime;
-    private ImageView itemArticleMore;
+    private CheckBox itemArticleMore;
     private RelativeLayout itemArticleRelative;
 
     public AdapterArticle(Context context, List<Article> data) {
@@ -68,6 +69,11 @@ public class AdapterArticle extends SimpleAdapter<Article> {
         itemArticleContent.setText(article.getContent());
 
         itemArticleMore = viewHolder.findView(R.id.item_article_more);
+        if (article.isSaved()==true) {
+            itemArticleMore.setChecked(true);
+        }else{
+            itemArticleMore.setChecked(false);
+        }
         itemArticleMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
