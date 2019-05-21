@@ -121,16 +121,17 @@ public class FragmentLogin extends BaseFragment {
 
         userName = loginUsername.getText().toString().trim();
 
-//        if (!RegularUtils.isUsername(username)){
-//            Toast.makeText(mActivity,"用户名不符合规范",Toast.LENGTH_LONG).show();
-//            return;
-//        }
+        if (!RegularUtils.isUsername(userName)){
+            Toast.makeText(mActivity,"用户名不符合规范",Toast.LENGTH_LONG).show();
+            return;
+        }
         userPwd = loginPass.getText().toString().trim();
 //        /* 测试不加密 */
-//        //pass = Md5Utlis.encryption(registerPass.getText().toString().trim());
-//        if (!RegularUtils.isPassWord(pass)){
-//            Toast.makeText(mActivity,"密码不符合规范",Toast.LENGTH_LONG).show();
-//            return;
+        //pass = Md5Utlis.encryption(registerPass.getText().toString().trim());
+        if (!RegularUtils.isPassWord(userPwd)) {
+            Toast.makeText(mActivity, "密码不符合规范", Toast.LENGTH_LONG).show();
+            return;
+        }
         try {
             userLogin(userName,userPwd);
 

@@ -206,9 +206,10 @@
             android:orientation="vertical">
 
             <ImageView
-                android:src="@drawable/shopping_cart"
+                android:id="@+id/cart"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:src="@drawable/shopping_cart" />
             <TextView
                 android:layout_marginTop="@dimen/dp_10"
                 android:text="购物车"

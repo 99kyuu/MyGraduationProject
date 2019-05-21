@@ -24,18 +24,14 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.Toast;
 
 
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.activity.MainActivity;
-import com.ldx.mygraduationproject.activity.SetPlanActivity;
-import com.ldx.mygraduationproject.bean.User;
-import com.ldx.mygraduationproject.bean.UserPlan;
 import com.ldx.mygraduationproject.bean.UserStep;
 import com.ldx.mygraduationproject.constant.AppConfig;
 import com.ldx.mygraduationproject.db.StepDataDao;
-import com.ldx.mygraduationproject.utils.NetUtils;
+import com.ldx.mygraduationproject.utils.SPUtlis;
 import com.ldx.mygraduationproject.utils.TimeUtil;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
@@ -246,7 +242,7 @@ public class StepService extends Service implements SensorEventListener {
 //                    if (userStep == null) {
 //                        CURRENT_STEP = 0;
 //                    } else {
-//                        CURRENT_STEP = Integer.parseInt(userStep.getSteps());
+//                        CURRENT_STEP = Integer.parseInt(userStep.getTotalSteps());
 //                    }
 //                }
 //            };
@@ -259,7 +255,7 @@ public class StepService extends Service implements SensorEventListener {
             if (userStep == null) {
                 CURRENT_STEP = 0;
             } else {
-                CURRENT_STEP = Integer.parseInt(userStep.getSteps());
+                CURRENT_STEP = Integer.parseInt(userStep.getTotalSteps());
             }
 //        }
     }
@@ -398,8 +394,8 @@ public class StepService extends Service implements SensorEventListener {
             //没有则新建一条数据
             userStep = new UserStep();
             userStep.setCurDate(CURRENT_DATE);
-            userStep.setSteps(String.valueOf(CURRENT_STEP));
-            AddUserPhysicalToNet("ldx",CURRENT_DATE,String.valueOf(CURRENT_STEP));
+            userStep.setTotalSteps(String.valueOf(CURRENT_STEP));
+            AddUserPhysicalToNet((String) SPUtlis.get(this, AppConfig.AUTO_LOGIN_NAME, ""),CURRENT_DATE,String.valueOf(CURRENT_STEP));
 
             addUserStepHandler = new Handler() {
                 @Override
@@ -414,7 +410,7 @@ public class StepService extends Service implements SensorEventListener {
             stepDataDao.addNewData(userStep);
         } else {
             //有则更新当前的数据
-            userStep.setSteps(String.valueOf(CURRENT_STEP));
+            userStep.setTotalSteps(String.valueOf(CURRENT_STEP));
             stepDataDao.updateCurData(userStep);
 //            UpdateUserPhysicalToNet("ldx","2019年02月10日",String.valueOf(CURRENT_STEP));
 //            updateUserHandler = new Handler() {

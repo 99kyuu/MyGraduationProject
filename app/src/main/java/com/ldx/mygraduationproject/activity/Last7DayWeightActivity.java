@@ -89,13 +89,13 @@ public class Last7DayWeightActivity extends BaseActivity {
                     Toast.makeText(Last7DayWeightActivity.this, "用户暂时未拥有数据", Toast.LENGTH_SHORT).show();
                 } else {
                     mItems = new ArrayList<>();
-                    mItems.add(new LineChartViewForWeight.ItemBean(1489507200, Integer.parseInt(userPhysicalList.get(0).getUserWeight())));
-                    mItems.add(new LineChartViewForWeight.ItemBean(1489593600, Integer.parseInt(userPhysicalList.get(1).getUserWeight())));
-                    mItems.add(new LineChartViewForWeight.ItemBean(1489680000, Integer.parseInt(userPhysicalList.get(2).getUserWeight())));
+                    mItems.add(new LineChartViewForWeight.ItemBean(1489507200, Integer.parseInt(userPhysicalList.get(6).getUserWeight())));
+                    mItems.add(new LineChartViewForWeight.ItemBean(1489593600, Integer.parseInt(userPhysicalList.get(5).getUserWeight())));
+                    mItems.add(new LineChartViewForWeight.ItemBean(1489680000, Integer.parseInt(userPhysicalList.get(4).getUserWeight())));
                     mItems.add(new LineChartViewForWeight.ItemBean(1489766400, Integer.parseInt(userPhysicalList.get(3).getUserWeight())));
-                    mItems.add(new LineChartViewForWeight.ItemBean(1489852800, Integer.parseInt(userPhysicalList.get(4).getUserWeight())));
-                    mItems.add(new LineChartViewForWeight.ItemBean(1489939200, Integer.parseInt(userPhysicalList.get(5).getUserWeight())));
-                    mItems.add(new LineChartViewForWeight.ItemBean(1490025600, Integer.parseInt(userPhysicalList.get(6).getUserWeight())));
+                    mItems.add(new LineChartViewForWeight.ItemBean(1489852800, Integer.parseInt(userPhysicalList.get(2).getUserWeight())));
+                    mItems.add(new LineChartViewForWeight.ItemBean(1489939200, Integer.parseInt(userPhysicalList.get(1).getUserWeight())));
+                    mItems.add(new LineChartViewForWeight.ItemBean(1490025600, Integer.parseInt(userPhysicalList.get(0).getUserWeight())));
                     shadeColors = new int[]{
                             Color.argb(100, 161, 216, 139), Color.argb(55, 183, 235, 139),
                             Color.argb(20, 221, 249, 197)};

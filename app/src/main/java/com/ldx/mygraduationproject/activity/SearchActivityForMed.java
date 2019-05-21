@@ -65,16 +65,15 @@ public class SearchActivityForMed extends BaseActivity {
 
     @Override
     protected void initData() {
-        list.add("二手烟的危害");
+        list.add("清火");
         list.add("感冒");
         list.add("发烧");
-        list.add("早餐的选择");
-        list.add("基因检测");
-        list.add("DNA 测序");
-        list.add("酒精");
-        list.add("企鹅");
-        list.add("扎堆取暖");
-        list.add("抵御严寒");
+        list.add("胃痛");
+        list.add("999");
+        list.add("糖浆");
+        list.add("维生素C");
+        list.add("颗粒");
+
 
     }
 

@@ -21,8 +21,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import com.ldx.mygraduationproject.R;
 import com.ldx.mygraduationproject.activity.HeartRateActivity;
+import com.ldx.mygraduationproject.activity.Last7DayStepActivity;
 import com.ldx.mygraduationproject.activity.Last7DayWeightActivity;
-import com.ldx.mygraduationproject.activity.MainActivity;
+import com.ldx.mygraduationproject.activity.PhysicalActivity;
+import com.ldx.mygraduationproject.activity.SetPlanActivity;
 import com.ldx.mygraduationproject.bean.UserHeartRate;
 import com.ldx.mygraduationproject.bean.UserPhysical;
 import com.ldx.mygraduationproject.bean.UserPlan;
@@ -266,7 +268,7 @@ public class FragmentDetails extends BaseFragment implements android.os.Handler.
                     Log.e("aa",""+userPlanNet.getPlanSteps());
                     totalStepNum = Integer.parseInt(userPlanNet.getPlanSteps());
                     if (userStep != null) {
-                        int steps = Integer.parseInt(userStep.getSteps());
+                        int steps = Integer.parseInt(userStep.getTotalSteps());
                         //获取全局的步数
                         runningView.setCurrentCount(0, totalStepNum, steps);
                         Log.e("aaaaaaa", "" + totalStepNum);
@@ -294,11 +296,12 @@ public class FragmentDetails extends BaseFragment implements android.os.Handler.
 //        }
     }
 
-    @OnClick({R.id.running_count_card, R.id.heart_rate_card,R.id.weight_card})
+    @OnClick({R.id.running_count_card, R.id.heart_rate_card,R.id.weight_card,
+            R.id.buttonWeight,R.id.buttonPlan})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.running_count_card:
-                mActivity.startActivity(new Intent(mActivity, Last7DayWeightActivity.class));
+                mActivity.startActivity(new Intent(mActivity, Last7DayStepActivity.class));
                 break;
             case R.id.heart_rate_card:
                 mActivity.startActivity(new Intent(mActivity, HeartRateActivity.class));
@@ -306,6 +309,13 @@ public class FragmentDetails extends BaseFragment implements android.os.Handler.
             case R.id.weight_card:
                 mActivity.startActivity(new Intent(mActivity, Last7DayWeightActivity.class));
                 break;
+            case R.id.buttonPlan:
+                mActivity.startActivity(new Intent(mActivity, SetPlanActivity.class));
+                break;
+            case R.id.buttonWeight:
+                mActivity.startActivity(new Intent(mActivity, PhysicalActivity.class));
+                break;
+
         }
     }
 
@@ -400,7 +410,7 @@ public class FragmentDetails extends BaseFragment implements android.os.Handler.
         UserStep userStep = stepDataDao.getCurDataByDate(curSelDate);
 
         if (userStep != null) {
-            int steps = Integer.parseInt(userStep.getSteps());
+            int steps = Integer.parseInt(userStep.getTotalSteps());
 
             //获取全局的步数
             totalStepsTv.setText(String.valueOf(steps));

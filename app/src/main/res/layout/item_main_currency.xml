@@ -10,10 +10,11 @@
 
     <ImageView
         android:id="@+id/item_main_currency_add"
-        android:layout_alignParentRight="true"
-        android:src="@drawable/add_plus"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/add_plus" />
 
 
     <RelativeLayout

@@ -68,19 +68,19 @@ public class FragmentRegister extends BaseFragment {
         /* 测试不加密 */
         //pass = Md5Utlis.encryption(registerPass.getText().toString().trim());
         userEmail = registerEmail.getText().toString().trim();
-//
-//        if (!RegularUtils.isUsername(userName)){
-//            Toast.makeText(mActivity,"用户名不符合规范",Toast.LENGTH_LONG).show();
-//            return;
-//        }
-//        if (!RegularUtils.isPassWord(userPwd)){
-//            Toast.makeText(mActivity,"密码不符合规范，最少需要6位字符",Toast.LENGTH_LONG).show();
-//            return;
-//        }
-//        if (!RegularUtils.isEmail(userEmail)){
-//            Toast.makeText(mActivity,"邮箱不符合规范",Toast.LENGTH_LONG).show();
-//            return;
-//        }
+
+        if (!RegularUtils.isUsername(userName)){
+            Toast.makeText(mActivity,"用户名不符合规范",Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (!RegularUtils.isPassWord(userPwd)){
+            Toast.makeText(mActivity,"密码不符合规范，最少需要6位字符",Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (!RegularUtils.isEmail(userEmail)){
+            Toast.makeText(mActivity,"邮箱不符合规范",Toast.LENGTH_LONG).show();
+            return;
+        }
         try {
             registerNewUser(userName, userPwd, userEmail);
         } catch (IOException e) {

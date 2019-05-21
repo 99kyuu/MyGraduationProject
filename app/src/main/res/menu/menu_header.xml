@@ -10,14 +10,14 @@
             android:id="@+id/nav_gallery"
             android:icon="@drawable/self_diagnose"
             android:title="体检单" />
-        <item
-            android:id="@+id/nav_setplan"
-            android:icon="@drawable/foot_print"
-            android:title="步数计划" />
-        <item
-            android:id="@+id/nav_setphysical"
-            android:icon="@drawable/follow"
-            android:title="身高体重" />
+        <!--<item-->
+            <!--android:id="@+id/nav_setplan"-->
+            <!--android:icon="@drawable/foot_print"-->
+            <!--android:title="步数计划" />-->
+        <!--<item-->
+            <!--android:id="@+id/nav_setphysical"-->
+            <!--android:icon="@drawable/follow"-->
+            <!--android:title="身高体重" />-->
         <item
             android:id="@+id/nav_helpself"
             android:icon="@drawable/follow"

@@ -146,6 +146,7 @@ public class MainActivity extends BaseActivity  implements
 
     private LinearLayout mywallet;
     private LinearLayout myshop;
+    private LinearLayout mycart;
     private ImageView myphoto;
     private TextView headerUserHealthNumber;
     private TextView headerUserHealthState;
@@ -158,6 +159,7 @@ public class MainActivity extends BaseActivity  implements
         mywallet = view.findViewById(R.id.header_my_wallet);
         myshop = view.findViewById(R.id.header_my_shop);
         view01 = view.findViewById(R.id.header_obtain);
+        mycart=view.findViewById(R.id.header_my_shop);
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT){
             view01.setVisibility(View.GONE);
         }
@@ -183,6 +185,12 @@ public class MainActivity extends BaseActivity  implements
                 startActivity(new Intent(MainActivity.this,WallteActivity.class));
             }
         });
+        mycart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,CartActivity.class));
+            }
+        });
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -197,12 +205,12 @@ public class MainActivity extends BaseActivity  implements
                             startActivity(new Intent(MainActivity.this,ScoreActivity.class));
                         }
                         break;
-                    case"步数计划":
-                        startActivity(new Intent(MainActivity.this,SetPlanActivity.class));
-                        break;
-                    case "身高体重":
-                        startActivity(new Intent(MainActivity.this,PhysicalActivity.class));
-                        break;
+//                    case"步数计划":
+//                        startActivity(new Intent(MainActivity.this,SetPlanActivity.class));
+//                        break;
+////                    case "身高体重":
+////                        startActivity(new Intent(MainActivity.this,PhysicalActivity.class));
+////                        break;
                     case "关注":
                         startActivity(new Intent(MainActivity.this,CollectionActivity.class));
                         break;

@@ -567,6 +567,10 @@ public class HeartRateActivity extends Activity {
                 Toast.makeText(HeartRateActivity.this, "" + r.get("msg"), Toast.LENGTH_SHORT).show();
                 finish();
             }
+            if ((Integer) r.get("code") == 2) {
+                Toast.makeText(HeartRateActivity.this, "" + r.get("msg"), Toast.LENGTH_SHORT).show();
+                finish();
+            }
         }
     };
 }

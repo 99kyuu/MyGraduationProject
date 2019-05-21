@@ -45,7 +45,7 @@ public class AppConfig {
     public final static String GET_USER_PHYSICAL_BY_USER_NAME=SERVER_URL_PATH.concat("/physical/get_user_physical_by_user_name");
     public final static String GET_MIN_USER_WEIGHT_BY_USER_NAME=SERVER_URL_PATH.concat("/physical/get_min_user_weight_by_user_name");
     public final static String GET_MAX_USER_WEIGHT_BY_USER_NAME=SERVER_URL_PATH.concat("/physical/get_max_user_weight_by_user_name");
-
+    public final static String HISTORY_STEPS=SERVER_URL_PATH.concat("/stepcount/history");
 
     //计步服务
     public static final int MSG_FROM_CLIENT = 0;
@@ -102,4 +102,17 @@ public class AppConfig {
             "        \"img\": null,\n" +
             "        \"status\": \"1\"\n" +
             "      }";
+    public static String DATE = "{\n" +
+            "        \"id\": 14,\n" +
+            "        \"createDate\": \"2018-09-08 14:12:27\",\n" +
+            "        \"title\": \"高血压的危害与预防你知道多少？\",\n" +
+            "        \"content\": \"   中风：高血压脑卒中的发生率是正常血压的7.76倍。    心力衰竭：高血压常见的并发症，40%-50%的心衰起因是高血压造成。    高血压导致左心室肥厚和心肌梗塞，可...\",\n" +
+            "        \"classes\": \"1\",\n" +
+            "        \"articleDate\": null,\n" +
+            "        \"articleUrl\": \"https://www.jianshu.com/p/82d47b02a033\",\n" +
+            "        \"author\": \"993\",\n" +
+            "        \"img\": null,\n" +
+            "        \"status\": \"1\"\n" +
+            "      }";
 }
+

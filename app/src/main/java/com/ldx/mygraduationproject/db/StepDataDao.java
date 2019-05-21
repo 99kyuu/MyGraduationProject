@@ -3,12 +3,10 @@ package com.ldx.mygraduationproject.db;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 
 import com.ldx.mygraduationproject.bean.UserStep;
-import com.ldx.mygraduationproject.bean.UserPlan;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +33,7 @@ public class StepDataDao {
         stepDb = stepHelper.getReadableDatabase();
         ContentValues values = new ContentValues();
         values.put("curDate", userStep.getCurDate());
-        values.put("totalSteps", userStep.getSteps());
+        values.put("totalSteps", userStep.getTotalSteps());
         stepDb.insert("step", null, values);
         stepDb.close();
     }
@@ -113,7 +111,7 @@ public class StepDataDao {
 
         ContentValues values = new ContentValues();
         values.put("curDate", userStep.getCurDate());
-        values.put("totalSteps", userStep.getSteps());
+        values.put("totalSteps", userStep.getTotalSteps());
         stepDb.update("step", values, "curDate=?", new String[]{userStep.getCurDate()});
 
         stepDb.close();

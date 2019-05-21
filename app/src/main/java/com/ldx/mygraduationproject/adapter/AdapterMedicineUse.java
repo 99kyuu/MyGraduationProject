@@ -56,7 +56,7 @@ public class AdapterMedicineUse extends SimpleAdapter<Medicine> {
         itemMainCurrencyName = viewHolder.findView(R.id.item_main_currency_name);
         itemMainCurrencyUse = viewHolder.findView(R.id.item_main_currency_use);
         itemMainCurrencyPrice = viewHolder.findView(R.id.item_main_currency_price);
-
+        itemMainCurrencyUse.setText(medicine.getMedicineType());
         itemMainCurrencyName.setText(medicine.getMedicineName());
         itemMainCurrencyPrice.setText(medicine.getMedicinePrice() + "￥");
         //itemMainCurrencyUse.setText(medicineBean.getMedicineType());

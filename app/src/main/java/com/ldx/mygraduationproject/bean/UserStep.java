@@ -29,11 +29,11 @@ public class UserStep extends LitePalSupport{
         this.curDate = curDate;
     }
 
-    public String getSteps() {
+    public String getTotalSteps() {
         return totalSteps;
     }
 
-    public void setSteps(String totalSteps) {
+    public void setTotalSteps(String totalSteps) {
         this.totalSteps = totalSteps;
     }
 
