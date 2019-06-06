@@ -88,6 +88,7 @@ public class SetActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.set_finish:
+                SPUtlis.put(SetActivity.this,AppConfig.IS_AUTO_LOGIN,false);
                 startActivity(new Intent(SetActivity.this,LoginActivity.class));
                 //这里6.0闪退报错
 

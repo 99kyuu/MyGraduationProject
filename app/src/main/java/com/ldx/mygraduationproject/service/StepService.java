@@ -395,7 +395,8 @@ public class StepService extends Service implements SensorEventListener {
             userStep = new UserStep();
             userStep.setCurDate(CURRENT_DATE);
             userStep.setTotalSteps(String.valueOf(CURRENT_STEP));
-            AddUserPhysicalToNet((String) SPUtlis.get(this, AppConfig.AUTO_LOGIN_NAME, ""),CURRENT_DATE,String.valueOf(CURRENT_STEP));
+            AddUserPhysicalToNet((String) SPUtlis.get(this, AppConfig.AUTO_LOGIN_NAME, ""),CURRENT_DATE,String.valueOf(CURRENT_STEP),
+                    (String) SPUtlis.get(this, AppConfig.AUTO_LOGIN_ID, ""));
 
             addUserStepHandler = new Handler() {
                 @Override
@@ -471,12 +472,13 @@ public class StepService extends Service implements SensorEventListener {
         });
     }
     //添加步数
-    public void AddUserPhysicalToNet(String userName,String curDate,String totalSteps){
+    public void AddUserPhysicalToNet(String userName,String curDate,String totalSteps,String userId){
         OkHttpClient mOkHttpClient = new OkHttpClient();
         FormEncodingBuilder builder = new FormEncodingBuilder();
         builder.add("user_name",userName);
         builder.add("cur_date",curDate);
         builder.add("total_steps",totalSteps);
+        builder.add("user_id",userId);
         final Request request = new Request.Builder()
                 .url(AppConfig.ADD_USER_STEP_DATA)
                 .post(builder.build())
